@@ -1,0 +1,114 @@
+<script>
+    // Contains all event listeners and helper functions for General Info Page.
+
+    // Attach change event listener to time-entry elements that updates
+    // the copy and paste links depending on input validity.
+    $(".time-entry").change(function () {
+        // Pull the input's id.
+        var inputId = $(this).attr('id');
+
+        // Update the copy and paste disabled property associated with
+        // changed input.
+        updateCopyLinks(inputId);
+
+        // Update the time stamps on all matching days.
+        updateDateTime(inputId);
+
+    });
+
+    // Update date times when hour input is changed.
+    var updateDateTime = function (inputId) {
+        var outputId = "#" + inputId + "Output";
+
+            $(outputId).text($("#" + inputId).val());
+
+            var day;
+            var time;
+            switch (inputId.substr(0,3))
+            {
+                case "mon":
+                    day = 0;
+                    break;
+                case "tue":
+                    day = 1;
+                    break;
+                case "wed":
+                    day = 2;
+                    break;
+                case "thu":
+                    day = 3;
+                    break;
+                case "fri":
+                    day = 4;
+                    break;
+                case "sat":
+                    day = 5;
+                    break;
+                case "sun":
+                    day = 6;
+                    break;
+                default:
+                    day = -1;
+            }
+
+            if(inputId.includes("Start"))
+            {
+                time = 0;
+            }
+            else if(inputId.includes("LunchIn"))
+            {
+                time = 1;
+            }
+            else if(inputId.includes("LunchOut"))
+            {
+                time = 2;
+            }
+            else if(inputId.includes("End"))
+            {
+                time = 3;
+            }
+
+            generalHourInfo[day][time][0] = $("#" + inputId).val();
+    }
+
+    // Attach event listeners to all copy and paste links.
+    $(".general-hours-copy").click(function () {
+        // Get associated time input and copy hours to global variable.
+        copiedHours = $(this).parent().find("input.time-entry")[0].value;
+        updatePasteLinks();
+    });
+
+    $(".general-hours-paste").click(function () {
+        // Fill hour input with copied time.
+        var inputElement = $(this).parent().find("input.time-entry")[0];
+        inputElement.value = copiedHours;
+        // Enable input's copy button.
+        $(this).parent().find("button.general-hours-copy")[0].disabled = false;
+        // Update date time on review page.
+        updateDateTime(inputElement.id);
+    });
+
+    // Given an input elements id, update copy and paste link's disable property
+    // based on whether the input element contains a valid time entry.
+    var updateCopyLinks = function (id) {
+        var inputElement = $("#" + id);
+        var copyLink = inputElement.parent().find("button.general-hours-copy")[0];
+        var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputElement.val());
+
+        // If the input is invalid, disable the copy link so users don't accidently copy
+        // and paste invalid data.
+        copyLink.disabled = !isValid;
+    }
+
+    // Enable all paste links if valid time has been copied.
+    var updatePasteLinks = function () {
+        $(".general-hours-paste").each(function (index, elem) {
+            $(this).prop('disabled', false);
+        });
+    }
+    // Globals
+
+    // copiedHours keeps track of the input hours value that has been copied.
+    var copiedHours;
+
+</script>

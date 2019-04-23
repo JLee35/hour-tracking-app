@@ -1,0 +1,37 @@
+<script>
+    // Contains all event listeners and helper functions for employee info page.
+    
+    // After the user specifies the week ending date,
+    // update all table dates accordingly.
+    function updateDates() {
+        var weekEnding = $("#weekEnding").val();
+
+        if (weekEnding != "") {
+            var endingDateInMilliseconds = new Date(Date.parse(weekEnding)).getTime();
+            // There are 86400000 ms in a day, subtracting that
+            // from current date object gives us previous day.
+
+            setDateAndMonth(".sundayDate", endingDateInMilliseconds);
+            setDateAndMonth(".saturdayDate", endingDateInMilliseconds -= 86400000);
+            setDateAndMonth(".fridayDate", endingDateInMilliseconds -= 86400000);
+            setDateAndMonth(".thursdayDate", endingDateInMilliseconds -= 86400000);
+            setDateAndMonth(".wednesdayDate", endingDateInMilliseconds -= 86400000);
+            setDateAndMonth(".tuesdayDate", endingDateInMilliseconds -= 86400000);
+            setDateAndMonth(".mondayDate", endingDateInMilliseconds -= 86400000);
+        }
+    }
+
+    // Set current date and month based on milliseconds since epoch.
+    function setDateAndMonth(dayElement, dateInMilliseconds) {
+        var date = new Date(dateInMilliseconds)
+
+        // Months are zero index based, we must add one
+        // to get correct value.
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+
+        var newDate = month + "/" + day;
+
+        $(dayElement).text(newDate);
+    }
+</script>

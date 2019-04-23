@@ -1,0 +1,82 @@
+<script>
+    // Contains event listeners and helper functions for the review, sign, submit page.
+    
+    // Attach listeners to all 'detailsIcon' icons.
+    $(".detailsIcon").each(function (index, value) {
+        $(this).click(function (e) {
+            e.preventDefault();
+            
+            // Clear details modal contents.
+            clearDetailsModal();
+
+            // Toggle modal dialog containing details from that day.
+            fillDetailsModal($(this).attr('id'));
+            $('#detailsModal').modal('show');
+        });
+    });
+
+    // Given an ID containing the day of the week, populate the details
+    // modal dialog with specific tasks completed.
+    function fillDetailsModal(dayOfTheWeekID) {
+        // Get swim lane associated with day of week selected.
+        var lane = $("#" + dayOfTheWeekID + "Lane");
+
+        var items = lane.find("div.swim-lane-item-content");
+
+        var totalHours = 0;
+
+        // Go through each item and pull out description and hours.
+        // Then create a table row with data and insert into details modal
+        items.each(function (index, element) {
+            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+            totalHours += parseFloat(hours);
+
+            // Create new table row.
+            var row = document.createElement("tr");
+            var descCol = document.createElement("td");
+            descCol.classList.add("text-center");
+            var hoursCol = document.createElement("td");
+            hoursCol.classList.add("text-center");
+            
+            descCol.innerText = desc;
+            hoursCol.innerText = hours;
+
+            row.append(descCol);
+            row.append(hoursCol);
+
+            $("#detailsModalTableBody").append(row);
+        });
+
+        // Update total hours
+        $("#detailsModalTotalHours").text(totalHours);
+    }
+
+    // Clears details modal content.
+    function clearDetailsModal() {
+        $("#detailsModalTableBody").empty();
+    }
+    
+    // Update employee name, job number, and week ending on the review, sign, submit page.
+    function populateReviewPage() {
+
+        // Set employee name.
+        $("#reviewName").text($("#employeeName").val());
+
+        // Set job number.
+        $("#reviewJob").text($("#jobNumber").val());
+
+        // Set weekending.
+        $("#reviewWeekEnding").text($("#weekEnding").val());
+
+        // Set signaturedate
+        var date1 = new Date();
+        $("#signatureDate").text(date1.toLocaleDateString());
+
+        // code help for here from: https://stackoverflow.com/questions/6338217/get-a-css-value-with-javascript
+        
+        signaturePad.clear();
+    }
+    
+</script>

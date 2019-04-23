@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>    
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <!-- Datepicker info from: https://github.com/uxsolutions/bootstrap-datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+    <!--<script src="libs/jSignature/jSignature.min.js" crossorigin="anonymous"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" 
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+          
+</head>
+
+<style>    
+    <?!= include('css/scoutLakeCSS'); ?> 
+</style>
+
+<body>
+  <!-- Start main container -->
+  <div class="container paddedPage">
+    <!-- Said to use text-right class: https://tutorialdeep.com/knowhow/left-right-align-button-bootstrap/ -->
+    <div class="text-right">
+        <button id="topSignOut" class="btn btn-primary">
+            Sign Out
+        </button>
+    </div>
+    
+
+      <!-- PROGRESS BAR -->
+      <div class="container" style="padding-top:64px" id="loggingProgressBar">
+          <div class="progress">
+            <div id="progressBar1" class="progress-bar bg-danger" role="progressbar" style="width:25%">
+              Employee Info
+            </div>
+            <div id="progressBar2" class="progress-bar bg-danger" role="progressbar" style="width:25%">
+              General Hourly Info
+            </div>
+            <div id="progressBar3" class="progress-bar bg-danger" role="progressbar" style="width:25%">
+              Specific Hourly Info
+            </div>
+            <div id="progressBar4" class="progress-bar bg-danger" role="progressbar" style="width:25%">
+              Review, Sign, Submit
+            </div>
+          </div>
+        </div>
+
+      <!-- EMPLOYEE INFO PAGE -->
+      <div class="container paddedPage" id="employeeInfoPage" style="padding-top:64px">
+          <div class="col-lg-12 text-center">
+            <center>
+              <form class="form-signin">
+                  <div class="text-left">Name:</div>
+                  <input type="text" id="employeeName" class="form-control" placeholder="Example: Steve Bond" required autofocus>
+                  <br>
+                  <div class="text-left">Job Number:</div>
+                  <select data-placeholder="Example: 19-003" id="jobNumber" class="size-chosen move-chosen" required>
+                    <option value="00-000">00-000</option>
+                  </select>
+                  <p id="jobName"></p>
+                  <br>
+                  <div class="text-left">Week Ending:</div>
+                  <input type="text" id="weekEnding" class="form-control" required>
+                  <br>
+                  <button id="beginLoggingBtn" class="btn btn-lg btn-primary btn-block" type="button">
+                      Begin recording work hours
+                  </button>
+              </form>
+            </center>
+          </div>
+      </div>
+      <!--Employee Info Page-->
+
+    <!--GENERAL INFO PAGE-->
+    <div class="container paddedPage" id="generalInfoPage" style="padding-top:64px">
+      <center>
+        <!-- Editable table -->
+        <div class="card">
+          <div class="card-body">
+            <div id="table" class="table-editable">
+              <table class="table table-bordered table-responsive-md table-striped text-center">
+                
+                <!-- Start Table Headers -->
+                <tr>
+                  <th class="text-center"></th>
+                  <th class="text-center">Start Time</th>
+                  <th class="text-center">Lunch In</th>
+                  <th class="text-center">Lunch Out</th>
+                  <th class="text-center">Time Off</th>
+                </tr>
+                <!-- End Table Headers -->
+
+                <!-- Start Monday -->
+                <tr>
+                  <th class="text-center">
+                      <span>Monday<br></span> 
+                      <span class="mondayDate"></span>
+                    </th>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="mondayStart" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="mondayLunchIn" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="mondayLunchOut" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="mondayEnd" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                </tr>
+                <!-- End Monday -->
+
+                <!-- Start Tuesday -->
+                <tr>
+                  <th class="text-center">
+                      <span>Tuesday<br></span> 
+                      <span class="tuesdayDate"></span>
+                    </th>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="tuesdayStart" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="tuesdayLunchIn" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="tuesdayLunchOut" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="tuesdayEnd" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                </tr>
+                <!-- End Tuesday -->
+
+                <!-- Start Wednesday -->
+                <tr>
+                  <th class="text-center">
+                      <span>Wednesday<br></span> 
+                      <span class="wednesdayDate"></span>
+                    </th>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="wednesdayStart" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="wednesdayLunchIn" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="wednesdayLunchOut" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+                  <td class="pt-3-half" contenteditable="false">
+                    <input id="wednesdayEnd" class="time-entry" type="time">
+                    <br>
+                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                  </td>
+
+                </tr>
+                <!-- End Wednesday -->
+                
+                <!-- Start Thursday -->
+                <tr>
+                    <th class="text-center">
+                        <span>Thursday<br></span> 
+                        <span class="thursdayDate"></span>
+                      </th>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="thursdayStart" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="thursdayLunchIn" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="thursdayLunchOut" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="thursdayEnd" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                </tr>
+                <!-- End Thursday -->
+
+                <!-- Start Friday -->
+                <tr>
+                    <th class="text-center">
+                        <span>Friday<br></span> 
+                        <span class="fridayDate"></span>
+                      </th>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="fridayStart" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="fridayLunchIn" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="fridayLunchOut" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="fridayEnd" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                </tr>
+                <!-- End Friday -->
+
+                <!-- Start Saturday -->
+                <tr>
+                    <th class="text-center">
+                      <span>Saturday<br></span> 
+                      <span class="saturdayDate"></span>
+                    </th>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="saturdayStart" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="saturdayLunchIn" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="saturdayLunchOut" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="saturdayEnd" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                </tr>
+                <!-- End Saturday -->
+
+                <!-- Start Sunday -->
+                <tr>
+                    <th class="text-center">
+                      <span>Sunday<br></span>
+                      <span class="sundayDate"></span>
+                    </th>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="sundayStart" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="sundayLunchIn" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="sundayLunchOut" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                      <input id="sundayEnd" class="time-entry" type="time">
+                      <br>
+                      <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
+                      <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
+                    </td>
+                </tr>
+                <!-- End Sunday -->
+
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Editable table -->
+
+        <button id="generalContinue" class="btn btn-lg btn-primary btn-block" type="button">Continue</button>
+        <br>
+        <button id="generalBack" class="btn btn-lg btn-primary btn-block" type="button">Back</button>
+        <br>
+      </center>
+    </div> 
+    <!--General Info Page-->
+
+    <!--SPECIFIC INFO PAGE-->
+    <div class="container paddedPage" id="specificInfoPage" style="padding-top:64px">
+      <center>
+        <!-- Editable table -->
+        <div class="card">
+          <div class="card-body ">
+            <div class="table-responsive-lg">
+                <table class="table table-bordered table-striped text-center">
+                
+                    <!-- Start Table Headers -->
+                    <tr>
+                      <th class="text-center swim-lane">
+                        <span>Mon<br></span>
+                        <span class="mondayDate"></span>
+                      </th>
+                      <th class="text-center swim-lane">
+                        <span>Tue<br></span>
+                        <span class="tuesdayDate"></span>
+                      </th>
+                      <th class="text-center swim-lane">
+                        <span>Wed<br></span>
+                        <span class="wednesdayDate"></span>
+                      </th>
+                      <th class="text-center swim-lane">
+                        <span>Thu<br></span>
+                        <span class="thursdayDate"></span>
+                      </th>
+                      <th class="text-center swim-lane">
+                        <span>Fri<br></span>
+                        <span class="fridayDate"></span>
+                      </th>
+                      <th class="text-center swim-lane">
+                        <span>Sat<br></span>
+                        <span class="saturdayDate"></span>
+                      </th>
+                      <th class="text-center swim-lane">
+                        <span>Sun<br></span>
+                        <span class="sundayDate"></span>
+                      </th>
+                    </tr>
+                    <!-- End Table Headers -->
+    
+                    <!-- Start Table Content -->
+                    <tr>
+                      <td id="mondayDetailsLane" class="swim-lane swim-lane-content">
+                        <div class="swim-lane-item-container"></div>
+                        <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                          </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                      </td>
+    
+                      <td id="tuesdayDetailsLane" class="swim-lane swim-lane-content">
+                          <div class="swim-lane-item-container"></div>
+                          <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                          </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                      </td>
+    
+                      <td id="wednesdayDetailsLane" class="swim-lane swim-lane-content">
+                          <div class="swim-lane-item-container"></div>
+                          <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                          </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                      </td>
+    
+                      <td id="thursdayDetailsLane" class="swim-lane swim-lane-content">
+                          <div class="swim-lane-item-container"></div>
+                          <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                          </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                      </td>
+    
+                      <td id="fridayDetailsLane" class="swim-lane swim-lane-content">
+                          <div class="swim-lane-item-container"></div>
+                          <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                          </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                      </td>
+    
+                      <td id="saturdayDetailsLane" class="swim-lane swim-lane-content">
+                          <div class="swim-lane-item-container"></div>
+                          <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                          </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                      </td>
+    
+                      <td id="sundayDetailsLane" class="swim-lane swim-lane-content">
+                        <div class="swim-lane-item-container"></div>
+                        <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                          <ion-icon name="add"></ion-icon>
+                        </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                      </td>
+                    </tr>
+                    <!-- End Table Content -->
+                  
+                  </table>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <button id="workerAcceptHoursBtn" class="btn btn-lg btn-primary btn-block" type="button">
+          Continue
+        </button>
+        <br>
+        <button id="specificInfoBackBtn" class="btn btn-lg btn-primary btn-block" type="button">
+          Back
+        </button>
+        <br>
+      </center>        
+    </div> 
+
+    <!-- Start Specific Info Add Item modal -->
+    <div id="addSpecificItemModal" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 100%">
+          <div class="modal-header">
+            <h5 class="modal-title">Add a specific item</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <select data-placeholder="Phase code" id="phaseCodeInput" class="form-control" required="true" autofocus>
+                <option value="0000">0000</option>
+              </select>
+              <p id="phaseCode"></p>
+            <br>
+            <!-- min and step help from: https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only -->
+            <input type="number" id="specificInfoHours" min=".25" step=".25" class="form-control" placeholder="Time spent in hours (1.5)" required="true">
+            <br>
+          </div>
+          <div class="modal-footer">
+            <button id="submitNewItem" type="button" class="btn btn-primary" disabled>Add item</button>
+            <br>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <br>
+          </div>
+        </div>
+      </div>
+      <!-- End Specific Info Add Item Modal -->
+    </div>
+  <!--End Specific Info Page-->
+
+    <!--SUPERVISOR REVIEW PAGE-->
+    <!-- Review, sign, and submit-->
+    <div class="container paddedPage" id="supervisorReviewPage" style="padding-top:64px">
+      <center>
+        <br>
+        <div class="container">
+          <!-- Start General Info table -->
+          <div class="card">
+              <div class="card-body">
+                  <h5>Name: <span id="reviewName"></span></h5>
+                  <h5>Job Number: <span id="reviewJob"></span></h5>
+                  <h5>Week Ending: <span id="reviewWeekEnding"></span></h5>
+              </div>
+              <div class="card-body">
+                <div id="table" class="table-editable">
+                  <table class="table table-bordered table-responsive-md table-striped text-center">
+                    
+                    <!-- Start Table Headers -->
+                    <tr>
+                      <th class="text-center review-page-header"></th>
+                      <th class="text-center review-page-header">Start Time</th>
+                      <th class="text-center review-page-header">Lunch In</th>
+                      <th class="text-center review-page-header">Lunch Out</th>
+                      <th class="text-center review-page-header">Time Off</th>
+                      <th class="text-center review-page-header">Details</th>
+                    </tr>
+                    <!-- End Table Headers -->
+
+                    <!-- Start Monday -->
+                    <tr>
+                      <th class="text-center review-page-header">
+                        Monday<br>
+                        <span class="mondayDate"></span>
+                      </th>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="mondayStartOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="mondayLunchInOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="mondayLunchOutOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="mondayEndOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                          <a id="mondayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                      </td>
+                    </tr>
+                    <!-- End Monday -->
+
+                    <!-- Start Tuesday -->
+                    <tr>
+                      <th class="text-center review-page-header">
+                        Tuesday<br>
+                        <span class="tuesdayDate"></span>
+                      </th>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="tuesdayStartOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="tuesdayLunchInOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="tuesdayLunchOutOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="tuesdayEndOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <a id="tuesdayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                      </td>
+                    </tr>
+                    <!-- End Tuesday -->
+
+                    <!-- Start Wednesday -->
+                    <tr>
+                      <th class="text-center review-page-header">
+                        Wednesday<br>
+                        <span class="wednesdayDate"></span>
+                      </th>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="wednesdayStartOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="wednesdayLunchInOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="wednesdayLunchOutOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <span id="wednesdayEndOutput" class="time-entryOutput"></span>
+                      </td>
+                      <td class="pt-3-half" contenteditable="false">
+                        <a id="wednesdayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                      </td>
+                    </tr>
+                    <!-- End Wednesday -->
+                    
+                    <!-- Start Thursday -->
+                    <tr>
+                        <th class="text-center review-page-header">
+                          Thursday<br>
+                          <span class="thursdayDate"></span>
+                        </th>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="thursdayStartOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="thursdayLunchInOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="thursdayLunchOutOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="thursdayEndOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <a id="thursdayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    <!-- End Thursday -->
+
+                    <!-- Start Friday -->
+                    <tr>
+                        <th class="text-center review-page-header">
+                          Friday<br>
+                          <span class="fridayDate"></span>
+                        </th>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="fridayStartOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                            <span id="fridayLunchInOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                            <span id="fridayLunchOutOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                            <span id="fridayEndOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <a id="fridayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    <!-- End Friday -->
+
+                    <!-- Start Saturday -->
+                    <tr>
+                        <th class="text-center review-page-header">
+                          Saturday<br>
+                          <span class="saturdayDate"></span>
+                        </th>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="saturdayStartOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="saturdayLunchInOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="saturdayLunchOutOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="saturdayEndOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <a id="saturdayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    <!-- End Saturday -->
+
+                    <!-- Start Sunday -->
+                    <tr>
+                        <th class="text-center review-page-header">
+                          Sunday<br>
+                          <span class="sundayDate"></span>
+                        </th>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="sundayStartOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="sundayLunchInOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="sundayLunchOutOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <span id="sundayEndOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                          <a id="sundayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    <!-- End Sunday -->
+
+                  </table>
+                </div>
+            </div>
+            <!-- End General Info table -->
+            
+            <!-- Start Employee Signature -->
+            <div class="card-body text-left">
+                <h6>I have worked safe and not had a work related injury (during) this time period. I was also given the opportunity of meals and breaks.</h6>
+                <h6>Signed: </h6>
+                <!-- Info on canvas from: https://www.w3schools.com/html/html5_canvas.asp -->
+                <div class="card-body text-center" id="signatureDiv">
+                  <!--<canvas id="signature" width="576" height="200" class="signature-box"></canvas>-->
+                </div>
+                <h6>Date: </h6>
+                <p id="signatureDate"></p>
+            </div>
+            <div id="toDelete">
+              <p id="testMedia" class="signature-box"></p>
+            </div>
+            <!-- End Employee Signature -->
+            
+        </div>
+        <br>
+        <button id="supervisorAcceptHoursBtn" class="btn btn-lg btn-primary btn-block" type="button">
+          Submit
+        </button>
+        <br>
+        <button id="supervisorAcceptBackBtn" class="btn btn-lg btn-primary btn-block" type="button">
+          Back
+        </button>
+        <br>
+
+        <!-- Start Details modal -->
+        <div id="detailsModal" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content" style="width: 100%">
+              <div class="modal-header">
+                <h5 class="modal-title">Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div id="details-modal-body" class="modal-body">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Description</th>
+                      <th scope="col">Hours</th>
+                    </tr>
+                  </thead>
+                  <tbody id="detailsModalTableBody"></tbody>
+                  <tr>
+                    <th scope="col">Total:</th>
+                    <th id="detailsModalTotalHours" scope="col"></th>
+                  </tr>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <br>
+              </div>
+            </div>
+          </div>
+          <!-- End Details modal -->
+
+      </center>        
+    </div> 
+    <!--Supervisor Review Page-->
+
+    <!-- Start Introduction Page -->
+    <div id="introductionPage" class="container paddedPage clickable-div">
+      <br>
+      <H1>Welcome to the Scout Lake Construction Payroll Application</H1>
+      <p>Use this application to log hours for yourself and your employees.</p>
+      <p><b>The process of this application is as follows:</b> 
+          <ul>
+              <li>Enter employee, job site, and pay period information</li>
+              <li>Enter general hourly information for each day (time in/out, lunch start/stop)</li>
+              <li>Enter specific hourly information for each day (individual code phases and time spent)</li>
+              <li>Review, sign, and submit timecard</li>
+          </ul>This application will walk you through these steps. Select <i>Get started</i> to continue.</b></p>
+          <button id="getStarted" class="btn btn-lg btn-primary btn-block" type="button">
+              Get Started
+            </button>
+    </div>
+    <!-- End Introduction Page -->
+
+    <!-- Start of ADD ANOTHER EMPLOYEE MODAL -->
+    <div id="addAnotherEmployeeModal" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 100%">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Another Employee?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Do you want to add information for another employee?</p>
+          </div>
+          <div class="modal-footer">
+            <button id="addEmployeeBtn" type="button" class="btn btn-primary">Yes, Add Another Employee</button>
+            <button id="signOutBtn" type="button" class="btn btn-secondary">Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Add Another Employee Modal -->
+  </div>
+
+  <!-- Start Please Wait modal -->
+  <div id="pleaseWaitModal" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1">
+      <div class="modal-dialog modal-sm">
+          <div class="modal-content" style="width: 100%">
+              <span class="fa fa-spinner fa-spin fa-3x" style="text-align: center;"></span>
+              <span>Please wait...</span>
+          </div>
+      </div>
+  </div>
+  <!-- End Please Wait modal -->
+
+    <script>
+      
+      var playerName = <?=data.playerId?>; // holds player name for top bar
+      var playerId = "";
+
+      var workOrders;
+      var phaseCodes;
+
+      // from https://developers.google.com/apps-script/guides/html/reference/url#methods
+      google.script.url.getLocation(function(location) {
+        playerId = location.parameter['id'];
+      });
+
+  // This said to use getElementById instead of jQuery: https://stackoverflow.com/questions/5808162/getcontext-is-not-a-function
+  // That fixed a "t.getcontext is not a function" error
+  // signature_pad from: https://github.com/szimek/signature_pad
+
+  var element = document.getElementById("testMedia");
+  style = window.getComputedStyle(element);
+
+  $("#signatureDiv").html("");
+  $("#signatureDiv").html('<canvas id="signature" width="' + style.getPropertyValue("width") + '" height="200" class="signature-box"></canvas>')
+  var canvas = document.getElementById("signature");
+
+  var signaturePad = new SignaturePad(canvas);
+
+  $("#toDelete").html('');
+
+  // Code help from: https://uxsolutions.github.io/bootstrap-datepicker/?markup=input&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&maxViewMode=4&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&daysOfWeekDisabled=1&daysOfWeekDisabled=2&daysOfWeekDisabled=3&daysOfWeekDisabled=4&daysOfWeekDisabled=5&daysOfWeekDisabled=6&keyboardNavigation=on&forceParse=on#sandbox
+  $('#weekEnding').datepicker({
+        daysOfWeekDisabled: "1,2,3,4,5,6"
+    });
+
+  /****************************************************************
+
+   FUNCTION:   initializeFromSheet()
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      To initialize work order and phase codes from sheet
+
+****************************************************************/
+
+function initializeFromSheet()
+{
+  google.script.run.withSuccessHandler(initializeSuccess).withFailureHandler(initializeFailure).loadFromSpreadsheet();
+}
+
+  /****************************************************************
+
+   FUNCTION:   initializeFailure()
+
+   ARGUMENTS:  error
+
+   RETURNS:    none
+
+   NOTES:      Callback function for client-side loadFromSpreadsheet function.
+
+****************************************************************/
+
+function initializeFailure(error)
+{
+  console.log(error);
+}
+
+/****************************************************************
+
+   FUNCTION:   initializeSuccess()
+
+   ARGUMENTS:  serverSideReturn
+
+   RETURNS:    none
+
+   NOTES:      Callback function for client-side loadFromSpreadsheet function.
+
+****************************************************************/
+
+function initializeSuccess(serverSideReturn)
+{
+  workOrders = serverSideReturn[0];
+  phaseCodes = serverSideReturn[1];
+
+  for (var i = 0; i < workOrders.length; i++)
+  {
+    // how to append: https://api.jquery.com/append/
+    $("#jobNumber").append('<option value="' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + '">' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + "</option>");
+  }
+  
+  for (var i = 0; i < phaseCodes.length; i++)
+  {
+    // how to append: https://api.jquery.com/append/
+    if(phaseCodes[i][1] != "")
+      $("#phaseCodeInput").append('<option value="' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + '">' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + "</option>");
+  }
+
+  // jobNumber button must be large enough so that it is easy to click on the ipad.
+  $("#jobNumber").chosen({width: "100%"});
+
+  // Auto width here: https://stackoverflow.com/questions/10303120/jquery-chosen-plugin-not-styling-correctly-very-small
+  var opts = {};
+  if (!$("#phaseCodeInput").is(':visible')) {
+    opts["width"] = '100%';
+  }
+  $("#phaseCodeInput").chosen(opts);
+}
+
+initializeFromSheet();
+
+
+/****************************************************************
+
+   FUNCTION:   change() for jobNumber
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Updates jobName when jobNumber is changed
+
+****************************************************************/
+
+// change from: https://api.jquery.com/change/
+/*$("#jobNumber").change(function(){
+  // how to get value of selected option: https://learn.jquery.com/using-jquery-core/faq/how-do-i-get-the-text-value-of-a-selected-option/
+  var selected = parseInt($("#jobNumber").val());
+  if(selected != -1)
+    $("#jobName").text(workOrders[parseInt($("#jobNumber").val())][1]);
+});*/
+
+/****************************************************************
+
+   FUNCTION:   change() for phaseCodeInput
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Updates phaseCode when phaseCodeInput is changed
+
+****************************************************************/
+
+// change from: https://api.jquery.com/change/
+/*$("#phaseCodeInput").change(function(){
+  // how to get value of selected option: https://learn.jquery.com/using-jquery-core/faq/how-do-i-get-the-text-value-of-a-selected-option/
+  var selected = parseInt($("#phaseCodeInput").val());
+  if(selected != -1)
+    $("#phaseCode").text(phaseCodes[parseInt($("#phaseCodeInput").val())][1]);
+});*/
+    
+/****************************************************************
+
+   FUNCTION:   getStarted onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Handles onclick of the getStarted button.
+
+****************************************************************/
+
+$("#getStarted").click(function(e) {
+      $("#introductionPage").css("display", "none");
+      currentPage = "employeeInfoPage";
+
+      $("#progressBar1").removeClass("bg-danger");
+      $("#progressBar1").addClass("bg-warning");
+      $("#progressBar1").addClass("progress-highlight");
+
+      $("#employeeInfoPage").css("display", "block");
+      e.stopPropagation();
+    });
+
+/****************************************************************
+
+   FUNCTION:   addEmployeeBtn onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Handles onclick of the sign-out button.
+
+****************************************************************/
+    
+$("#addEmployeeBtn").click(function(e){
+      $("#supervisorReviewPage").css('display', 'none');
+      $("#employeeInfoPage").css('display', 'block');
+
+      $("#progressBar1").removeClass("bg-success");
+      $("#progressBar1").addClass("bg-warning");
+      $("#progressBar2").removeClass("bg-success");
+      $("#progressBar2").addClass("bg-danger");
+      $("#progressBar3").removeClass("bg-success");
+      $("#progressBar3").addClass("bg-danger");
+      $("#progressBar4").removeClass("bg-warning");
+      $("#progressBar4").addClass("bg-danger");
+
+      $('#addAnotherEmployeeModal').modal('hide');
+
+      // add info for this employee to employee array
+      // TODO total hours and labor hours 
+      var pngImage = signaturePad.toDataURL("image/png");
+      var date = new Date();
+      allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date.toLocaleString()]);
+
+      currentPage = "supervisorReview";  
+
+      generalHourInfo = [[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]]];
+      $(".time-entry").val("");
+      $(".time-entryOutput").text("");
+      $("#employeeName").val("");
+    });
+
+/****************************************************************
+
+   FUNCTION:   signOutBtn onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Handles onclick of the sign-out button.
+               Opens in same page.
+****************************************************************/
+    
+    $("#signOutBtn").click(function(){
+
+      $("#pleaseWaitModal").modal('show');
+
+      $("#progressBar1").removeClass("bg-success");
+      $("#progressBar1").addClass("bg-warning");
+      $("#progressBar2").removeClass("bg-success");
+      $("#progressBar2").addClass("bg-danger");
+      $("#progressBar3").removeClass("bg-success");
+      $("#progressBar3").addClass("bg-danger");
+      $("#progressBar4").removeClass("bg-warning");
+      $("#progressBar4").addClass("bg-danger");
+
+      $('#addAnotherEmployeeModal').modal('hide');
+
+      // add info for this employee to employee array
+      // TODO total hours and labor hours 
+      var pngImage = signaturePad.toDataURL("image/png");
+      var date2 = new Date();
+      var swimlaneinfo = [];
+      var mondayitems = $("#mondayDetailsLane").find("div.swim-lane-item-content");
+      var mondaylist = [];
+
+      mondayitems.each(function (index, element) {
+            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+            mondaylist.push([desc,hours]);
+        });
+
+      swimlaneinfo.push(mondaylist);
+      console.log(mondaylist);
+
+      var tuesdayitems = $("#tuesdayDetailsLane").find("div.swim-lane-item-content");
+      var tuesdaylist = [];
+
+      tuesdayitems.each(function (index, element) {
+            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+            tuesdaylist.push([desc,hours]);
+        });
+
+      swimlaneinfo.push(tuesdaylist);
+      console.log(tuesdaylist);
+
+      var wednesdayitems = $("#wednesdayDetailsLane").find("div.swim-lane-item-content");
+      var wednesdaylist = [];
+
+      wednesdayitems.each(function (index, element) {
+            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+            wednesdaylist.push([desc,hours]);
+        });
+
+      swimlaneinfo.push(wednesdaylist);
+      console.log(wednesdaylist);
+
+      var thursdayitems = $("#thursdayDetailsLane").find("div.swim-lane-item-content");
+      var thursdaylist = [];
+
+      thursdayitems.each(function (index, element) {
+            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+            thursdaylist.push([desc,hours]);
+        });
+
+      swimlaneinfo.push(thursdaylist);
+      console.log(thursdaylist);
+
+      var fridayitems = $("#fridayDetailsLane").find("div.swim-lane-item-content");
+      var fridaylist = [];
+
+      fridayitems.each(function (index, element) {
+            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+            fridaylist.push([desc,hours]);
+        });
+
+      swimlaneinfo.push(fridaylist);
+      console.log(fridaylist);
+
+      var saturdayitems = $("#saturdayDetailsLane").find("div.swim-lane-item-content");
+      var saturdaylist = [];
+
+      saturdayitems.each(function (index, element) {
+            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+            saturdaylist.push([desc,hours]);
+        });
+
+      swimlaneinfo.push(saturdaylist);
+      console.log(saturdaylist);
+
+      var sundayitems = $("#sundayDetailsLane").find("div.swim-lane-item-content");
+      var sundaylist = [];
+
+      sundayitems.each(function (index, element) {
+            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+            sundaylist.push([desc,hours]);
+        });
+
+      swimlaneinfo.push(sundaylist);
+      console.log(sundaylist);
+
+      allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date2.toLocaleString(), swimlaneinfo]);
+
+      if(allEmployeeInfo.length > 0) // meaning info for at least one employee has been completed
+      {
+        // Send all info to the Spreadsheet
+        google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).submitEmployeeInfo(sessionStorage.getItem("inputEmail"), allEmployeeInfo);
+      }
+      else
+      {
+        currentPage = "supervisorReview";  
+        var baseURL = <?=ScriptApp.getService().getUrl()?>;
+        window.open(baseURL, "_top");
+      }
+    });
+
+/****************************************************************
+
+   FUNCTION:   topSignOut onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Handles onclick of the top sign-out button.
+
+   ****************************************************************/
+
+$("#topSignOut").click(function(){
+  $("#signOutBtn").click();
+});
+
+/****************************************************************
+
+   FUNCTION:   submitFailure()
+
+   ARGUMENTS:  error
+
+   RETURNS:    none
+
+   NOTES:      Callback function for client-side insertEmployeeInfo function.
+
+****************************************************************/
+
+function submitFailure(error)
+{
+  console.log(error);
+  currentPage = "supervisorReview";  
+  var baseURL = <?=ScriptApp.getService().getUrl()?>;
+  window.open(baseURL, "_top");
+}
+
+/****************************************************************
+
+   FUNCTION:   submitSuccess()
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Callback function for client-side insertEmployeeInfo function.
+
+****************************************************************/
+
+function submitSuccess()
+{
+  currentPage = "supervisorReview";  
+  var baseURL = <?=ScriptApp.getService().getUrl()?>;
+  window.open(baseURL, "_top");
+}
+
+/****************************************************************
+
+   FUNCTION:   goToScoringBtn onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Handles onclick of the Go To Scoring button.
+               Displays the Hole Scoring page.
+****************************************************************/
+
+    $("#beginLoggingBtn").click(function() {
+      // Update all dates
+      updateDates();
+
+      $("#employeeInfoPage").css('display', 'none');
+      $("#generalInfoPage").css('display', 'block');
+      if(!$("#progressBar2").hasClass("bg-success"))
+      {
+        $("#progressBar1").removeClass("bg-warning");
+        $("#progressBar1").addClass("bg-success");
+        $("#progressBar2").removeClass("bg-danger");
+        $("#progressBar2").addClass("bg-warning");
+      }
+      $("#progressBar1").removeClass("progress-highlight");
+      $("#progressBar2").addClass("progress-highlight");
+      currentPage = "generalInfoPage";
+      return;
+    });
+
+/****************************************************************
+
+   FUNCTION:   generalContinue onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Moves to specific info page
+               
+****************************************************************/
+
+    $("#generalContinue").click(function() {
+      //var mondaytime = new Date();
+      console.log("Start time: " + $("#mondayStart").val());
+      $("#generalInfoPage").css('display', 'none');
+
+      if(!$("#progressBar3").hasClass("bg-success"))
+      {
+        $("#progressBar2").removeClass("bg-warning");
+        $("#progressBar2").addClass("bg-success");
+        $("#progressBar3").removeClass("bg-danger");
+        $("#progressBar3").addClass("bg-warning");
+      }
+
+      $("#progressBar2").removeClass("progress-highlight");
+      $("#progressBar3").addClass("progress-highlight");
+
+
+      $("#specificInfoPage").css('display', 'block');
+      currentPage = "specificInfoPage";       
+
+      return;
+    });
+
+/****************************************************************
+
+   FUNCTION:   generalBack onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Returns the employee info page
+               
+****************************************************************/
+
+$("#generalBack").click(function() {
+
+      $("#generalInfoPage").css('display', 'none');
+      $("#employeeInfoPage").css('display', 'block');
+
+      $("#progressBar2").removeClass("progress-highlight");
+      $("#progressBar1").addClass("progress-highlight");
+
+      currentPage = "employeeInfoPage";       
+
+      return;
+    });
+
+/****************************************************************
+
+   FUNCTION:   workerAcceptHoursBtn onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Moves on to the supervisor review page
+
+****************************************************************/
+
+$("#workerAcceptHoursBtn").click(function() {
+      $("#specificInfoPage").css('display', 'none');
+      $("#supervisorReviewPage").css('display', 'block');
+      
+      $("#progressBar3").removeClass("bg-warning");
+      $("#progressBar3").addClass("bg-success");
+      $("#progressBar4").removeClass("bg-danger");
+      $("#progressBar4").addClass("bg-warning");
+
+      $("#progressBar3").removeClass("progress-highlight");
+      $("#progressBar4").addClass("progress-highlight");
+
+      currentPage = "supervisorReview";
+
+      // Update review page with employee input.
+      populateReviewPage();     
+
+      return;
+    });
+
+/****************************************************************
+
+   FUNCTION:   specificInfoBackBtn onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Returns to general info page
+               
+****************************************************************/
+
+$("#specificInfoBackBtn").click(function() {
+
+  $("#specificInfoPage").css('display', 'none');
+  $("#generalInfoPage").css('display', 'block');
+
+  $("#progressBar3").removeClass("progress-highlight");
+  $("#progressBar2").addClass("progress-highlight");
+  currentPage = "generalInfoPage";       
+
+  return;
+});
+
+  /****************************************************************
+
+   FUNCTION:   supervisorAcceptHoursBtn onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Submits info to spreadsheet, then either logs out or moves to next employee
+               
+****************************************************************/
+
+$("#supervisorAcceptHoursBtn").click(function() {
+      $('#addAnotherEmployeeModal').modal('show');
+
+    });
+
+  /****************************************************************
+
+   FUNCTION:   supervisorAcceptBackBtn onclick
+
+   ARGUMENTS:  none
+
+   RETURNS:    none
+
+   NOTES:      Returns to specific info page
+               
+****************************************************************/
+
+$("#supervisorAcceptBackBtn").click(function() {
+    $("#supervisorReviewPage").css('display', 'none');
+    $("#specificInfoPage").css('display', 'block');
+
+    $("#progressBar4").removeClass("progress-highlight");
+    $("#progressBar3").addClass("progress-highlight");
+
+    currentPage = "specificInfoPage";    
+
+    });
+
+    
+
+    //CODE AND TO BE EXECUTED AFTER PAGE IS LOADED GOES HERE
+    //GLOBAL VARIABLES NEEDED FOR APP GO HERE
+    var currentPage = "introductionPage"; // The currently displayed page
+    var previousPage = "";
+
+    // will be used to hold all of the info for the employees for this supervisor
+    var allEmployeeInfo = [];
+    var generalHourInfo = [[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]]];
+
+    //Declare Initialize global variables
+
+    // Associates the ID's of buttons to the page titles they should show
+    var btnIdsToPageTitles = {
+      "employeeInfoPage" : "Scoring for " + playerName,
+      "generalInfoPage" : "Scoring for " + playerName
+    };
+
+
+    //INITIALLY MAKE ALL PAGES EXCEPT the introduction page invisible
+    $("#generalInfoPage").css("display", "none");
+    $("#specificInfoPage").css('display', 'none');
+    $("#supervisorReviewPage").css("display", "none");
+    $("#employeeInfoPage").css("display", "none");
+
+</script>
+
+<script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+
+<?!=include('js/specificInfoJS'); ?>
+<?!=include('js/reviewSignSubmitJS'); ?>
+<?!=include('js/employeeInfoJS'); ?>
+<?!=include('js/generalInfoJS'); ?>
+</body>
+</html>
+
