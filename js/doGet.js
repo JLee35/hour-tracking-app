@@ -1,18 +1,3 @@
-//********************************************************************************
-//DOGET.GS
-//*********************************************************************************
-//This file contains the doGet() function, which serves up the app, 
-//responding to get requests with query strings as appropriate to dish out
-//new pages.
-//*********************************************************************************
-/****************************************************************
-   PROGRAM:   CptS 489 Project
-   AUTHOR:    Nathaniel Fox
-   DUE DATE:  4/2/19
-
-   NOTES:     This program is a payroll app for Scout Lake Construction
-****************************************************************/
-
 
 function doGet(e) {
   var template;
