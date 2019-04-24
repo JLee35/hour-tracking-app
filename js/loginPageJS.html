@@ -1,4 +1,74 @@
 <script>
+    // Global variables
+    EmailInputElement = $("#inputEmail");
+    PasswordInputElement = $("#inputPassword");        
+
+    // Click event listeners
+    $("#signIn").click(signInClick);
+
+    $("#inputEmail").click(function(e) { updateFeedbackText(""); });
+
+    $("#inputPassword").click(function(e) {
+        $('#feedback').html("");
+    });
+
+    $("#requestAccount").on("click", requestAccountClick);
+
+    $("#submitRequest").on("click", submitRequestClick);
+
+    function requestAccountClick() {
+        $('#requestAccountModal').modal('show');
+    }
+
+    function submitRequestClick() {
+
+        if($('#requestPassword').val() != $('#confirmPassword').val()) {
+            $('#passwordRequestError').text("Passwords do not match!");
+            $('#requestPassword').css("background-color", "red");
+            return;
+        }
+
+        $('#requestAccountModal').modal('hide');
+        $('#pleaseWaitModal').modal('show');
+
+        google.script.run.withSuccessHandler(accountRequestSuccess).withFailureHandler(accountRequestFailure).requestAccount($("#requestEmail").val(), $("#requestPassword").val());
+    }
+
+    function accountRequestSuccess(serverSideReturn) {
+        if(serverSideReturn) {
+            console.log("serverSideReturn" + serverSideReturn);
+            $('#requestModalHeader').text("Success!");
+            $('#requestModalBody').text("Your account has successfully been created!");
+        }
+        else {
+            $('#requestModalHeader').text("Failed!");
+            $('#requestModalBody').text("Account creation failed, that email either already has an account or is not an authorized email.");
+        }
+        $('#pleaseWaitModal').modal('hide');
+
+        setTimeout(function() {
+            $('#successMessageModal').modal('show');
+            return serverSideReturn;
+        }, 500);
+    }
+
+    function accountRequestFailure(error) {
+        $('#feedback').html(error);
+        $('#pleaseWaitModal').modal('hide');
+
+        $('#requestModalHeader').text("Error!");
+            $('#requestModalBody').text("An error occurred during account creation.");
+
+        setTimeout(function() {
+            $('#successMessageModal').modal('show');
+        }, 500);
+    }
+
+    $("#requestPassword").click(function(e) {
+        $('#requestPassword').css("background-color", "white");
+        $('#passwordRequestError').text("Request an account");
+    });
+
     // Handles signIn on click event.
     function signInClick() {
         if(inputIsEmpty(EmailInputElement)) {
@@ -26,6 +96,39 @@
         $("#feedback").html(text);
     }
 
-    EmailInputElement = $("#inputEmail");
-    PasswordInputElement = $("#inputPassword");
+    function authenticateSuccess(serverSideReturn) {
+        if(serverSideReturn) {
+            // Session storage help from: https://stackoverflow.com/questions/1981673/persist-javascript-variables-across-pages
+            sessionStorage.setItem("inputEmail", $("#inputEmail").val());
+            window.open(baseURL + "?user=" + $("#inputEmail").val(), "_top");
+        }
+        
+        else {
+            updateFeedbackText("Incorrect username/password.");
+        }
+        
+        $('#pleaseWaitModal').modal('hide');            
+        return serverSideReturn;
+    }
+
+    function authenticateFailure(error) {
+        $('#feedback').html(error);
+        $('#pleaseWaitModal').modal('hide');
+    }
+    
+    document.onkeypress = function(e) {
+        if(e.key == "Enter") {
+            e.preventDefault();
+            
+            if($('#requestAccountModal').hasClass('show')) {
+                $("#submitRequest").click();
+            }
+            else {
+                $("#signIn").click();
+            }
+        }
+    }
+
+    EmailInputElement.focus();
+
 </script>
