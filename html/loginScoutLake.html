@@ -2,9 +2,10 @@
 <html>
 <head>
     <base target="_top">
-    <title>SLC Payroll App</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+
+    <title>SLC Payroll App</title>
     
     <!-- Start external style references -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -108,29 +109,8 @@
     <!-- End Success Message modal -->
 
     <script>
-
+        // Note: baseURL reference must stay on html page for reference to compile.
         var baseURL = <?=ScriptApp.getService().getUrl()?>; 
-        
-        // Handles signIn on click event.
-        function signInClick()
-        {
-            if($("#inputEmail").val() == "")
-            {
-                $('#feedback').html("Please enter an email and try again.");
-            }
-            else if($("#inputPassword").val() == "")
-            {
-                $('#feedback').html("Please enter a password and try again.");
-            }
-            else
-            {
-                $('#pleaseWaitModal').modal('show');
-                // how to use google.script.run: https://www.youtube.com/watch?v=RRQvySxaCW0
-                // and https://developers.google.com/apps-script/guides/html/reference/run
-                google.script.run.withSuccessHandler(authenticateSuccess).withFailureHandler(authenticateFailure).authenticate($("#inputEmail").val(), $("#inputPassword").val());
-            }
-
-        }
         
         function authenticateSuccess(serverSideReturn)
         {
@@ -358,5 +338,6 @@
         $("#inputEmail").focus(); //put focus on the code entry field
 
     </script>
+    <?!= include('js/loginPageJS'); ?>
   </body>
 </html>

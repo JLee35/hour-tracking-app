@@ -1,0 +1,31 @@
+<script>
+    // Handles signIn on click event.
+    function signInClick() {
+        if(inputIsEmpty(EmailInputElement)) {
+            updateFeedbackText("Please enter an email and try again.");
+        }
+
+        else if(inputIsEmpty(PasswordInputElement)) {
+            updateFeedbackText("Please enter a password and try again.");
+        }
+        
+        else
+        {
+            $('#pleaseWaitModal').modal('show');
+            // how to use google.script.run: https://www.youtube.com/watch?v=RRQvySxaCW0
+            // and https://developers.google.com/apps-script/guides/html/reference/run
+            google.script.run.withSuccessHandler(authenticateSuccess).withFailureHandler(authenticateFailure).authenticate($("#inputEmail").val(), $("#inputPassword").val());
+        }
+    }
+
+    function inputIsEmpty(inputElement) {
+        return inputElement.val() == "";
+    }
+
+    function updateFeedbackText(text) {
+        $("#feedback").html(text);
+    }
+
+    EmailInputElement = $("#inputEmail");
+    PasswordInputElement = $("#inputPassword");
+</script>
