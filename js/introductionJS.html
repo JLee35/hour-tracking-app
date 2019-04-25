@@ -1,0 +1,13 @@
+<script>
+    $("#getStarted").click(function(e) {
+      $("#introductionPage").css("display", "none");
+      currentPage = "employeeInfoPage";
+
+      $("#progressBar1").removeClass("bg-danger");
+      $("#progressBar1").addClass("bg-warning");
+      $("#progressBar1").addClass("progress-highlight");
+
+      $("#employeeInfoPage").css("display", "block");
+      e.stopPropagation();
+    });
+</script>

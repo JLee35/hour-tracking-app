@@ -1,0 +1,261 @@
+<div class="container paddedPage" id="supervisorReviewPage" style="padding-top:64px">
+    <center>
+        <br>
+        <div class="container">
+        <!-- Start General Info table -->
+        <div class="card">
+            <div class="card-body">
+                <h5>Name: <span id="reviewName"></span></h5>
+                <h5>Job Number: <span id="reviewJob"></span></h5>
+                <h5>Week Ending: <span id="reviewWeekEnding"></span></h5>
+            </div>
+            <div class="card-body">
+                <div id="table" class="table-editable">
+                <table class="table table-bordered table-responsive-md table-striped text-center">
+                    
+                    <!-- Start Table Headers -->
+                    <tr>
+                    <th class="text-center review-page-header"></th>
+                    <th class="text-center review-page-header">Start Time</th>
+                    <th class="text-center review-page-header">Lunch In</th>
+                    <th class="text-center review-page-header">Lunch Out</th>
+                    <th class="text-center review-page-header">Time Off</th>
+                    <th class="text-center review-page-header">Details</th>
+                    </tr>
+                    <!-- End Table Headers -->
+
+                    <!-- Start Monday -->
+                    <tr>
+                    <th class="text-center review-page-header">
+                        Monday<br>
+                        <span class="mondayDate"></span>
+                    </th>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="mondayStartOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="mondayLunchInOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="mondayLunchOutOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="mondayEndOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <a id="mondayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                    </td>
+                    </tr>
+                    <!-- End Monday -->
+
+                    <!-- Start Tuesday -->
+                    <tr>
+                    <th class="text-center review-page-header">
+                        Tuesday<br>
+                        <span class="tuesdayDate"></span>
+                    </th>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="tuesdayStartOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="tuesdayLunchInOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="tuesdayLunchOutOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="tuesdayEndOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <a id="tuesdayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                    </td>
+                    </tr>
+                    <!-- End Tuesday -->
+
+                    <!-- Start Wednesday -->
+                    <tr>
+                    <th class="text-center review-page-header">
+                        Wednesday<br>
+                        <span class="wednesdayDate"></span>
+                    </th>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="wednesdayStartOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="wednesdayLunchInOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="wednesdayLunchOutOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <span id="wednesdayEndOutput" class="time-entryOutput"></span>
+                    </td>
+                    <td class="pt-3-half" contenteditable="false">
+                        <a id="wednesdayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                    </td>
+                    </tr>
+                    <!-- End Wednesday -->
+                    
+                    <!-- Start Thursday -->
+                    <tr>
+                        <th class="text-center review-page-header">
+                        Thursday<br>
+                        <span class="thursdayDate"></span>
+                        </th>
+                        <td class="pt-3-half" contenteditable="false">
+                        <span id="thursdayStartOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                        <span id="thursdayLunchInOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                        <span id="thursdayLunchOutOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                        <span id="thursdayEndOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                        <a id="thursdayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    <!-- End Thursday -->
+
+                    <!-- Start Friday -->
+                    <tr>
+                        <th class="text-center review-page-header">
+                        Friday<br>
+                        <span class="fridayDate"></span>
+                        </th>
+                        <td class="pt-3-half" contenteditable="false">
+                        <span id="fridayStartOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                            <span id="fridayLunchInOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                            <span id="fridayLunchOutOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                            <span id="fridayEndOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                        <a id="fridayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    <!-- End Friday -->
+
+                    <!-- Start Saturday -->
+                    <tr>
+                        <th class="text-center review-page-header">
+                        Saturday<br>
+                        <span class="saturdayDate"></span>
+                        </th>
+                        <td class="pt-3-half" contenteditable="false">
+                        <span id="saturdayStartOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                        <span id="saturdayLunchInOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                        <span id="saturdayLunchOutOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                        <span id="saturdayEndOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                        <a id="saturdayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    <!-- End Saturday -->
+
+                    <!-- Start Sunday -->
+                    <tr>
+                        <th class="text-center review-page-header">
+                            Sunday<br>
+                            <span class="sundayDate"></span>
+                        </th>
+                            <td class="pt-3-half" contenteditable="false">
+                            <span id="sundayStartOutput" class="time-entryOutput"></span>
+                        </td>
+                            <td class="pt-3-half" contenteditable="false">
+                            <span id="sundayLunchInOutput" class="time-entryOutput"></span>
+                        </td>
+                            <td class="pt-3-half" contenteditable="false">
+                            <span id="sundayLunchOutOutput" class="time-entryOutput"></span>
+                        </td>
+                            <td class="pt-3-half" contenteditable="false">
+                            <span id="sundayEndOutput" class="time-entryOutput"></span>
+                        </td>
+                        <td class="pt-3-half" contenteditable="false">
+                            <a id="sundayDetails" class="detailsIcon" href=""><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    <!-- End Sunday -->
+
+                </table>
+                </div>
+            </div>
+            <!-- End General Info table -->
+            
+            <!-- Start Employee Signature -->
+            <div class="card-body text-left">
+                <h6>I have worked safe and not had a work related injury (during) this time period. I was also given the opportunity of meals and breaks.</h6>
+                <h6>Signed: </h6>
+                <!-- Info on canvas from: https://www.w3schools.com/html/html5_canvas.asp -->
+                <div class="card-body text-center" id="signatureDiv">
+                <!--<canvas id="signature" width="576" height="200" class="signature-box"></canvas>-->
+                </div>
+                <h6>Date: </h6>
+                <p id="signatureDate"></p>
+            </div>
+            <div id="toDelete">
+                <p id="testMedia" class="signature-box"></p>
+            </div>
+            <!-- End Employee Signature -->
+            
+        </div>
+        <br>
+        <button id="supervisorAcceptHoursBtn" class="btn btn-lg btn-primary btn-block" type="button">
+        Submit
+        </button>
+        <br>
+        <button id="supervisorAcceptBackBtn" class="btn btn-lg btn-primary btn-block" type="button">
+        Back
+        </button>
+        <br>
+
+        <!-- Start Details modal -->
+        <div id="detailsModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="width: 100%">
+            <div class="modal-header">
+                <h5 class="modal-title">Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="details-modal-body" class="modal-body">
+                <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">Description</th>
+                    <th scope="col">Hours</th>
+                    </tr>
+                </thead>
+                <tbody id="detailsModalTableBody"></tbody>
+                <tr>
+                    <th scope="col">Total:</th>
+                    <th id="detailsModalTotalHours" scope="col"></th>
+                </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <br>
+            </div>
+            </div>
+        </div>
+        <!-- End Details modal -->
+
+    </center>        
+</div> 

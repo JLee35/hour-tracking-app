@@ -106,6 +106,40 @@
             $(this).prop('disabled', false);
         });
     }
+
+    $("#generalContinue").click(function() {
+      $("#generalInfoPage").css('display', 'none');
+
+      if(!$("#progressBar3").hasClass("bg-success")) {
+        $("#progressBar2").removeClass("bg-warning");
+        $("#progressBar2").addClass("bg-success");
+        $("#progressBar3").removeClass("bg-danger");
+        $("#progressBar3").addClass("bg-warning");
+      }
+
+      $("#progressBar2").removeClass("progress-highlight");
+      $("#progressBar3").addClass("progress-highlight");
+
+
+      $("#specificInfoPage").css('display', 'block');
+      currentPage = "specificInfoPage";       
+
+      return;
+    });
+
+    // Returns the employee info page
+    $("#generalBack").click(function() {
+        $("#generalInfoPage").css('display', 'none');
+        $("#employeeInfoPage").css('display', 'block');
+
+        $("#progressBar2").removeClass("progress-highlight");
+        $("#progressBar1").addClass("progress-highlight");
+
+        currentPage = "employeeInfoPage";       
+
+        return;
+    });
+
     // Globals
 
     // copiedHours keeps track of the input hours value that has been copied.

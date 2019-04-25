@@ -1,0 +1,109 @@
+<script>
+
+    $("#topSignOut").click(function(){
+        $("#signOutBtn").click();
+    });
+    
+    function initializeFromSheet() {
+        google.script.run.withSuccessHandler(initializeSuccess).withFailureHandler(initializeFailure).loadFromSpreadsheet();
+    }
+
+    // Callback function for client-side loadFromSpreadsheet function.
+    function initializeFailure(error) {
+        console.log(error);
+    }
+
+    // Callback function for client-side loadFromSpreadsheet function.
+    function initializeSuccess(serverSideReturn) {
+        workOrders = serverSideReturn[0];
+        phaseCodes = serverSideReturn[1];
+
+        for (var i = 0; i < workOrders.length; i++) {
+            $("#jobNumber").append('<option value="' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + '">' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + "</option>");
+        }
+    
+        for (var i = 0; i < phaseCodes.length; i++) {
+            if(phaseCodes[i][1] != "")
+                $("#phaseCodeInput").append('<option value="' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + '">' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + "</option>");
+        }
+
+        $("#jobNumber").chosen({width: "100%"});
+
+        // Auto width here: https://stackoverflow.com/questions/10303120/jquery-chosen-plugin-not-styling-correctly-very-small
+        var opts = {};
+
+        if (!$("#phaseCodeInput").is(':visible')) {
+            opts["width"] = '100%';
+        }
+        
+        $("#phaseCodeInput").chosen(opts);
+    }
+
+    initializeFromSheet();
+
+    // from https://developers.google.com/apps-script/guides/html/reference/url#methods
+    google.script.url.getLocation(function(location) {
+      playerId = location.parameter['id'];
+    });
+
+    // TODO: Clean this up. It is entirely too long.
+    $("#signOutBtn").click(function(){
+
+        $("#pleaseWaitModal").modal('show');
+        
+        $("#progressBar1").removeClass("bg-success");
+        $("#progressBar1").addClass("bg-warning");
+        $("#progressBar2").removeClass("bg-success");
+        $("#progressBar2").addClass("bg-danger");
+        $("#progressBar3").removeClass("bg-success");
+        $("#progressBar3").addClass("bg-danger");
+        $("#progressBar4").removeClass("bg-warning");
+        $("#progressBar4").addClass("bg-danger");
+
+        $('#addAnotherEmployeeModal').modal('hide');
+
+        var pngImage = signaturePad.toDataURL("image/png");
+        var date2 = new Date();
+        var swimlaneinfo = [];
+
+        swimlaneinfo.push(updateDailyItems($("#mondayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#tuesdayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#wednesdayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#wednesdayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#fridayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#saturdayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#sundayDetailsLane").find("div.swim-lane-item-content")));
+
+        allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date2.toLocaleString(), swimlaneinfo]);
+
+        // meaning info for at least one employee has been completed
+        if(allEmployeeInfo.length > 0)  {
+        // Send all info to the Spreadsheet
+            google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).submitEmployeeInfo(sessionStorage.getItem("inputEmail"), allEmployeeInfo);
+        }
+
+        else {
+            // Call function back in main to avoid syntax error.
+            reloadReviewPage();
+        }
+    });
+
+    function updateDailyItems(items) {
+        var list = [];
+
+        items.each(function (index, element) {
+            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+            list.push([desc,hours]);
+        });
+
+        return list;
+    }
+
+    // Hide all pages except introduction.
+    $("#generalInfoPage").css("display", "none");
+    $("#specificInfoPage").css('display', 'none');
+    $("#supervisorReviewPage").css("display", "none");
+    $("#employeeInfoPage").css("display", "none");
+</script>

@@ -1,0 +1,26 @@
+
+<!-- Start Employee Info Page -->
+<div class="container paddedPage" id="employeeInfoPage" style="padding-top:64px">
+        <div class="col-lg-12 text-center">
+          <center>
+            <form class="form-signin">
+                <div class="text-left">Name:</div>
+                <input type="text" id="employeeName" class="form-control" placeholder="Example: Steve Bond" required autofocus>
+                <br>
+                <div class="text-left">Job Number:</div>
+                <select data-placeholder="Example: 19-003" id="jobNumber" class="size-chosen move-chosen" required>
+                  <option value="00-000">00-000</option>
+                </select>
+                <p id="jobName"></p>
+                <br>
+                <div class="text-left">Week Ending:</div>
+                <input type="text" id="weekEnding" class="form-control" required>
+                <br>
+                <button id="beginLoggingBtn" class="btn btn-lg btn-primary btn-block" type="button">
+                    Begin recording work hours
+                </button>
+            </form>
+          </center>
+        </div>
+    </div>
+    <!-- End Employee Info Page -->
