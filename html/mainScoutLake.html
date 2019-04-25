@@ -29,58 +29,39 @@
 
 <body>
   <!-- Start main container -->
+
   <div class="container paddedPage">
-    <!-- Said to use text-right class: https://tutorialdeep.com/knowhow/left-right-align-button-bootstrap/ -->
+
+    <!-- Start Sign out button -->
     <div class="text-right">
         <button id="topSignOut" class="btn btn-primary">
             Sign Out
         </button>
     </div>
+    <!-- End Sign out button -->
     
-
-      <!-- PROGRESS BAR -->
-      <div class="container" style="padding-top:64px" id="loggingProgressBar">
-          <div class="progress">
-            <div id="progressBar1" class="progress-bar bg-danger" role="progressbar" style="width:25%">
-              Employee Info
-            </div>
-            <div id="progressBar2" class="progress-bar bg-danger" role="progressbar" style="width:25%">
-              General Hourly Info
-            </div>
-            <div id="progressBar3" class="progress-bar bg-danger" role="progressbar" style="width:25%">
-              Specific Hourly Info
-            </div>
-            <div id="progressBar4" class="progress-bar bg-danger" role="progressbar" style="width:25%">
-              Review, Sign, Submit
-            </div>
+    <!-- Start Progress Bar -->
+    <div class="container" style="padding-top:64px" id="loggingProgressBar">
+        <div class="progress">
+          <div id="progressBar1" class="progress-bar bg-danger" role="progressbar" style="width:25%">
+            Employee Info
+          </div>
+          <div id="progressBar2" class="progress-bar bg-danger" role="progressbar" style="width:25%">
+            General Hourly Info
+          </div>
+          <div id="progressBar3" class="progress-bar bg-danger" role="progressbar" style="width:25%">
+            Specific Hourly Info
+          </div>
+          <div id="progressBar4" class="progress-bar bg-danger" role="progressbar" style="width:25%">
+            Review, Sign, Submit
           </div>
         </div>
-
-      <!-- EMPLOYEE INFO PAGE -->
-      <div class="container paddedPage" id="employeeInfoPage" style="padding-top:64px">
-          <div class="col-lg-12 text-center">
-            <center>
-              <form class="form-signin">
-                  <div class="text-left">Name:</div>
-                  <input type="text" id="employeeName" class="form-control" placeholder="Example: Steve Bond" required autofocus>
-                  <br>
-                  <div class="text-left">Job Number:</div>
-                  <select data-placeholder="Example: 19-003" id="jobNumber" class="size-chosen move-chosen" required>
-                    <option value="00-000">00-000</option>
-                  </select>
-                  <p id="jobName"></p>
-                  <br>
-                  <div class="text-left">Week Ending:</div>
-                  <input type="text" id="weekEnding" class="form-control" required>
-                  <br>
-                  <button id="beginLoggingBtn" class="btn btn-lg btn-primary btn-block" type="button">
-                      Begin recording work hours
-                  </button>
-              </form>
-            </center>
-          </div>
       </div>
-      <!--Employee Info Page-->
+    <!-- End Progress Bar -->
+
+    <!-- Start Employee Info Page -->
+    <?!= include('html/employeeInfo'); ?>
+    <!-- End Employee Info Page -->
 
     <!--GENERAL INFO PAGE-->
     <div class="container paddedPage" id="generalInfoPage" style="padding-top:64px">
