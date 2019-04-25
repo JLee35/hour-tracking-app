@@ -79,4 +79,32 @@
         signaturePad.clear();
     }
     
+    $("#addEmployeeBtn").click(function(e){
+      $("#supervisorReviewPage").css('display', 'none');
+      $("#employeeInfoPage").css('display', 'block');
+
+      $("#progressBar1").removeClass("bg-success");
+      $("#progressBar1").addClass("bg-warning");
+      $("#progressBar2").removeClass("bg-success");
+      $("#progressBar2").addClass("bg-danger");
+      $("#progressBar3").removeClass("bg-success");
+      $("#progressBar3").addClass("bg-danger");
+      $("#progressBar4").removeClass("bg-warning");
+      $("#progressBar4").addClass("bg-danger");
+
+      $('#addAnotherEmployeeModal').modal('hide');
+
+      var pngImage = signaturePad.toDataURL("image/png");
+      var date = new Date();
+      allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date.toLocaleString()]);
+
+      currentPage = "supervisorReview";  
+
+      generalHourInfo = [[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]]];
+      $(".time-entry").val("");
+      $(".time-entryOutput").text("");
+      $("#employeeName").val("");
+    });
+
+    
 </script>

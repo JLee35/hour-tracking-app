@@ -84,103 +84,88 @@
       playerId = location.parameter['id'];
     });
 
-  // This said to use getElementById instead of jQuery: https://stackoverflow.com/questions/5808162/getcontext-is-not-a-function
-  // That fixed a "t.getcontext is not a function" error
-  // signature_pad from: https://github.com/szimek/signature_pad
+    // This said to use getElementById instead of jQuery: https://stackoverflow.com/questions/5808162/getcontext-is-not-a-function
+    // That fixed a "t.getcontext is not a function" error
+    // signature_pad from: https://github.com/szimek/signature_pad
 
-  // Note: Signature pad must stay in main HTML.
-  var element = document.getElementById("testMedia");
-  style = window.getComputedStyle(element);
+    // Note: Signature pad must stay in main HTML.
+    var element = document.getElementById("testMedia");
+    style = window.getComputedStyle(element);
 
-  $("#signatureDiv").html("");
-  $("#signatureDiv").html('<canvas id="signature" width="' + style.getPropertyValue("width") + '" height="200" class="signature-box"></canvas>')
-  var canvas = document.getElementById("signature");
+    $("#signatureDiv").html("");
+    $("#signatureDiv").html('<canvas id="signature" width="' + style.getPropertyValue("width") + '" height="200" class="signature-box"></canvas>')
+    var canvas = document.getElementById("signature");
+    var signaturePad = new SignaturePad(canvas);
 
-  var signaturePad = new SignaturePad(canvas);
-
-  $("#toDelete").html('');
+    $("#toDelete").html('');
 
   
-function initializeFromSheet() {
-  google.script.run.withSuccessHandler(initializeSuccess).withFailureHandler(initializeFailure).loadFromSpreadsheet();
-}
-
-// Callback function for client-side loadFromSpreadsheet function.
-function initializeFailure(error) {
-  console.log(error);
-}
-
-// Callback function for client-side loadFromSpreadsheet function.
-function initializeSuccess(serverSideReturn) {
-  workOrders = serverSideReturn[0];
-  phaseCodes = serverSideReturn[1];
-
-  for (var i = 0; i < workOrders.length; i++) {
-    // how to append: https://api.jquery.com/append/
-    $("#jobNumber").append('<option value="' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + '">' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + "</option>");
-  }
-  
-  for (var i = 0; i < phaseCodes.length; i++) {
-    // how to append: https://api.jquery.com/append/
-    if(phaseCodes[i][1] != "")
-      $("#phaseCodeInput").append('<option value="' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + '">' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + "</option>");
+  function initializeFromSheet() {
+    google.script.run.withSuccessHandler(initializeSuccess).withFailureHandler(initializeFailure).loadFromSpreadsheet();
   }
 
-  // jobNumber button must be large enough so that it is easy to click on the ipad.
-  $("#jobNumber").chosen({width: "100%"});
-
-  // Auto width here: https://stackoverflow.com/questions/10303120/jquery-chosen-plugin-not-styling-correctly-very-small
-  var opts = {};
-  if (!$("#phaseCodeInput").is(':visible')) {
-    opts["width"] = '100%';
+  // Callback function for client-side loadFromSpreadsheet function.
+  function initializeFailure(error) {
+    console.log(error);
   }
-  $("#phaseCodeInput").chosen(opts);
-}
 
-initializeFromSheet();
+  // Callback function for client-side loadFromSpreadsheet function.
+  function initializeSuccess(serverSideReturn) {
+    workOrders = serverSideReturn[0];
+    phaseCodes = serverSideReturn[1];
 
-
-
-/****************************************************************
-
-   FUNCTION:   addEmployeeBtn onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Handles onclick of the sign-out button.
-
-****************************************************************/
+    for (var i = 0; i < workOrders.length; i++) {
+      // how to append: https://api.jquery.com/append/
+      $("#jobNumber").append('<option value="' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + '">' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + "</option>");
+    }
     
-$("#addEmployeeBtn").click(function(e){
-      $("#supervisorReviewPage").css('display', 'none');
-      $("#employeeInfoPage").css('display', 'block');
+    for (var i = 0; i < phaseCodes.length; i++) {
+      // how to append: https://api.jquery.com/append/
+      if(phaseCodes[i][1] != "")
+        $("#phaseCodeInput").append('<option value="' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + '">' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + "</option>");
+    }
 
-      $("#progressBar1").removeClass("bg-success");
-      $("#progressBar1").addClass("bg-warning");
-      $("#progressBar2").removeClass("bg-success");
-      $("#progressBar2").addClass("bg-danger");
-      $("#progressBar3").removeClass("bg-success");
-      $("#progressBar3").addClass("bg-danger");
-      $("#progressBar4").removeClass("bg-warning");
-      $("#progressBar4").addClass("bg-danger");
+    // jobNumber button must be large enough so that it is easy to click on the ipad.
+    $("#jobNumber").chosen({width: "100%"});
 
-      $('#addAnotherEmployeeModal').modal('hide');
+    // Auto width here: https://stackoverflow.com/questions/10303120/jquery-chosen-plugin-not-styling-correctly-very-small
+    var opts = {};
+    if (!$("#phaseCodeInput").is(':visible')) {
+      opts["width"] = '100%';
+    }
+    $("#phaseCodeInput").chosen(opts);
+  }
 
-      // add info for this employee to employee array
-      // TODO total hours and labor hours 
-      var pngImage = signaturePad.toDataURL("image/png");
-      var date = new Date();
-      allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date.toLocaleString()]);
+  initializeFromSheet();
+ 
+// $("#addEmployeeBtn").click(function(e){
+//       $("#supervisorReviewPage").css('display', 'none');
+//       $("#employeeInfoPage").css('display', 'block');
 
-      currentPage = "supervisorReview";  
+//       $("#progressBar1").removeClass("bg-success");
+//       $("#progressBar1").addClass("bg-warning");
+//       $("#progressBar2").removeClass("bg-success");
+//       $("#progressBar2").addClass("bg-danger");
+//       $("#progressBar3").removeClass("bg-success");
+//       $("#progressBar3").addClass("bg-danger");
+//       $("#progressBar4").removeClass("bg-warning");
+//       $("#progressBar4").addClass("bg-danger");
 
-      generalHourInfo = [[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]]];
-      $(".time-entry").val("");
-      $(".time-entryOutput").text("");
-      $("#employeeName").val("");
-    });
+//       $('#addAnotherEmployeeModal').modal('hide');
+
+//       // add info for this employee to employee array
+//       // TODO total hours and labor hours 
+//       var pngImage = signaturePad.toDataURL("image/png");
+//       var date = new Date();
+//       allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date.toLocaleString()]);
+
+//       currentPage = "supervisorReview";  
+
+//       generalHourInfo = [[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]]];
+//       $(".time-entry").val("");
+//       $(".time-entryOutput").text("");
+//       $("#employeeName").val("");
+//     });
 
 /****************************************************************
 
