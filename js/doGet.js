@@ -41,8 +41,7 @@ NOTES:      Authenticates inputed email and password.
 
 ****************************************************************/
 
-function authenticate(email, password)
-{
+function authenticate(email, password) {
     // How to get by sheet name: https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet#getSheetByName(String)
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Login Info");
     var numUsers = sheet.getLastRow();
@@ -74,8 +73,7 @@ NOTES:      Creates or rejects account info
 
 ****************************************************************/
 
-function requestAccount(email, password)
-{
+function requestAccount(email, password) {
 
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Email Whitelist");
   var numEmails = sheet.getLastRow();
@@ -83,23 +81,19 @@ function requestAccount(email, password)
       return 0;
   
   var emails = sheet.getSheetValues(1, 1, numEmails, 1);
-  for(var i = 0; i < emails.length; i++)
-  {
-    if(email == emails[i][0])
-    {
+  for(var i = 0; i < emails.length; i++) {
+    if(email == emails[i][0]) {
       var sheet2 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Login Info");
       var numUsers = sheet2.getLastRow();    
 
-
       var users;
 
-      if(numUsers > 0)
+      if(numUsers > 0) {
         users = sheet2.getSheetValues(1, 1, numUsers, 1);
-
-      for(var i = 0; i < numUsers != 0 && users.length; i++)
-      {
-          if(users[i][0] == email)
-          {
+      }
+        
+      for(var i = 0; i < numUsers != 0 && users.length; i++) {
+          if(users[i][0] == email) {
             console.log("Returning zero because email already used!");
             return 0;
           }
@@ -127,8 +121,7 @@ NOTES:      Gets work order and phase codes from spreadsheet
 
 ****************************************************************/
 
-function loadFromSpreadsheet()
-{
+function loadFromSpreadsheet() {
     var workOrderSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Work Orders");
     var phaseCodeSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Phase Codes");
 
@@ -141,11 +134,6 @@ function loadFromSpreadsheet()
     workOrders = workOrderSheet.getSheetValues(2, 1, numWorkOrders, 2);
     phaseCodes = phaseCodeSheet.getSheetValues(2, 1, numPhaseCodes, 2);
 
-    console.log(workOrders);
-
-    console.log(phaseCodes);
-    
-    // idea to return two values in list from: https://stackoverflow.com/questions/2917175/return-multiple-values-in-javascript
     return [workOrders, phaseCodes];
 }
 
@@ -161,10 +149,8 @@ NOTES:      Inputs employee info to the spreadsheet
 
 ****************************************************************/
 
-function submitEmployeeInfo(email, allEmployeeInfo)
-{
+function submitEmployeeInfo(email, allEmployeeInfo) {
   var date = new Date();
-  console.log(allEmployeeInfo);
     SpreadsheetApp.getActiveSpreadsheet().insertSheet(email + " - " + date.toLocaleString());
     var infoSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(email + " - " + date.toLocaleString());
 
@@ -200,18 +186,20 @@ function submitEmployeeInfo(email, allEmployeeInfo)
       infoSheet.insertRows(infoSheet.getLastRow(), 1);
       infoSheet.appendRow(["Code", "Description", "Hours"]);
       infoSheet.appendRow(["Monday:"]);
-      for(var j = 0; j < allEmployeeInfo[i][6][0].length; j++)
-      {
+
+      for(var j = 0; j < allEmployeeInfo[i][6][0].length; j++) {
         infoSheet.appendRow([allEmployeeInfo[i][6][0][j][0], allEmployeeInfo[i][6][0][j][1]])
       }
+
       infoSheet.appendRow(["Tuesday:"]);
-      for(var j = 0; j < allEmployeeInfo[i][6][1].length; j++)
-      {
+
+      for(var j = 0; j < allEmployeeInfo[i][6][1].length; j++) {
         infoSheet.appendRow([allEmployeeInfo[i][6][1][j][0], allEmployeeInfo[i][6][1][j][1]])
       }
+
       infoSheet.appendRow(["Wednesday:"]);
-      for(var j = 0; j < allEmployeeInfo[i][6][2].length; j++)
-      {
+
+      for(var j = 0; j < allEmployeeInfo[i][6][2].length; j++) {
         infoSheet.appendRow([allEmployeeInfo[i][6][2][j][0], allEmployeeInfo[i][6][2][j][1]])
       }
       infoSheet.appendRow(["Thursday:"]);
@@ -240,5 +228,4 @@ function submitEmployeeInfo(email, allEmployeeInfo)
       infoSheet.appendRow(["Date:"]);
       infoSheet.appendRow([allEmployeeInfo[i][5]]);
     }
-    
 }
