@@ -172,6 +172,19 @@
         return;
     });
 
+    // Returns to general info page
+    $("#specificInfoBackBtn").click(function() {
+
+        $("#specificInfoPage").css('display', 'none');
+        $("#generalInfoPage").css('display', 'block');
+
+        $("#progressBar3").removeClass("progress-highlight");
+        $("#progressBar2").addClass("progress-highlight");
+        currentPage = "generalInfoPage";       
+
+        return;
+    });
+
 
     // Global Variables
 

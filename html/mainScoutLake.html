@@ -72,17 +72,12 @@
   <!-- End main container -->
 
   <script>
-      
+    // Note: Global variables must stay here.
     var playerName = <?=data.playerId?>; // holds player name for top bar
     var playerId = "";
 
     var workOrders;
     var phaseCodes;
-
-    // from https://developers.google.com/apps-script/guides/html/reference/url#methods
-    google.script.url.getLocation(function(location) {
-      playerId = location.parameter['id'];
-    });
 
     // This said to use getElementById instead of jQuery: https://stackoverflow.com/questions/5808162/getcontext-is-not-a-function
     // That fixed a "t.getcontext is not a function" error
@@ -99,274 +94,45 @@
 
     $("#toDelete").html('');
 
-  function initializeFromSheet() {
-    google.script.run.withSuccessHandler(initializeSuccess).withFailureHandler(initializeFailure).loadFromSpreadsheet();
-  }
-
-  // Callback function for client-side loadFromSpreadsheet function.
-  function initializeFailure(error) {
-    console.log(error);
-  }
-
-  // Callback function for client-side loadFromSpreadsheet function.
-  function initializeSuccess(serverSideReturn) {
-    workOrders = serverSideReturn[0];
-    phaseCodes = serverSideReturn[1];
-
-    for (var i = 0; i < workOrders.length; i++) {
-      $("#jobNumber").append('<option value="' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + '">' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + "</option>");
-    }
-    
-    for (var i = 0; i < phaseCodes.length; i++) {
-      if(phaseCodes[i][1] != "")
-        $("#phaseCodeInput").append('<option value="' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + '">' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + "</option>");
+    // Any script that contains GAS syntax must stay in main.
+    function reloadReviewPage() {
+      currentPage = "supervisorReview";  
+      var baseURL = <?=ScriptApp.getService().getUrl()?>;
+      window.open(baseURL, "_top");
     }
 
-    $("#jobNumber").chosen({width: "100%"});
-
-    // Auto width here: https://stackoverflow.com/questions/10303120/jquery-chosen-plugin-not-styling-correctly-very-small
-    var opts = {};
-    if (!$("#phaseCodeInput").is(':visible')) {
-      opts["width"] = '100%';
+    // Callback function for client-side insertEmployeeInfo function.
+    function submitFailure(error) {
+      console.log(error);
+      currentPage = "supervisorReview";  
+      var baseURL = <?=ScriptApp.getService().getUrl()?>;
+      window.open(baseURL, "_top");
     }
-    $("#phaseCodeInput").chosen(opts);
-  }
 
-  initializeFromSheet();
- 
-/****************************************************************
-
-   FUNCTION:   signOutBtn onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Handles onclick of the sign-out button.
-               Opens in same page.
-****************************************************************/
+    // Callback function for client-side insertEmployeeInfo function.
+    function submitSuccess()
+    {
+      currentPage = "supervisorReview";  
+      var baseURL = <?=ScriptApp.getService().getUrl()?>;
+      window.open(baseURL, "_top");
+    }
     
-    $("#signOutBtn").click(function(){
-
-      $("#pleaseWaitModal").modal('show');
-
-      $("#progressBar1").removeClass("bg-success");
-      $("#progressBar1").addClass("bg-warning");
-      $("#progressBar2").removeClass("bg-success");
-      $("#progressBar2").addClass("bg-danger");
-      $("#progressBar3").removeClass("bg-success");
-      $("#progressBar3").addClass("bg-danger");
-      $("#progressBar4").removeClass("bg-warning");
-      $("#progressBar4").addClass("bg-danger");
-
-      $('#addAnotherEmployeeModal').modal('hide');
-
-      // add info for this employee to employee array
-      // TODO total hours and labor hours 
-      var pngImage = signaturePad.toDataURL("image/png");
-      var date2 = new Date();
-      var swimlaneinfo = [];
-      var mondayitems = $("#mondayDetailsLane").find("div.swim-lane-item-content");
-      var mondaylist = [];
-
-      mondayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            mondaylist.push([desc,hours]);
-        });
-
-      swimlaneinfo.push(mondaylist);
-
-      var tuesdayitems = $("#tuesdayDetailsLane").find("div.swim-lane-item-content");
-      var tuesdaylist = [];
-
-      tuesdayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            tuesdaylist.push([desc,hours]);
-        });
-
-      swimlaneinfo.push(tuesdaylist);
-
-      var wednesdayitems = $("#wednesdayDetailsLane").find("div.swim-lane-item-content");
-      var wednesdaylist = [];
-
-      wednesdayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            wednesdaylist.push([desc,hours]);
-        });
-
-      swimlaneinfo.push(wednesdaylist);
-
-      var thursdayitems = $("#thursdayDetailsLane").find("div.swim-lane-item-content");
-      var thursdaylist = [];
-
-      thursdayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            thursdaylist.push([desc,hours]);
-        });
-
-      swimlaneinfo.push(thursdaylist);
-
-      var fridayitems = $("#fridayDetailsLane").find("div.swim-lane-item-content");
-      var fridaylist = [];
-
-      fridayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            fridaylist.push([desc,hours]);
-        });
-
-      swimlaneinfo.push(fridaylist);
-
-      var saturdayitems = $("#saturdayDetailsLane").find("div.swim-lane-item-content");
-      var saturdaylist = [];
-
-      saturdayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            saturdaylist.push([desc,hours]);
-        });
-
-      swimlaneinfo.push(saturdaylist);
-
-      var sundayitems = $("#sundayDetailsLane").find("div.swim-lane-item-content");
-      var sundaylist = [];
-
-      sundayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            sundaylist.push([desc,hours]);
-        });
-
-      swimlaneinfo.push(sundaylist);
-
-      allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date2.toLocaleString(), swimlaneinfo]);
-
-      if(allEmployeeInfo.length > 0) // meaning info for at least one employee has been completed
-      {
-        // Send all info to the Spreadsheet
-        google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).submitEmployeeInfo(sessionStorage.getItem("inputEmail"), allEmployeeInfo);
-      }
-      else
-      {
-        currentPage = "supervisorReview";  
-        var baseURL = <?=ScriptApp.getService().getUrl()?>;
-        window.open(baseURL, "_top");
-      }
-    });
-
-$("#topSignOut").click(function(){
-  $("#signOutBtn").click();
-});
-
-// Callback function for client-side insertEmployeeInfo function.
-function submitFailure(error) {
-  console.log(error);
-  currentPage = "supervisorReview";  
-  var baseURL = <?=ScriptApp.getService().getUrl()?>;
-  window.open(baseURL, "_top");
-}
-
-// Callback function for client-side insertEmployeeInfo function.
-function submitSuccess()
-{
-  currentPage = "supervisorReview";  
-  var baseURL = <?=ScriptApp.getService().getUrl()?>;
-  window.open(baseURL, "_top");
-}
-
-/****************************************************************
-
-   FUNCTION:   specificInfoBackBtn onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Returns to general info page
-               
-****************************************************************/
-
-$("#specificInfoBackBtn").click(function() {
-
-  $("#specificInfoPage").css('display', 'none');
-  $("#generalInfoPage").css('display', 'block');
-
-  $("#progressBar3").removeClass("progress-highlight");
-  $("#progressBar2").addClass("progress-highlight");
-  currentPage = "generalInfoPage";       
-
-  return;
-});
-
-  /****************************************************************
-
-   FUNCTION:   supervisorAcceptHoursBtn onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Submits info to spreadsheet, then either logs out or moves to next employee
-               
-****************************************************************/
-
-$("#supervisorAcceptHoursBtn").click(function() {
-      $('#addAnotherEmployeeModal').modal('show');
-
-    });
-
-  /****************************************************************
-
-   FUNCTION:   supervisorAcceptBackBtn onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Returns to specific info page
-               
-****************************************************************/
-
-$("#supervisorAcceptBackBtn").click(function() {
-    $("#supervisorReviewPage").css('display', 'none');
-    $("#specificInfoPage").css('display', 'block');
-
-    $("#progressBar4").removeClass("progress-highlight");
-    $("#progressBar3").addClass("progress-highlight");
-
-    currentPage = "specificInfoPage";    
-
-    });
-
-    
-    var currentPage = "introductionPage"; // The currently displayed page
+    // The currently displayed page.
+    var currentPage = "introductionPage"; 
     var previousPage = "";
 
-    // will be used to hold all of the info for the employees for this supervisor
+    // Used to hold all of the info for the employees for this supervisor.
     var allEmployeeInfo = [];
     var generalHourInfo = [[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]]];
 
-    //Declare Initialize global variables
-
-    //INITIALLY MAKE ALL PAGES EXCEPT the introduction page invisible
+    // Hide all pages except introduction.
     $("#generalInfoPage").css("display", "none");
     $("#specificInfoPage").css('display', 'none');
     $("#supervisorReviewPage").css("display", "none");
     $("#employeeInfoPage").css("display", "none");
-
   </script>
 
+    <?!= include('js/mainJS'); ?>
     <?!= include('js/introductionJS'); ?>
     <?!= include('js/employeeInfoJS'); ?>
     <?!= include('js/generalInfoJS'); ?>

@@ -15,6 +15,22 @@
         });
     });
 
+    $("#supervisorAcceptHoursBtn").click(function() {
+        $('#addAnotherEmployeeModal').modal('show');
+    });
+
+    // Returns to specific info page
+    $("#supervisorAcceptBackBtn").click(function() {
+        $("#supervisorReviewPage").css('display', 'none');
+        $("#specificInfoPage").css('display', 'block');
+
+        $("#progressBar4").removeClass("progress-highlight");
+        $("#progressBar3").addClass("progress-highlight");
+
+        currentPage = "specificInfoPage";    
+
+    });
+
     // Given an ID containing the day of the week, populate the details
     // modal dialog with specific tasks completed.
     function fillDetailsModal(dayOfTheWeekID) {
