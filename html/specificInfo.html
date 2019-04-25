@@ -1,0 +1,148 @@
+<div class="container paddedPage" id="specificInfoPage" style="padding-top:64px">
+    <center>
+        <!-- Editable table -->
+        <div class="card">
+        <div class="card-body ">
+            <div class="table-responsive-lg">
+                <table class="table table-bordered table-striped text-center">
+                
+                    <!-- Start Table Headers -->
+                    <tr>
+                    <th class="text-center swim-lane">
+                        <span>Mon<br></span>
+                        <span class="mondayDate"></span>
+                    </th>
+                    <th class="text-center swim-lane">
+                        <span>Tue<br></span>
+                        <span class="tuesdayDate"></span>
+                    </th>
+                    <th class="text-center swim-lane">
+                        <span>Wed<br></span>
+                        <span class="wednesdayDate"></span>
+                    </th>
+                    <th class="text-center swim-lane">
+                        <span>Thu<br></span>
+                        <span class="thursdayDate"></span>
+                    </th>
+                    <th class="text-center swim-lane">
+                        <span>Fri<br></span>
+                        <span class="fridayDate"></span>
+                    </th>
+                    <th class="text-center swim-lane">
+                        <span>Sat<br></span>
+                        <span class="saturdayDate"></span>
+                    </th>
+                    <th class="text-center swim-lane">
+                        <span>Sun<br></span>
+                        <span class="sundayDate"></span>
+                    </th>
+                    </tr>
+                    <!-- End Table Headers -->
+    
+                    <!-- Start Table Content -->
+                    <tr>
+                    <td id="mondayDetailsLane" class="swim-lane swim-lane-content">
+                        <div class="swim-lane-item-container"></div>
+                        <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                        </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                    </td>
+    
+                    <td id="tuesdayDetailsLane" class="swim-lane swim-lane-content">
+                        <div class="swim-lane-item-container"></div>
+                        <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                        </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                    </td>
+    
+                    <td id="wednesdayDetailsLane" class="swim-lane swim-lane-content">
+                        <div class="swim-lane-item-container"></div>
+                        <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                        </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                    </td>
+    
+                    <td id="thursdayDetailsLane" class="swim-lane swim-lane-content">
+                        <div class="swim-lane-item-container"></div>
+                        <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                        </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                    </td>
+    
+                    <td id="fridayDetailsLane" class="swim-lane swim-lane-content">
+                        <div class="swim-lane-item-container"></div>
+                        <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                        </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                    </td>
+    
+                    <td id="saturdayDetailsLane" class="swim-lane swim-lane-content">
+                        <div class="swim-lane-item-container"></div>
+                        <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <ion-icon name="add"></ion-icon>
+                        </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                    </td>
+    
+                    <td id="sundayDetailsLane" class="swim-lane swim-lane-content">
+                        <div class="swim-lane-item-container"></div>
+                        <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                        <ion-icon name="add"></ion-icon>
+                        </button>
+                        <div class="swim-lane-item-total align-bottom">Total: 0</div>
+                    </td>
+                    </tr>
+                    <!-- End Table Content -->
+                
+                </table>
+            </div>
+        </div>
+        </div>
+
+        <br>
+        <button id="workerAcceptHoursBtn" class="btn btn-lg btn-primary btn-block" type="button">
+        Continue
+        </button>
+        <br>
+        <button id="specificInfoBackBtn" class="btn btn-lg btn-primary btn-block" type="button">
+        Back
+        </button>
+        <br>
+    </center>        
+    </div> 
+
+    <!-- Start Specific Info Add Item modal -->
+    <div id="addSpecificItemModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 100%">
+        <div class="modal-header">
+            <h5 class="modal-title">Add a specific item</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <select data-placeholder="Phase code" id="phaseCodeInput" class="form-control" required="true" autofocus>
+                <option value="0000">0000</option>
+            </select>
+            <p id="phaseCode"></p>
+            <br>
+            <!-- min and step help from: https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only -->
+            <input type="number" id="specificInfoHours" min=".25" step=".25" class="form-control" placeholder="Time spent in hours (1.5)" required="true">
+            <br>
+        </div>
+        <div class="modal-footer">
+            <button id="submitNewItem" type="button" class="btn btn-primary" disabled>Add item</button>
+            <br>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <br>
+        </div>
+        </div>
+    </div>
+    <!-- End Specific Info Add Item Modal -->
+    </div>
