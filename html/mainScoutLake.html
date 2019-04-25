@@ -285,52 +285,6 @@ function submitSuccess()
   window.open(baseURL, "_top");
 }
 
-// Returns the employee info page
-$("#generalBack").click(function() {
-
-      $("#generalInfoPage").css('display', 'none');
-      $("#employeeInfoPage").css('display', 'block');
-
-      $("#progressBar2").removeClass("progress-highlight");
-      $("#progressBar1").addClass("progress-highlight");
-
-      currentPage = "employeeInfoPage";       
-
-      return;
-    });
-
-/****************************************************************
-
-   FUNCTION:   workerAcceptHoursBtn onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Moves on to the supervisor review page
-
-****************************************************************/
-
-$("#workerAcceptHoursBtn").click(function() {
-      $("#specificInfoPage").css('display', 'none');
-      $("#supervisorReviewPage").css('display', 'block');
-      
-      $("#progressBar3").removeClass("bg-warning");
-      $("#progressBar3").addClass("bg-success");
-      $("#progressBar4").removeClass("bg-danger");
-      $("#progressBar4").addClass("bg-warning");
-
-      $("#progressBar3").removeClass("progress-highlight");
-      $("#progressBar4").addClass("progress-highlight");
-
-      currentPage = "supervisorReview";
-
-      // Update review page with employee input.
-      populateReviewPage();     
-
-      return;
-    });
-
 /****************************************************************
 
    FUNCTION:   specificInfoBackBtn onclick
@@ -396,9 +350,6 @@ $("#supervisorAcceptBackBtn").click(function() {
     });
 
     
-
-    //CODE AND TO BE EXECUTED AFTER PAGE IS LOADED GOES HERE
-    //GLOBAL VARIABLES NEEDED FOR APP GO HERE
     var currentPage = "introductionPage"; // The currently displayed page
     var previousPage = "";
 
@@ -408,13 +359,6 @@ $("#supervisorAcceptBackBtn").click(function() {
 
     //Declare Initialize global variables
 
-    // Associates the ID's of buttons to the page titles they should show
-    var btnIdsToPageTitles = {
-      "employeeInfoPage" : "Scoring for " + playerName,
-      "generalInfoPage" : "Scoring for " + playerName
-    };
-
-
     //INITIALLY MAKE ALL PAGES EXCEPT the introduction page invisible
     $("#generalInfoPage").css("display", "none");
     $("#specificInfoPage").css('display', 'none');
@@ -422,8 +366,6 @@ $("#supervisorAcceptBackBtn").click(function() {
     $("#employeeInfoPage").css("display", "none");
 
   </script>
-
-    
 
     <?!= include('js/introductionJS'); ?>
     <?!= include('js/employeeInfoJS'); ?>

@@ -151,6 +151,28 @@
         $("#submitNewItem").prop('disabled', !isValid);
     }
 
+    // Moves on to the supervisor review page
+    $("#workerAcceptHoursBtn").click(function() {
+        $("#specificInfoPage").css('display', 'none');
+        $("#supervisorReviewPage").css('display', 'block');
+        
+        $("#progressBar3").removeClass("bg-warning");
+        $("#progressBar3").addClass("bg-success");
+        $("#progressBar4").removeClass("bg-danger");
+        $("#progressBar4").addClass("bg-warning");
+
+        $("#progressBar3").removeClass("progress-highlight");
+        $("#progressBar4").addClass("progress-highlight");
+
+        currentPage = "supervisorReview";
+
+        // Update review page with employee input.
+        populateReviewPage();     
+
+        return;
+    });
+
+
     // Global Variables
 
     // currentLaneAddItemButton keeps track of which swim lane element is
