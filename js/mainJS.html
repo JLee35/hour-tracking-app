@@ -46,6 +46,7 @@
       playerId = location.parameter['id'];
     });
 
+    // TODO: Clean this up. It is entirely too long.
     $("#signOutBtn").click(function(){
 
         $("#pleaseWaitModal").modal('show');
@@ -160,13 +161,11 @@
             // Call function back in main to avoid syntax error.
             reloadReviewPage();
         }
+    });
 
-
-
-    //INITIALLY MAKE ALL PAGES EXCEPT the introduction page invisible
+    // Hide all pages except introduction.
     $("#generalInfoPage").css("display", "none");
     $("#specificInfoPage").css('display', 'none');
     $("#supervisorReviewPage").css("display", "none");
     $("#employeeInfoPage").css("display", "none");
-    });
 </script>

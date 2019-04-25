@@ -27,8 +27,7 @@
         $("#progressBar4").removeClass("progress-highlight");
         $("#progressBar3").addClass("progress-highlight");
 
-        currentPage = "specificInfoPage";    
-
+        currentPage = "specificInfoPage";
     });
 
     // Given an ID containing the day of the week, populate the details
@@ -90,8 +89,6 @@
         var date1 = new Date();
         $("#signatureDate").text(date1.toLocaleDateString());
 
-        // code help for here from: https://stackoverflow.com/questions/6338217/get-a-css-value-with-javascript
-        
         signaturePad.clear();
     }
     
@@ -121,6 +118,4 @@
       $(".time-entryOutput").text("");
       $("#employeeName").val("");
     });
-
-    
 </script>
