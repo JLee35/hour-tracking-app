@@ -42,6 +42,9 @@
     <!-- Progress Bar -->
     <?!= include('html/progressBar'); ?>
 
+    <!-- Introduction Page -->
+    <?!= include('html/introductionPage'); ?>
+
     <!-- Employee Info Page -->
     <?!= include('html/employeeInfoPage'); ?>
 
@@ -54,42 +57,17 @@
     <!-- Review, Sign, Submit Page -->
     <?!= include('html/reviewSignSubmitPage'); ?>
 
-    <!-- Start Introduction Page -->
-    <?!= include('html/introductionPage'); ?>
+    <!-- Add Another Employee Modal -->
+    <?!= include('html/addAnotherEmployeeModal'); ?>
 
-    <!-- Start of ADD ANOTHER EMPLOYEE MODAL -->
-    <div id="addAnotherEmployeeModal" class="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 100%">
-          <div class="modal-header">
-            <h5 class="modal-title">Add Another Employee?</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Do you want to add information for another employee?</p>
-          </div>
-          <div class="modal-footer">
-            <button id="addEmployeeBtn" type="button" class="btn btn-primary">Yes, Add Another Employee</button>
-            <button id="signOutBtn" type="button" class="btn btn-secondary">Sign Out</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End of Add Another Employee Modal -->
+    <!-- Please Wait modal -->
+    <?!= include('html/pleaseWaitModal'); ?>
+    
   </div>
+  <!-- End main container -->
 
-  <!-- Start Please Wait modal -->
-  <div id="pleaseWaitModal" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1">
-      <div class="modal-dialog modal-sm">
-          <div class="modal-content" style="width: 100%">
-              <span class="fa fa-spinner fa-spin fa-3x" style="text-align: center;"></span>
-              <span>Please wait...</span>
-          </div>
-      </div>
-  </div>
-  <!-- End Please Wait modal -->
+  
+  
 
     <script>
       
@@ -350,7 +328,6 @@ $("#addEmployeeBtn").click(function(e){
         });
 
       swimlaneinfo.push(mondaylist);
-      console.log(mondaylist);
 
       var tuesdayitems = $("#tuesdayDetailsLane").find("div.swim-lane-item-content");
       var tuesdaylist = [];
@@ -363,7 +340,6 @@ $("#addEmployeeBtn").click(function(e){
         });
 
       swimlaneinfo.push(tuesdaylist);
-      console.log(tuesdaylist);
 
       var wednesdayitems = $("#wednesdayDetailsLane").find("div.swim-lane-item-content");
       var wednesdaylist = [];
@@ -376,7 +352,6 @@ $("#addEmployeeBtn").click(function(e){
         });
 
       swimlaneinfo.push(wednesdaylist);
-      console.log(wednesdaylist);
 
       var thursdayitems = $("#thursdayDetailsLane").find("div.swim-lane-item-content");
       var thursdaylist = [];
@@ -389,7 +364,6 @@ $("#addEmployeeBtn").click(function(e){
         });
 
       swimlaneinfo.push(thursdaylist);
-      console.log(thursdaylist);
 
       var fridayitems = $("#fridayDetailsLane").find("div.swim-lane-item-content");
       var fridaylist = [];
@@ -402,7 +376,6 @@ $("#addEmployeeBtn").click(function(e){
         });
 
       swimlaneinfo.push(fridaylist);
-      console.log(fridaylist);
 
       var saturdayitems = $("#saturdayDetailsLane").find("div.swim-lane-item-content");
       var saturdaylist = [];
@@ -415,7 +388,6 @@ $("#addEmployeeBtn").click(function(e){
         });
 
       swimlaneinfo.push(saturdaylist);
-      console.log(saturdaylist);
 
       var sundayitems = $("#sundayDetailsLane").find("div.swim-lane-item-content");
       var sundaylist = [];
@@ -428,7 +400,6 @@ $("#addEmployeeBtn").click(function(e){
         });
 
       swimlaneinfo.push(sundaylist);
-      console.log(sundaylist);
 
       allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date2.toLocaleString(), swimlaneinfo]);
 
@@ -544,8 +515,6 @@ function submitSuccess()
 ****************************************************************/
 
     $("#generalContinue").click(function() {
-      //var mondaytime = new Date();
-      console.log("Start time: " + $("#mondayStart").val());
       $("#generalInfoPage").css('display', 'none');
 
       if(!$("#progressBar3").hasClass("bg-success"))

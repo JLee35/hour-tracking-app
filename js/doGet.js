@@ -94,7 +94,6 @@ function requestAccount(email, password) {
         
       for(var i = 0; i < numUsers != 0 && users.length; i++) {
           if(users[i][0] == email) {
-            console.log("Returning zero because email already used!");
             return 0;
           }
       }
