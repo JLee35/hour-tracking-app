@@ -4,28 +4,33 @@
 <head>
     <base target="_top">
     <meta charset="utf-8">
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+
+    <!-- Start external style references -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
+    <!-- End external style references -->
+
+    <!-- Start external script references -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-    <!-- Datepicker info from: https://github.com/uxsolutions/bootstrap-datepicker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
-    <!--<script src="libs/jSignature/jSignature.min.js" crossorigin="anonymous"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" 
-          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-          
+    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+    <!-- End external script references -->  
 </head>
 
+<!-- Start internal style references -->
 <style>    
   <?!= include('css/scoutLakeCSS'); ?> 
 </style>
+<!-- End internal style references -->
 
 <body>
   <!-- Start main container -->
@@ -66,26 +71,24 @@
   </div>
   <!-- End main container -->
 
-  
-  
-
-    <script>
+  <script>
       
-      var playerName = <?=data.playerId?>; // holds player name for top bar
-      var playerId = "";
+    var playerName = <?=data.playerId?>; // holds player name for top bar
+    var playerId = "";
 
-      var workOrders;
-      var phaseCodes;
+    var workOrders;
+    var phaseCodes;
 
-      // from https://developers.google.com/apps-script/guides/html/reference/url#methods
-      google.script.url.getLocation(function(location) {
-        playerId = location.parameter['id'];
-      });
+    // from https://developers.google.com/apps-script/guides/html/reference/url#methods
+    google.script.url.getLocation(function(location) {
+      playerId = location.parameter['id'];
+    });
 
   // This said to use getElementById instead of jQuery: https://stackoverflow.com/questions/5808162/getcontext-is-not-a-function
   // That fixed a "t.getcontext is not a function" error
   // signature_pad from: https://github.com/szimek/signature_pad
 
+  // Note: Signature pad must stay in main HTML.
   var element = document.getElementById("testMedia");
   style = window.getComputedStyle(element);
 
@@ -97,70 +100,27 @@
 
   $("#toDelete").html('');
 
-  // Code help from: https://uxsolutions.github.io/bootstrap-datepicker/?markup=input&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&maxViewMode=4&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&daysOfWeekDisabled=1&daysOfWeekDisabled=2&daysOfWeekDisabled=3&daysOfWeekDisabled=4&daysOfWeekDisabled=5&daysOfWeekDisabled=6&keyboardNavigation=on&forceParse=on#sandbox
-  $('#weekEnding').datepicker({
-        daysOfWeekDisabled: "1,2,3,4,5,6"
-    });
-
-  /****************************************************************
-
-   FUNCTION:   initializeFromSheet()
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      To initialize work order and phase codes from sheet
-
-****************************************************************/
-
-function initializeFromSheet()
-{
+  
+function initializeFromSheet() {
   google.script.run.withSuccessHandler(initializeSuccess).withFailureHandler(initializeFailure).loadFromSpreadsheet();
 }
 
-  /****************************************************************
-
-   FUNCTION:   initializeFailure()
-
-   ARGUMENTS:  error
-
-   RETURNS:    none
-
-   NOTES:      Callback function for client-side loadFromSpreadsheet function.
-
-****************************************************************/
-
-function initializeFailure(error)
-{
+// Callback function for client-side loadFromSpreadsheet function.
+function initializeFailure(error) {
   console.log(error);
 }
 
-/****************************************************************
-
-   FUNCTION:   initializeSuccess()
-
-   ARGUMENTS:  serverSideReturn
-
-   RETURNS:    none
-
-   NOTES:      Callback function for client-side loadFromSpreadsheet function.
-
-****************************************************************/
-
-function initializeSuccess(serverSideReturn)
-{
+// Callback function for client-side loadFromSpreadsheet function.
+function initializeSuccess(serverSideReturn) {
   workOrders = serverSideReturn[0];
   phaseCodes = serverSideReturn[1];
 
-  for (var i = 0; i < workOrders.length; i++)
-  {
+  for (var i = 0; i < workOrders.length; i++) {
     // how to append: https://api.jquery.com/append/
     $("#jobNumber").append('<option value="' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + '">' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + "</option>");
   }
   
-  for (var i = 0; i < phaseCodes.length; i++)
-  {
+  for (var i = 0; i < phaseCodes.length; i++) {
     // how to append: https://api.jquery.com/append/
     if(phaseCodes[i][1] != "")
       $("#phaseCodeInput").append('<option value="' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + '">' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + "</option>");
@@ -180,69 +140,6 @@ function initializeSuccess(serverSideReturn)
 initializeFromSheet();
 
 
-/****************************************************************
-
-   FUNCTION:   change() for jobNumber
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Updates jobName when jobNumber is changed
-
-****************************************************************/
-
-// change from: https://api.jquery.com/change/
-/*$("#jobNumber").change(function(){
-  // how to get value of selected option: https://learn.jquery.com/using-jquery-core/faq/how-do-i-get-the-text-value-of-a-selected-option/
-  var selected = parseInt($("#jobNumber").val());
-  if(selected != -1)
-    $("#jobName").text(workOrders[parseInt($("#jobNumber").val())][1]);
-});*/
-
-/****************************************************************
-
-   FUNCTION:   change() for phaseCodeInput
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Updates phaseCode when phaseCodeInput is changed
-
-****************************************************************/
-
-// change from: https://api.jquery.com/change/
-/*$("#phaseCodeInput").change(function(){
-  // how to get value of selected option: https://learn.jquery.com/using-jquery-core/faq/how-do-i-get-the-text-value-of-a-selected-option/
-  var selected = parseInt($("#phaseCodeInput").val());
-  if(selected != -1)
-    $("#phaseCode").text(phaseCodes[parseInt($("#phaseCodeInput").val())][1]);
-});*/
-    
-/****************************************************************
-
-   FUNCTION:   getStarted onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Handles onclick of the getStarted button.
-
-****************************************************************/
-
-$("#getStarted").click(function(e) {
-      $("#introductionPage").css("display", "none");
-      currentPage = "employeeInfoPage";
-
-      $("#progressBar1").removeClass("bg-danger");
-      $("#progressBar1").addClass("bg-warning");
-      $("#progressBar1").addClass("progress-highlight");
-
-      $("#employeeInfoPage").css("display", "block");
-      e.stopPropagation();
-    });
 
 /****************************************************************
 
@@ -684,12 +581,13 @@ $("#supervisorAcceptBackBtn").click(function() {
 
   </script>
 
-    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+    
 
-    <?!=include('js/specificInfoJS'); ?>
-    <?!=include('js/reviewSignSubmitJS'); ?>
-    <?!=include('js/employeeInfoJS'); ?>
-    <?!=include('js/generalInfoJS'); ?>
+    <?!= include('js/introductionJS'); ?>
+    <?!= include('js/employeeInfoJS'); ?>
+    <?!= include('js/generalInfoJS'); ?>
+    <?!= include('js/specificInfoJS'); ?>
+    <?!= include('js/reviewSignSubmitJS'); ?>
   </body>
 </html>
 
