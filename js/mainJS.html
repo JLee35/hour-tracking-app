@@ -66,26 +66,13 @@
         var date2 = new Date();
         var swimlaneinfo = [];
 
-        var mondayItems = $("#mondayDetailsLane").find("div.swim-lane-item-content");
-        swimlaneinfo.push(updateDailyItems(mondayItems));
-
-        var tuesdayItems = $("#tuesdayDetailsLane").find("div.swim-lane-item-content");
-        swimlaneinfo.push(updateDailyItems(tuesdayItems));
-        
-        var wednesdayItems = $("#wednesdayDetailsLane").find("div.swim-lane-item-content");
-        swimlaneinfo.push(updateDailyItems(wednesdayItems));
-
-        var thursdayItems = $("#thursdayDetailsLane").find("div.swim-lane-item-content");
-        swimlaneinfo.push(updateDailyItems(thursdayItems));
-
-        var fridayItems = $("#fridayDetailsLane").find("div.swim-lane-item-content");
-        swimlaneinfo.push(updateDailyItems(fridayItems));
-
-        var saturdayItems = $("#saturdayDetailsLane").find("div.swim-lane-item-content");
-        swimlaneinfo.push(updateDailyItems(saturdayItems));
-
-        var sundayItems = $("#sundayDetailsLane").find("div.swim-lane-item-content");
-        swimlaneinfo.push(updateDailyItems(sundayItems));
+        swimlaneinfo.push(updateDailyItems($("#mondayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#tuesdayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#wednesdayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#wednesdayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#fridayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#saturdayDetailsLane").find("div.swim-lane-item-content")));
+        swimlaneinfo.push(updateDailyItems($("#sundayDetailsLane").find("div.swim-lane-item-content")));
 
         allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date2.toLocaleString(), swimlaneinfo]);
 
