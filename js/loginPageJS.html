@@ -1,0 +1,145 @@
+<script>
+    // Inputs
+    EmailInput = $("#inputEmail");
+    PasswordInput = $("#inputPassword");
+    RequestEmailInput = $("#requestEmail");
+    RequestPasswordInput = $("#requestPassword");
+    ConfirmPasswordInput = $("#confirmPassword");
+
+    // Outputs
+    PasswordRequestError = $("#passwordRequestError");
+    RequestModalHeader = $("#requestModalHeader");
+    RequestModalBody = $("#requestModalBody");
+
+    // Buttons
+    SignInButton = $("#signIn");
+    RequestAccountButton = $("#requestAccount");
+    SubmitRequestButton = $("#submitRequest");
+
+    // Modals
+    RequestAccountModal = $("#requestAccountModal");
+    PleaseWaitModal = $("#pleaseWaitModal");
+    SuccessMessageModal = $("#successMessageModal");
+
+    // Input click event listeners
+    EmailInput.click(function(e) { updateFeedbackText(""); });
+    PasswordInput.click(function(e) { updateFeedbackText(""); });
+    RequestPasswordInput.click(function(e) {
+        RequestPasswordInput.css("background-color", "white");
+        PasswordRequestError.text("Request an account");
+    });
+
+    // Button click event listeners
+    SignInButton.click(signInClick);
+    RequestAccountButton.click(function(e) { RequestAccountModal.modal('show'); });
+    SubmitRequestButton.click(submitRequestClick);
+
+    // Set page input focus.
+    EmailInput.focus();
+
+    function submitRequestClick() {
+        if(RequestPasswordInput.val() != ConfirmPasswordInput.val()) {
+            PasswordRequestError.text("Passwords do not match!");
+            RequestPasswordInput.css("background-color", "red");
+            return;
+        }
+
+        RequestAccountModal.modal('hide');
+        PleaseWaitModal.modal('show');
+
+        google.script.run.withSuccessHandler(accountRequestSuccess).withFailureHandler(accountRequestFailure).requestAccount(RequestEmailInput.val(), RequestPasswordInput.val());
+    }
+
+    function accountRequestSuccess(serverSideReturn) {
+        if(serverSideReturn) {
+            RequestModalHeader.text("Success!");
+            RequestModalBody.text("Your account has successfully been created!");
+        }
+
+        else {
+            RequestModalHeader.text("Failed!");
+            RequestModalBody.text("Account creation failed, that email either already has an account or is not an authorized email.");
+        }
+
+        PleaseWaitModal.modal('hide');
+
+        setTimeout(function() {
+            SuccessMessageModal.modal('show');
+            return serverSideReturn;
+        }, 500);
+    }
+
+    function accountRequestFailure(error) {
+        updateFeedbackText(error);
+
+        PleaseWaitModal.modal('hide');
+
+        RequestModalHeader.text("Error!");
+        RequestModalBody.text("An error occurred during account creation.");
+
+        setTimeout(function() {
+            SuccessMessageModal.modal('show');
+        }, 500);
+    }
+
+    // Handles signIn on click event.
+    function signInClick() {
+        if(inputIsEmpty(EmailInput)) {
+            updateFeedbackText("Please enter an email and try again.");
+        }
+
+        else if(inputIsEmpty(PasswordInput)) {
+            updateFeedbackText("Please enter a password and try again.");
+        }
+        
+        else
+        {
+            PleaseWaitModal.modal('show');
+            // how to use google.script.run: https://www.youtube.com/watch?v=RRQvySxaCW0
+            // and https://developers.google.com/apps-script/guides/html/reference/run
+            google.script.run.withSuccessHandler(authenticateSuccess).withFailureHandler(authenticateFailure).authenticate($("#inputEmail").val(), $("#inputPassword").val());
+        }
+    }
+
+    function inputIsEmpty(inputElement) {
+        return inputElement.val() == "";
+    }
+
+    function updateFeedbackText(text) {
+        $("#feedback").text(text);
+    }
+
+    function authenticateSuccess(serverSideReturn) {
+        if(serverSideReturn) {
+            // Session storage help from: https://stackoverflow.com/questions/1981673/persist-javascript-variables-across-pages
+            sessionStorage.setItem("inputEmail", EmailInput.val());
+            window.open(baseURL + "?user=" + $("#inputEmail").val(), "_top");
+        }
+        
+        else {
+            updateFeedbackText("Incorrect username/password.");
+        }
+        
+        PleaseWaitModal.modal('hide');            
+        return serverSideReturn;
+    }
+
+    function authenticateFailure(error) {
+        updateFeedbackText(error);
+        PleaseWaitModal.modal('hide');
+    }
+    
+    document.onkeypress = function(e) {
+        if(e.key == "Enter") {
+            e.preventDefault();
+            
+            if(RequestAccountModal.hasClass('show')) {
+                SubmitRequestButton.click();
+            }
+
+            else {
+                SignInButton.click();
+            }
+        }
+    }
+</script>

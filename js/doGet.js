@@ -1,9 +1,8 @@
-// Test test
-
 function doGet(e) {
   var template;
   tName = "Scout Lake Construction Payroll App";
-  if (e.parameter.user) { //user page
+  
+  if (e.parameter.user) {
     template = HtmlService.createTemplateFromFile('html/mainScoutLake');
     template.data = {playerId: e.parameter.user};
     return template
@@ -11,12 +10,9 @@ function doGet(e) {
     .setSandboxMode(HtmlService.SandboxMode.IFRAME)
     .addMetaTag('viewport', 'width=device-width, initial-scale=1')
     .setTitle("Home page of " + e.parameter.user);
-  } if (e.parameter.page) { //show leaderboard under constructino page
-    return HtmlService.createHtmlOutputFromFile('html/LeaderboardUnderConstruction')
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-      .addMetaTag('viewport', 'width=device-width, initial-scale=1')
-      .setTitle("SpeedScore LIVE Leaderboard");
-  } else { //login page
+  }
+  
+  else { //login page
     template = HtmlService.createTemplateFromFile('html/loginScoutLake');
     return template
     .evaluate()
