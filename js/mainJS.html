@@ -65,89 +65,27 @@
         var pngImage = signaturePad.toDataURL("image/png");
         var date2 = new Date();
         var swimlaneinfo = [];
-        var mondayitems = $("#mondayDetailsLane").find("div.swim-lane-item-content");
-        var mondaylist = [];
 
-        mondayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+        var mondayItems = $("#mondayDetailsLane").find("div.swim-lane-item-content");
+        swimlaneinfo.push(updateDailyItems(mondayItems));
 
-            mondaylist.push([desc,hours]);
-        });
+        var tuesdayItems = $("#tuesdayDetailsLane").find("div.swim-lane-item-content");
+        swimlaneinfo.push(updateDailyItems(tuesdayItems));
+        
+        var wednesdayItems = $("#wednesdayDetailsLane").find("div.swim-lane-item-content");
+        swimlaneinfo.push(updateDailyItems(wednesdayItems));
 
-        swimlaneinfo.push(mondaylist);
+        var thursdayItems = $("#thursdayDetailsLane").find("div.swim-lane-item-content");
+        swimlaneinfo.push(updateDailyItems(thursdayItems));
 
-        var tuesdayitems = $("#tuesdayDetailsLane").find("div.swim-lane-item-content");
-        var tuesdaylist = [];
+        var fridayItems = $("#fridayDetailsLane").find("div.swim-lane-item-content");
+        swimlaneinfo.push(updateDailyItems(fridayItems));
 
-        tuesdayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+        var saturdayItems = $("#saturdayDetailsLane").find("div.swim-lane-item-content");
+        swimlaneinfo.push(updateDailyItems(saturdayItems));
 
-            tuesdaylist.push([desc,hours]);
-        });
-
-        swimlaneinfo.push(tuesdaylist);
-
-        var wednesdayitems = $("#wednesdayDetailsLane").find("div.swim-lane-item-content");
-        var wednesdaylist = [];
-
-        wednesdayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            wednesdaylist.push([desc,hours]);
-        });
-
-        swimlaneinfo.push(wednesdaylist);
-
-        var thursdayitems = $("#thursdayDetailsLane").find("div.swim-lane-item-content");
-        var thursdaylist = [];
-
-        thursdayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            thursdaylist.push([desc,hours]);
-        });
-
-        swimlaneinfo.push(thursdaylist);
-
-        var fridayitems = $("#fridayDetailsLane").find("div.swim-lane-item-content");
-        var fridaylist = [];
-
-        fridayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            fridaylist.push([desc,hours]);
-        });
-
-        swimlaneinfo.push(fridaylist);
-
-        var saturdayitems = $("#saturdayDetailsLane").find("div.swim-lane-item-content");
-        var saturdaylist = [];
-
-        saturdayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            saturdaylist.push([desc,hours]);
-        });
-
-        swimlaneinfo.push(saturdaylist);
-
-        var sundayitems = $("#sundayDetailsLane").find("div.swim-lane-item-content");
-        var sundaylist = [];
-
-        sundayitems.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-            sundaylist.push([desc,hours]);
-        });
-
-        swimlaneinfo.push(sundaylist);
+        var sundayItems = $("#sundayDetailsLane").find("div.swim-lane-item-content");
+        swimlaneinfo.push(updateDailyItems(sundayItems));
 
         allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date2.toLocaleString(), swimlaneinfo]);
 
@@ -162,6 +100,19 @@
             reloadReviewPage();
         }
     });
+
+    function updateDailyItems(items) {
+        var list = [];
+
+        items.each(function (index, element) {
+            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+            list.push([desc,hours]);
+        });
+
+        return list;
+    }
 
     // Hide all pages except introduction.
     $("#generalInfoPage").css("display", "none");
