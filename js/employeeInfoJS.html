@@ -38,4 +38,23 @@
     $('#weekEnding').datepicker({
         daysOfWeekDisabled: "1,2,3,4,5,6"
     });
+
+    $("#beginLoggingBtn").click(function() {
+        // Update all dates
+        updateDates();
+
+        $("#employeeInfoPage").css('display', 'none');
+        $("#generalInfoPage").css('display', 'block');
+        if(!$("#progressBar2").hasClass("bg-success"))
+        {
+            $("#progressBar1").removeClass("bg-warning");
+            $("#progressBar1").addClass("bg-success");
+            $("#progressBar2").removeClass("bg-danger");
+            $("#progressBar2").addClass("bg-warning");
+        }
+        $("#progressBar1").removeClass("progress-highlight");
+        $("#progressBar2").addClass("progress-highlight");
+        currentPage = "generalInfoPage";
+        return;
+  });
 </script>

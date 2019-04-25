@@ -99,7 +99,6 @@
 
     $("#toDelete").html('');
 
-  
   function initializeFromSheet() {
     google.script.run.withSuccessHandler(initializeSuccess).withFailureHandler(initializeFailure).loadFromSpreadsheet();
   }
@@ -115,17 +114,14 @@
     phaseCodes = serverSideReturn[1];
 
     for (var i = 0; i < workOrders.length; i++) {
-      // how to append: https://api.jquery.com/append/
       $("#jobNumber").append('<option value="' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + '">' + workOrders[i][0] + "  " + "(" + workOrders[i][1] + ")" + "</option>");
     }
     
     for (var i = 0; i < phaseCodes.length; i++) {
-      // how to append: https://api.jquery.com/append/
       if(phaseCodes[i][1] != "")
         $("#phaseCodeInput").append('<option value="' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + '">' + phaseCodes[i][0] + "  " + "(" + phaseCodes[i][1] + ")" + "</option>");
     }
 
-    // jobNumber button must be large enough so that it is easy to click on the ipad.
     $("#jobNumber").chosen({width: "100%"});
 
     // Auto width here: https://stackoverflow.com/questions/10303120/jquery-chosen-plugin-not-styling-correctly-very-small
@@ -138,35 +134,6 @@
 
   initializeFromSheet();
  
-// $("#addEmployeeBtn").click(function(e){
-//       $("#supervisorReviewPage").css('display', 'none');
-//       $("#employeeInfoPage").css('display', 'block');
-
-//       $("#progressBar1").removeClass("bg-success");
-//       $("#progressBar1").addClass("bg-warning");
-//       $("#progressBar2").removeClass("bg-success");
-//       $("#progressBar2").addClass("bg-danger");
-//       $("#progressBar3").removeClass("bg-success");
-//       $("#progressBar3").addClass("bg-danger");
-//       $("#progressBar4").removeClass("bg-warning");
-//       $("#progressBar4").addClass("bg-danger");
-
-//       $('#addAnotherEmployeeModal').modal('hide');
-
-//       // add info for this employee to employee array
-//       // TODO total hours and labor hours 
-//       var pngImage = signaturePad.toDataURL("image/png");
-//       var date = new Date();
-//       allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date.toLocaleString()]);
-
-//       currentPage = "supervisorReview";  
-
-//       generalHourInfo = [[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]]];
-//       $(".time-entry").val("");
-//       $(".time-entryOutput").text("");
-//       $("#employeeName").val("");
-//     });
-
 /****************************************************************
 
    FUNCTION:   signOutBtn onclick
@@ -298,54 +265,19 @@
       }
     });
 
-/****************************************************************
-
-   FUNCTION:   topSignOut onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Handles onclick of the top sign-out button.
-
-   ****************************************************************/
-
 $("#topSignOut").click(function(){
   $("#signOutBtn").click();
 });
 
-/****************************************************************
-
-   FUNCTION:   submitFailure()
-
-   ARGUMENTS:  error
-
-   RETURNS:    none
-
-   NOTES:      Callback function for client-side insertEmployeeInfo function.
-
-****************************************************************/
-
-function submitFailure(error)
-{
+// Callback function for client-side insertEmployeeInfo function.
+function submitFailure(error) {
   console.log(error);
   currentPage = "supervisorReview";  
   var baseURL = <?=ScriptApp.getService().getUrl()?>;
   window.open(baseURL, "_top");
 }
 
-/****************************************************************
-
-   FUNCTION:   submitSuccess()
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Callback function for client-side insertEmployeeInfo function.
-
-****************************************************************/
-
+// Callback function for client-side insertEmployeeInfo function.
 function submitSuccess()
 {
   currentPage = "supervisorReview";  
@@ -353,82 +285,7 @@ function submitSuccess()
   window.open(baseURL, "_top");
 }
 
-/****************************************************************
-
-   FUNCTION:   goToScoringBtn onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Handles onclick of the Go To Scoring button.
-               Displays the Hole Scoring page.
-****************************************************************/
-
-    $("#beginLoggingBtn").click(function() {
-      // Update all dates
-      updateDates();
-
-      $("#employeeInfoPage").css('display', 'none');
-      $("#generalInfoPage").css('display', 'block');
-      if(!$("#progressBar2").hasClass("bg-success"))
-      {
-        $("#progressBar1").removeClass("bg-warning");
-        $("#progressBar1").addClass("bg-success");
-        $("#progressBar2").removeClass("bg-danger");
-        $("#progressBar2").addClass("bg-warning");
-      }
-      $("#progressBar1").removeClass("progress-highlight");
-      $("#progressBar2").addClass("progress-highlight");
-      currentPage = "generalInfoPage";
-      return;
-    });
-
-/****************************************************************
-
-   FUNCTION:   generalContinue onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Moves to specific info page
-               
-****************************************************************/
-
-    $("#generalContinue").click(function() {
-      $("#generalInfoPage").css('display', 'none');
-
-      if(!$("#progressBar3").hasClass("bg-success"))
-      {
-        $("#progressBar2").removeClass("bg-warning");
-        $("#progressBar2").addClass("bg-success");
-        $("#progressBar3").removeClass("bg-danger");
-        $("#progressBar3").addClass("bg-warning");
-      }
-
-      $("#progressBar2").removeClass("progress-highlight");
-      $("#progressBar3").addClass("progress-highlight");
-
-
-      $("#specificInfoPage").css('display', 'block');
-      currentPage = "specificInfoPage";       
-
-      return;
-    });
-
-/****************************************************************
-
-   FUNCTION:   generalBack onclick
-
-   ARGUMENTS:  none
-
-   RETURNS:    none
-
-   NOTES:      Returns the employee info page
-               
-****************************************************************/
-
+// Returns the employee info page
 $("#generalBack").click(function() {
 
       $("#generalInfoPage").css('display', 'none');
