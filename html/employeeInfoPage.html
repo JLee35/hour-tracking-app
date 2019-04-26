@@ -7,6 +7,12 @@
                 <div class="text-left">Name:</div>
                 <input type="text" id="employeeName" class="form-control" placeholder="Example: Steve Bond" required autofocus>
                 <br>
+                <div class="text-left">Classification:</div>
+                <input type="text" id="employeeClassification" class="form-control" placeholder="Example: Superintendent" required autofocus>
+                <br>
+                <div class="text-left">Project Manager:</div>
+                <input type="text" id="employeeManager" class="form-control" placeholder="Example: Erick Bond" required autofocus>
+                <br>
                 <div class="text-left">Job Number:</div>
                 <select data-placeholder="Example: 19-003" id="jobNumber" class="size-chosen move-chosen" required>
                   <option value="00-000">00-000</option>
@@ -17,7 +23,11 @@
                 <input type="text" id="weekEnding" class="form-control" required>
                 <br>
                 <button id="beginLoggingBtn" class="btn btn-lg btn-primary btn-block" type="button">
-                    Begin recording work hours
+                    Continue
+                </button>
+                <br>
+                <button id="employeeInfoBackBtn" class="btn btn-lg btn-primary btn-block" type="button">
+                    Save and return to main menu
                 </button>
             </form>
           </center>

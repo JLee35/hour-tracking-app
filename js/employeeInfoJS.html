@@ -40,7 +40,6 @@
     });
 
     $("#beginLoggingBtn").click(function() {
-        // Update all dates
         updateDates();
 
         $("#employeeInfoPage").css('display', 'none');
@@ -56,5 +55,14 @@
         $("#progressBar2").addClass("progress-highlight");
         currentPage = "generalInfoPage";
         return;
-  });
+    });
+
+    $("#employeeInfoBackBtn").click(function () {
+        $("#employeeInfoPage").css('display', 'none');
+        $("#introductionPage").css('display', 'block');
+
+        $("#progressBar1").removeClass("progress-highlight");
+        currentPage = "introductionPage";
+        return;
+    });
 </script>
