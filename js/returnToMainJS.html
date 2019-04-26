@@ -1,0 +1,29 @@
+<script>
+    $("#returnToMainBtn").click(function(e) {
+        $("#supervisorReviewPage").css('display', 'none');
+        $("#introductionPage").css('display', 'block');
+
+        $("#progressBar1").removeClass("bg-success");
+        $("#progressBar1").addClass("bg-danger");
+        $("#progressBar2").removeClass("bg-success");
+        $("#progressBar2").addClass("bg-danger");
+        $("#progressBar3").removeClass("bg-success");
+        $("#progressBar3").addClass("bg-danger");
+        $("#progressBar4").removeClass("bg-warning");
+        $("#progressBar4").addClass("bg-danger");
+
+        $("#progressBar4").removeClass("progress-highlight");
+
+        currentPage = "introductionPage";  
+        
+        $(".time-entry").val("");
+        $(".time-entryOutput").text("");
+        $("#employeeName").val("");
+        
+        // TODO: Empty all input fields.
+    });
+
+    $("#signOutBtn").click(function() {
+        signout();
+    });
+</script>
