@@ -7,40 +7,67 @@
         var weekEnding = $("#weekEnding").val();
 
         if (weekEnding != "") {
+
+            timecardData["weekEnding"] = weekEnding;
+
             var endingDateInMilliseconds = new Date(Date.parse(weekEnding)).getTime();
             // There are 86400000 ms in a day, subtracting that
             // from current date object gives us previous day.
 
             setDateAndMonth(".sundayDate", endingDateInMilliseconds);
+            timecardData["sunday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".saturdayDate", endingDateInMilliseconds -= 86400000);
+            timecardData["saturday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".fridayDate", endingDateInMilliseconds -= 86400000);
+            timecardData["friday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".thursdayDate", endingDateInMilliseconds -= 86400000);
+            timecardData["thursday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".wednesdayDate", endingDateInMilliseconds -= 86400000);
+            timecardData["wednesday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".tuesdayDate", endingDateInMilliseconds -= 86400000);
+            timecardData["tuesday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".mondayDate", endingDateInMilliseconds -= 86400000);
+            timecardData["monday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
         }
     }
 
     // Set current date and month based on milliseconds since epoch.
     function setDateAndMonth(dayElement, dateInMilliseconds) {
-        var date = new Date(dateInMilliseconds)
+        $(dayElement).text(getDateFromMilliseconds(dateInMilliseconds));
+    }
+
+    function getDateFromMilliseconds(dateInMilliseconds) {
+        var date = new Date(dateInMilliseconds);
 
         // Months are zero index based, we must add one
         // to get correct value.
         var month = date.getMonth() + 1;
         var day = date.getDate();
 
-        var newDate = month + "/" + day;
-
-        $(dayElement).text(newDate);
+        return month + "/" + day;
     }
 
     $('#weekEnding').datepicker({
         daysOfWeekDisabled: "1,2,3,4,5,6"
     });
 
+    // Pull all info from page exept for week info (already populated).
+    function populateTimecardWithPageInfo() {
+        timecardData["name"] = $("#employeeName").val();
+        timecardData["classification"] = $("#employeeClassification").val();
+        timecardData["jobNumber"] = $("#jobNumber").val();
+        timecardData["projectManager"] = $("#projectManager").val();
+
+        console.log(timecardData["name"]);
+        console.log(timecardData["classification"]);
+        console.log(timecardData["jobNumber"]);
+        console.log(timecardData["projectManager"]);
+    }
+
     $("#beginLoggingBtn").click(function() {
         updateDates();
+
+        populateTimecardWithPageInfo();
 
         $("#employeeInfoPage").css('display', 'none');
         $("#generalInfoPage").css('display', 'block');
