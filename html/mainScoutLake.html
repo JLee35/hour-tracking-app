@@ -78,8 +78,29 @@
     var workOrders;
     var phaseCodes;
 
+    // Timecard object used to store all collected timecard information.
+    var timecardData;
+
     // Note: baseURL reference must stay on html page for reference to compile.
     var baseURL = <?=ScriptApp.getService().getUrl()?>; 
+
+    // Constructor for blank timecard data.
+    function blankTimecardData() {
+      return new {
+          name: "",
+          classification: "",
+          projectManager: "",
+          jobNumber: "",
+          weekEnding: "",
+          monday: { start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          tuesday: { start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          wednesday: { start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          thursday: { start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          friday: { start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          saturuday: { start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          sunday: { start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] }
+      };
+    }
 
     // This said to use getElementById instead of jQuery: https://stackoverflow.com/questions/5808162/getcontext-is-not-a-function
     // That fixed a "t.getcontext is not a function" error
@@ -119,6 +140,11 @@
           keyboard: false
         });
       }, 800);
+    }
+
+    // Function that calls populateTimecard in doGet.
+    function submitTimecard() {
+        google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).populateTimecard(sessionStorage.getItem("inputEmail"));
     }
 
     // Resets all data and returns user to main page.

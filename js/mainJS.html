@@ -46,10 +46,6 @@
       playerId = location.parameter['id'];
     });
 
-    function submitTimecard() {
-        google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).submitEmployeeInfo(sessionStorage.getItem("inputEmail"));
-    }
-
     function updateDailyItems(items) {
         var list = [];
 

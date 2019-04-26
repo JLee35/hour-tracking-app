@@ -136,7 +136,7 @@ function loadFromSpreadsheet() {
   return [workOrders, phaseCodes];
 }
 
-function submitEmployeeInfo(email) {
+function populateTimecard(email, employee) {
   var date = new Date();
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var blankTimecard = ss.getSheetByName("Blank Timecard");
@@ -144,5 +144,4 @@ function submitEmployeeInfo(email) {
 
   var nameCell = ss.getRange('B8');
   //nameCell.setValue(employeeInfo[0]);
-
 }
