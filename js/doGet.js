@@ -149,82 +149,13 @@ NOTES:      Inputs employee info to the spreadsheet
 ****************************************************************/
 
 function submitEmployeeInfo(email, allEmployeeInfo) {
+  var nameCell, classificationCell, jobCell, weekEndingCell;
   var date = new Date();
-    SpreadsheetApp.getActiveSpreadsheet().insertSheet(email + " - " + date.toLocaleString());
-    var infoSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(email + " - " + date.toLocaleString());
+  var blankTimecard = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Blank Timecard");
 
-    for(var i = 0; i < allEmployeeInfo.length; i++)
-    {
-      // making room in the first two columns
-      infoSheet.autoResizeColumn(1);
-      infoSheet.autoResizeColumn(2);
+  var newTimecard = blankTimecard.copy(email + " - " + date.toLocaleString());
 
+  for (var i = 0; i < allEmployeeInfo.length; i++) {
 
-      infoSheet.appendRow(["Employee Name:", allEmployeeInfo[i][0]]);
-
-      if(i > 0) // so that we don't add spaces at the very beginning
-      {
-        // for spacing between sheets. Can only add blank row between rows, not appended at the end
-        // Help from: https://stackoverflow.com/questions/34689556/how-do-i-append-a-blank-row-in-a-google-spreadsheet-with-apps-script
-        infoSheet.insertRows(infoSheet.getLastRow(), 1);
-        infoSheet.insertRows(infoSheet.getLastRow(), 1);
-      }
-
-      infoSheet.appendRow(["Job Number:", allEmployeeInfo[i][1]]);
-      infoSheet.appendRow(["Week Ending:", allEmployeeInfo[i][2]]);
-      infoSheet.appendRow(["", "Start Time", "Lunch In", "Lunch Out", "Time Off"]);
-      infoSheet.insertRows(infoSheet.getLastRow(), 1);
-      infoSheet.appendRow(["Monday", allEmployeeInfo[i][3][0][0][0], allEmployeeInfo[i][3][0][1][0], allEmployeeInfo[i][3][0][2][0], allEmployeeInfo[i][3][0][3][0]]);
-      infoSheet.appendRow(["Tuesday", allEmployeeInfo[i][3][1][0][0], allEmployeeInfo[i][3][1][1][0], allEmployeeInfo[i][3][1][2][0], allEmployeeInfo[i][3][1][3][0]]);
-      infoSheet.appendRow(["Wednesday", allEmployeeInfo[i][3][2][0][0], allEmployeeInfo[i][3][2][1][0], allEmployeeInfo[i][3][2][2][0], allEmployeeInfo[i][3][2][3][0]]);
-      infoSheet.appendRow(["Thursday", allEmployeeInfo[i][3][3][0][0], allEmployeeInfo[i][3][3][1][0], allEmployeeInfo[i][3][3][2][0], allEmployeeInfo[i][3][3][3][0]]);
-      infoSheet.appendRow(["Friday", allEmployeeInfo[i][3][4][0][0], allEmployeeInfo[i][3][4][1][0], allEmployeeInfo[i][3][4][2][0], allEmployeeInfo[i][3][4][3][0]]);
-      infoSheet.appendRow(["Saturday", allEmployeeInfo[i][3][5][0][0], allEmployeeInfo[i][3][5][1][0], allEmployeeInfo[i][3][5][2][0], allEmployeeInfo[i][3][5][3][0]]);
-      infoSheet.appendRow(["Sunday", allEmployeeInfo[i][3][6][0][0], allEmployeeInfo[i][3][6][1][0], allEmployeeInfo[i][3][6][2][0], allEmployeeInfo[i][3][6][3][0]]);
-      infoSheet.appendRow(["Labor Hours:"]);
-      infoSheet.insertRows(infoSheet.getLastRow(), 1);
-      infoSheet.appendRow(["Code", "Description", "Hours"]);
-      infoSheet.appendRow(["Monday:"]);
-
-      for(var j = 0; j < allEmployeeInfo[i][6][0].length; j++) {
-        infoSheet.appendRow([allEmployeeInfo[i][6][0][j][0], allEmployeeInfo[i][6][0][j][1]])
-      }
-
-      infoSheet.appendRow(["Tuesday:"]);
-
-      for(var j = 0; j < allEmployeeInfo[i][6][1].length; j++) {
-        infoSheet.appendRow([allEmployeeInfo[i][6][1][j][0], allEmployeeInfo[i][6][1][j][1]])
-      }
-
-      infoSheet.appendRow(["Wednesday:"]);
-
-      for(var j = 0; j < allEmployeeInfo[i][6][2].length; j++) {
-        infoSheet.appendRow([allEmployeeInfo[i][6][2][j][0], allEmployeeInfo[i][6][2][j][1]])
-      }
-      infoSheet.appendRow(["Thursday:"]);
-      for(var j = 0; j < allEmployeeInfo[i][6][3].length; j++)
-      {
-        infoSheet.appendRow([allEmployeeInfo[i][6][3][j][0], allEmployeeInfo[i][6][3][j][1]])
-      }
-      infoSheet.appendRow(["Friday:"]);
-      for(var j = 0; j < allEmployeeInfo[i][6][4].length; j++)
-      {
-        infoSheet.appendRow([allEmployeeInfo[i][6][4][j][0], allEmployeeInfo[i][6][4][j][1]])
-      }
-      infoSheet.appendRow(["Saturday:"]);
-      for(var j = 0; j < allEmployeeInfo[i][6][5].length; j++)
-      {
-        infoSheet.appendRow([allEmployeeInfo[i][6][5][j][0], allEmployeeInfo[i][6][5][j][1]])
-      }
-      infoSheet.appendRow(["Sunday:"]);
-      for(var j = 0; j < allEmployeeInfo[i][6][6].length; j++)
-      {
-        infoSheet.appendRow([allEmployeeInfo[i][6][6][j][0], allEmployeeInfo[i][6][6][j][1]])
-      }
-
-      infoSheet.appendRow(["Signature:", "", "", "", "", allEmployeeInfo[i][4]]);
-      infoSheet.insertRows(infoSheet.getLastRow(), 1);
-      infoSheet.appendRow(["Date:"]);
-      infoSheet.appendRow([allEmployeeInfo[i][5]]);
-    }
+  }
 }
