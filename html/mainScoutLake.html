@@ -78,6 +78,9 @@
     var workOrders;
     var phaseCodes;
 
+    // Note: baseURL reference must stay on html page for reference to compile.
+    var baseURL = <?=ScriptApp.getService().getUrl()?>; 
+
     // This said to use getElementById instead of jQuery: https://stackoverflow.com/questions/5808162/getcontext-is-not-a-function
     // That fixed a "t.getcontext is not a function" error
     // signature_pad from: https://github.com/szimek/signature_pad
@@ -111,19 +114,23 @@
       $("#pleaseWaitModal").modal("hide");
 
       setInterval(function () {
-        // $("#returnToMainModal").modal({
-        //   backdrop: 'static',
-        //   keyboard: false
-        // });
-        $("#returnToMainModal").modal('show');
+        $("#returnToMainModal").modal({
+          backdrop: 'static',
+          keyboard: false
+        });
       }, 800);
-      
+    }
+
+    // Resets all data and returns user to main page.
+    function returnToMain() {
+      $("#pleaseWaitModal").modal('show');
+      window.open(baseURL + "?user=" + $("#inputEmail").val(), "_top");
     }
     
     // The currently displayed page.
     var currentPage = "introductionPage"; 
     var previousPage = "";
-    
+
   </script>
 
     <?!= include('js/mainJS'); ?>
