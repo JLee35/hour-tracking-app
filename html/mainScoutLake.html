@@ -63,7 +63,7 @@
     <?!= include('html/reviewSignSubmitPage'); ?>
 
     <!-- Add Another Employee Modal -->
-    <?!= include('html/addAnotherEmployeeModal'); ?>
+    <?!= include('html/returnToMainModal'); ?>
 
     <!-- Please Wait modal -->
     <?!= include('html/pleaseWaitModal'); ?>
@@ -73,11 +73,34 @@
 
   <script>
     // Note: Global variables must stay here.
-    var playerName = <?=data.playerId?>; // holds player name for top bar
-    var playerId = "";
+    var userEmail = <?=data.playerId?>; // holds player name for top bar
 
     var workOrders;
     var phaseCodes;
+
+    // Timecard object used to store all collected timecard information.
+    var timecardData;
+
+    // Note: baseURL reference must stay on html page for reference to compile.
+    var baseURL = <?=ScriptApp.getService().getUrl()?>; 
+
+    // Constructor for blank timecard data.
+    function blankTimecardData() {
+      return {
+          name: "",
+          classification: "",
+          projectManager: "",
+          jobNumber: "",
+          weekEnding: "",
+          monday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          tuesday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          wednesday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          thursday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          friday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          saturday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          sunday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] }
+      };
+    }
 
     // This said to use getElementById instead of jQuery: https://stackoverflow.com/questions/5808162/getcontext-is-not-a-function
     // That fixed a "t.getcontext is not a function" error
@@ -95,35 +118,44 @@
     $("#toDelete").html('');
 
     // Any script that contains GAS syntax must stay in main.
-    function reloadReviewPage() {
-      currentPage = "supervisorReview";  
+    function signout() {
+      //currentPage = "supervisorReview";  
       var baseURL = <?=ScriptApp.getService().getUrl()?>;
       window.open(baseURL, "_top");
     }
 
-    // Callback function for client-side insertEmployeeInfo function.
+    // Callback function for client-side submitTimecard function.
     function submitFailure(error) {
       console.log(error);
-      currentPage = "supervisorReview";  
-      var baseURL = <?=ScriptApp.getService().getUrl()?>;
-      window.open(baseURL, "_top");
+      $("#pleaseWaitModal").modal("hide");
     }
 
     // Callback function for client-side insertEmployeeInfo function.
-    function submitSuccess()
-    {
-      currentPage = "supervisorReview";  
-      var baseURL = <?=ScriptApp.getService().getUrl()?>;
-      window.open(baseURL, "_top");
+    function submitSuccess() {
+      $("#pleaseWaitModal").modal("hide");
+
+      setInterval(function () {
+        $("#returnToMainModal").modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+      }, 800);
+    }
+
+    // Function that calls populateTimecard in doGet.
+    function submitTimecard() {
+        google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).populateTimecard(sessionStorage.getItem("inputEmail"), timecardData);
+    }
+
+    // Resets all data and returns user to main page.
+    function returnToMain() {
+      $("#pleaseWaitModal").modal('show');
+      window.open(baseURL + "?user=" + $("#inputEmail").val(), "_top");
     }
     
     // The currently displayed page.
     var currentPage = "introductionPage"; 
     var previousPage = "";
-
-    // Used to hold all of the info for the employees for this supervisor.
-    var allEmployeeInfo = [];
-    var generalHourInfo = [[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]],[["-"],["-"],["-"],["-"]]];
 
   </script>
 
@@ -133,5 +165,6 @@
     <?!= include('js/generalInfoJS'); ?>
     <?!= include('js/specificInfoJS'); ?>
     <?!= include('js/reviewSignSubmitJS'); ?>
+    <?!= include('js/returnToMainJS'); ?>
   </body>
 </html>

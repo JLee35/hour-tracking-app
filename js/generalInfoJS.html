@@ -19,56 +19,54 @@
     // Update date times when hour input is changed.
     var updateDateTime = function (inputId) {
         var outputId = "#" + inputId + "Output";
+        var output = $("#" + inputId).val();
 
-            $(outputId).text($("#" + inputId).val());
+        $(outputId).text(output);
 
-            var day;
-            var time;
-            switch (inputId.substr(0,3))
-            {
-                case "mon":
-                    day = 0;
-                    break;
-                case "tue":
-                    day = 1;
-                    break;
-                case "wed":
-                    day = 2;
-                    break;
-                case "thu":
-                    day = 3;
-                    break;
-                case "fri":
-                    day = 4;
-                    break;
-                case "sat":
-                    day = 5;
-                    break;
-                case "sun":
-                    day = 6;
-                    break;
-                default:
-                    day = -1;
-            }
+        var day;
 
-            if(inputId.includes("Start"))
-            {
-                time = 0;
-            }
-            else if(inputId.includes("LunchIn"))
-            {
-                time = 1;
-            }
-            else if(inputId.includes("LunchOut"))
-            {
-                time = 2;
-            }
-            else if(inputId.includes("End"))
-            {
-                time = 3;
-            }
+        switch (inputId.substr(0,3)) {
+            case "mon":
+                day = "monday";
+                break;
+            case "tue":
+                day = "tuesday";
+                break;
+            case "wed":
+                day = "wednesday";
+                break;
+            case "thu":
+                day = "thursday";
+                break;
+            case "fri":
+                day = "friday";
+                break;
+            case "sat":
+                day = "saturday";
+                break;
+            case "sun":
+                day = "sunday";
+                break;
+            default:
+                day = "";
+                console.log("Error! Daily start/stop day undefined");
+        }
 
-            generalHourInfo[day][time][0] = $("#" + inputId).val();
+        if(inputId.includes("Start")) {
+            timecardData[day]["start"] = output;
+        }
+
+        else if(inputId.includes("LunchIn")) {
+            timecardData[day]["lunchIn"] = output;
+        }
+
+        else if(inputId.includes("LunchOut")) {
+            timecardData[day]["lunchOut"] = output;
+        }
+
+        else if(inputId.includes("End")) {
+            timecardData[day]["stop"] = output;
+        }
     }
 
     // Attach event listeners to all copy and paste links.
@@ -88,6 +86,46 @@
         updateDateTime(inputElement.id);
     });
 
+    $("#general-hours-paste-start-time").click(function () {
+        $("#mondayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#tuesdayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#wednesdayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#thursdayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#fridayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#saturdayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#sundayStart").parent().find("button.general-hours-paste")[0].click();
+    });
+
+    $("#general-hours-paste-lunch-in").click(function () {
+        $("#mondayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#tuesdayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#wednesdayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#thursdayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#fridayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#saturdayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#sundayLunchIn").parent().find("button.general-hours-paste")[0].click();
+    });
+
+    $("#general-hours-paste-lunch-out").click(function () {
+        $("#mondayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#tuesdayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#wednesdayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#thursdayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#fridayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#saturdayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#sundayLunchOut").parent().find("button.general-hours-paste")[0].click();
+    });
+
+    $("#general-hours-paste-time-off").click(function () {
+        $("#mondayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#tuesdayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#wednesdayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#thursdayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#fridayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#saturdayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#sundayEnd").parent().find("button.general-hours-paste")[0].click();
+    });
+
     // Given an input elements id, update copy and paste link's disable property
     // based on whether the input element contains a valid time entry.
     var updateCopyLinks = function (id) {
@@ -102,9 +140,8 @@
 
     // Enable all paste links if valid time has been copied.
     var updatePasteLinks = function () {
-        $(".general-hours-paste").each(function (index, elem) {
-            $(this).prop('disabled', false);
-        });
+        $(".general-hours-paste").prop('disabled', false);
+        $(".general-hours-paste-col").prop('disabled', false);
     }
 
     $("#generalContinue").click(function() {

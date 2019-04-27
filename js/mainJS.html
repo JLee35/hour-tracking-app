@@ -1,7 +1,7 @@
 <script>
 
     $("#topSignOut").click(function(){
-        $("#signOutBtn").click();
+        signout();
     });
     
     function initializeFromSheet() {
@@ -44,48 +44,6 @@
     // from https://developers.google.com/apps-script/guides/html/reference/url#methods
     google.script.url.getLocation(function(location) {
       playerId = location.parameter['id'];
-    });
-
-    // TODO: Clean this up. It is entirely too long.
-    $("#signOutBtn").click(function(){
-
-        $("#pleaseWaitModal").modal('show');
-        
-        $("#progressBar1").removeClass("bg-success");
-        $("#progressBar1").addClass("bg-warning");
-        $("#progressBar2").removeClass("bg-success");
-        $("#progressBar2").addClass("bg-danger");
-        $("#progressBar3").removeClass("bg-success");
-        $("#progressBar3").addClass("bg-danger");
-        $("#progressBar4").removeClass("bg-warning");
-        $("#progressBar4").addClass("bg-danger");
-
-        $('#addAnotherEmployeeModal').modal('hide');
-
-        var pngImage = signaturePad.toDataURL("image/png");
-        var date2 = new Date();
-        var swimlaneinfo = [];
-
-        swimlaneinfo.push(updateDailyItems($("#mondayDetailsLane").find("div.swim-lane-item-content")));
-        swimlaneinfo.push(updateDailyItems($("#tuesdayDetailsLane").find("div.swim-lane-item-content")));
-        swimlaneinfo.push(updateDailyItems($("#wednesdayDetailsLane").find("div.swim-lane-item-content")));
-        swimlaneinfo.push(updateDailyItems($("#wednesdayDetailsLane").find("div.swim-lane-item-content")));
-        swimlaneinfo.push(updateDailyItems($("#fridayDetailsLane").find("div.swim-lane-item-content")));
-        swimlaneinfo.push(updateDailyItems($("#saturdayDetailsLane").find("div.swim-lane-item-content")));
-        swimlaneinfo.push(updateDailyItems($("#sundayDetailsLane").find("div.swim-lane-item-content")));
-
-        allEmployeeInfo.push([$("#employeeName").val(), $("#jobNumber").val(), $("#weekEnding").val(), generalHourInfo, pngImage.substr(22), date2.toLocaleString(), swimlaneinfo]);
-
-        // meaning info for at least one employee has been completed
-        if(allEmployeeInfo.length > 0)  {
-        // Send all info to the Spreadsheet
-            google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).submitEmployeeInfo(sessionStorage.getItem("inputEmail"), allEmployeeInfo);
-        }
-
-        else {
-            // Call function back in main to avoid syntax error.
-            reloadReviewPage();
-        }
     });
 
     function updateDailyItems(items) {
