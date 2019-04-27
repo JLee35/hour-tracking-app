@@ -156,4 +156,19 @@ function populateTimecard(email, data) {
 
   var weekEndingCell = ss.getRange('E5');
   weekEndingCell.setValue(data["weekEnding"]);
+
+  var sundayDateCell = ss.getRange('P3');
+  sundayDateCell.setValue(data["sunday"]["date"]);
+  var saturdayDateCell = ss.getRange('O3');
+  saturdayDateCell.setValue(data["saturday"]["date"]);
+  var fridayDateCell = ss.getRange('N3');
+  fridayDateCell.setValue(data["friday"]["date"]);
+  var thursdayDateCell = ss.getRange('M3');
+  thursdayDateCell.setValue(data["thursday"]["date"]);
+  var wednesdayDateCell = ss.getRange('L3');
+  wednesdayDateCell.setValue(data["wednesday"]["date"]);
+  var tuesdayDateCell = ss.getRange('K3');
+  tuesdayDateCell.setValue(data["tuesday"]["date"]);
+  var mondayDateCell = ss.getRange('J3');
+  mondayDateCell.setValue(data["monday"]["date"]);
 }
