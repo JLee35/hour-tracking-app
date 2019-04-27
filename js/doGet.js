@@ -171,4 +171,13 @@ function populateTimecard(email, data) {
   tuesdayDateCell.setValue(data["tuesday"]["date"]);
   var mondayDateCell = ss.getRange('J3');
   mondayDateCell.setValue(data["monday"]["date"]);
+
+  var mondayStartCell = ss.getRange('B14');
+  mondayStartCell.setValue(data["monday"]["start"]);
+  var mondayLunchInCell = ss.getRange('C14');
+  mondayLunchInCell.setValue(data["monday"]["lunchIn"]);
+  var mondayLunchOutCell = ss.getRange('D14');
+  mondayLunchOutCell.setValue(data["monday"]["lunchOut"]);
+  var mondayStopCell = ss.getRange('E14');
+  mondayStopCell.setValue(data["monday"]["stop"]);
 }
