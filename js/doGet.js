@@ -136,12 +136,24 @@ function loadFromSpreadsheet() {
   return [workOrders, phaseCodes];
 }
 
-function populateTimecard(email, employee) {
+function populateTimecard(email, data) {
   var date = new Date();
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var blankTimecard = ss.getSheetByName("Blank Timecard");
   ss.insertSheet(email + " - " + date.toLocaleString(), {template: blankTimecard});
 
   var nameCell = ss.getRange('B8');
-  //nameCell.setValue(employeeInfo[0]);
+  nameCell.setValue(data["name"]);
+
+  var classificationCell = ss.getRange('B9');
+  classificationCell.setValue(data["classification"]);
+
+  var projectManagerCell = ss.getRange('B10');
+  projectManagerCell.setValue(data["projectManager"]);
+
+  var jobNumberCell = ss.getRange('E4');
+  jobNumberCell.setValue(data["jobNumber"]);
+
+  var weekEndingCell = ss.getRange('E5');
+  weekEndingCell.setValue(data["weekEnding"]);
 }

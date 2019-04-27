@@ -57,16 +57,10 @@
         timecardData["classification"] = $("#employeeClassification").val();
         timecardData["jobNumber"] = $("#jobNumber").val();
         timecardData["projectManager"] = $("#projectManager").val();
-
-        console.log(timecardData["name"]);
-        console.log(timecardData["classification"]);
-        console.log(timecardData["jobNumber"]);
-        console.log(timecardData["projectManager"]);
     }
 
     $("#beginLoggingBtn").click(function() {
         updateDates();
-
         populateTimecardWithPageInfo();
 
         $("#employeeInfoPage").css('display', 'none');

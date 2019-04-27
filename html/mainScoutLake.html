@@ -144,7 +144,7 @@
 
     // Function that calls populateTimecard in doGet.
     function submitTimecard() {
-        google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).populateTimecard(sessionStorage.getItem("inputEmail"));
+        google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).populateTimecard(sessionStorage.getItem("inputEmail"), timecardData);
     }
 
     // Resets all data and returns user to main page.
