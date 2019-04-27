@@ -86,6 +86,46 @@
         updateDateTime(inputElement.id);
     });
 
+    $("#general-hours-paste-start-time").click(function () {
+        $("#mondayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#tuesdayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#wednesdayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#thursdayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#fridayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#saturdayStart").parent().find("button.general-hours-paste")[0].click();
+        $("#sundayStart").parent().find("button.general-hours-paste")[0].click();
+    });
+
+    $("#general-hours-paste-lunch-in").click(function () {
+        $("#mondayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#tuesdayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#wednesdayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#thursdayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#fridayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#saturdayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        $("#sundayLunchIn").parent().find("button.general-hours-paste")[0].click();
+    });
+
+    $("#general-hours-paste-lunch-out").click(function () {
+        $("#mondayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#tuesdayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#wednesdayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#thursdayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#fridayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#saturdayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        $("#sundayLunchOut").parent().find("button.general-hours-paste")[0].click();
+    });
+
+    $("#general-hours-paste-time-off").click(function () {
+        $("#mondayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#tuesdayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#wednesdayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#thursdayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#fridayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#saturdayEnd").parent().find("button.general-hours-paste")[0].click();
+        $("#sundayEnd").parent().find("button.general-hours-paste")[0].click();
+    });
+
     // Given an input elements id, update copy and paste link's disable property
     // based on whether the input element contains a valid time entry.
     var updateCopyLinks = function (id) {
@@ -100,9 +140,8 @@
 
     // Enable all paste links if valid time has been copied.
     var updatePasteLinks = function () {
-        $(".general-hours-paste").each(function (index, elem) {
-            $(this).prop('disabled', false);
-        });
+        $(".general-hours-paste").prop('disabled', false);
+        $(".general-hours-paste-col").prop('disabled', false);
     }
 
     $("#generalContinue").click(function() {
