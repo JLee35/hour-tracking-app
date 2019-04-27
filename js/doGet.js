@@ -180,4 +180,5 @@ function populateTimecard(email, data) {
   mondayLunchOutCell.setValue(data["monday"]["lunchOut"]);
   var mondayStopCell = ss.getRange('E14');
   mondayStopCell.setValue(data["monday"]["stop"]);
+
 }
