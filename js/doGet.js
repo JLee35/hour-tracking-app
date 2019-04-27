@@ -172,13 +172,33 @@ function populateTimecard(email, data) {
   var mondayDateCell = ss.getRange('J3');
   mondayDateCell.setValue(data["monday"]["date"]);
 
-  var mondayStartCell = ss.getRange('B14');
-  mondayStartCell.setValue(data["monday"]["start"]);
-  var mondayLunchInCell = ss.getRange('C14');
-  mondayLunchInCell.setValue(data["monday"]["lunchIn"]);
-  var mondayLunchOutCell = ss.getRange('D14');
-  mondayLunchOutCell.setValue(data["monday"]["lunchOut"]);
-  var mondayStopCell = ss.getRange('E14');
-  mondayStopCell.setValue(data["monday"]["stop"]);
+  fillDayInOutCells("monday", data, ["B14", "E14", "C14", "D14"], ss);
+  fillDayInOutCells("tuesday", data, ["B16", "E16", "C16", "D16"], ss);
+  fillDayInOutCells("wednesday", data, ["B18", "E18", "C18", "D18"], ss);
+  fillDayInOutCells("thursday", data, ["B20", "E20", "C20", "D20"], ss);
+  fillDayInOutCells("friday", data, ["B22", "E22", "C22", "D22"], ss);
+  fillDayInOutCells("saturday", data, ["B24", "E24", "C24", "D24"], ss);
+  fillDayInOutCells("sunday", data, ["B26", "E26", "C26", "D26"], ss);
 
+  var fileName = ss.getName() + " (COPY)";
+  var newSheet = ss.copy(fileName);
+
+  // Test sending email.
+  MailApp.sendEmail({
+    to: "jaredlee.dev@gmail.com",
+    subject: "Timecard for " + data["name"],
+    body: "Attached is a copy of a timecard for " + data["name"] + ", week ending on " + data["weekEnding"] + " on job " + data["jobNumber"] + ". This is an automatic message, please do not reply.",
+    attachments: [newSheet.getBlob().setName(fileName)]
+  });
+
+}
+
+// Given day string, timecard data object, active spread sheet reference,
+// and an array of cell ranges for daily start, stop, lunchIn, and lunchOut,
+// populate the spread sheet daily in and out times.
+function fillDayInOutCells(day, data, ranges, spreadSheet) {
+  spreadSheet.getRange(ranges[0]).setValue(data[day]["start"]);
+  spreadSheet.getRange(ranges[1]).setValue(data[day]["stop"]);
+  spreadSheet.getRange(ranges[2]).setValue(data[day]["lunchIn"]);
+  spreadSheet.getRange(ranges[3]).setValue(data[day]["lunchOut"]);
 }
