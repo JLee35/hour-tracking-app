@@ -19,56 +19,54 @@
     // Update date times when hour input is changed.
     var updateDateTime = function (inputId) {
         var outputId = "#" + inputId + "Output";
+        var output = $("#" + inputId).val();
 
-            $(outputId).text($("#" + inputId).val());
+        $(outputId).text(output);
 
-            var day;
-            var time;
-            switch (inputId.substr(0,3))
-            {
-                case "mon":
-                    day = 0;
-                    break;
-                case "tue":
-                    day = 1;
-                    break;
-                case "wed":
-                    day = 2;
-                    break;
-                case "thu":
-                    day = 3;
-                    break;
-                case "fri":
-                    day = 4;
-                    break;
-                case "sat":
-                    day = 5;
-                    break;
-                case "sun":
-                    day = 6;
-                    break;
-                default:
-                    day = -1;
-            }
+        var day;
 
-            if(inputId.includes("Start"))
-            {
-                time = 0;
-            }
-            else if(inputId.includes("LunchIn"))
-            {
-                time = 1;
-            }
-            else if(inputId.includes("LunchOut"))
-            {
-                time = 2;
-            }
-            else if(inputId.includes("End"))
-            {
-                time = 3;
-            }
+        switch (inputId.substr(0,3)) {
+            case "mon":
+                day = "monday";
+                break;
+            case "tue":
+                day = "tuesday";
+                break;
+            case "wed":
+                day = "wednesday";
+                break;
+            case "thu":
+                day = "thursday";
+                break;
+            case "fri":
+                day = "friday";
+                break;
+            case "sat":
+                day = "saturday";
+                break;
+            case "sun":
+                day = "sunday";
+                break;
+            default:
+                day = "";
+                console.log("Error! Daily start/stop day undefined");
+        }
 
-            generalHourInfo[day][time][0] = $("#" + inputId).val();
+        if(inputId.includes("Start")) {
+            timecardData[day]["start"] = output;
+        }
+
+        else if(inputId.includes("LunchIn")) {
+            timecardData[day]["lunchIn"] = output;
+        }
+
+        else if(inputId.includes("LunchOut")) {
+            timecardData[day]["lunchOut"] = output;
+        }
+
+        else if(inputId.includes("End")) {
+            timecardData[day]["stop"] = output;
+        }
     }
 
     // Attach event listeners to all copy and paste links.
