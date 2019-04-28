@@ -11,15 +11,15 @@
 
     function getPhaseRow() {
         var phaseNumElement = document.createElement("p");
-        phaseNumElement.innerText = selectedPhase.substr(0, selectedPhase.indexOf(' '));
+        phaseNumElement.innerText = '(' + selectedPhase.substr(0, selectedPhase.indexOf(' ')) + ')';
         phaseNumElement.classList.add("specific-info-phase-output");
 
         var phaseTextElement = document.createElement("p");
         var phaseText = selectedPhase.substr(selectedPhase.indexOf(' ') + 1);
+        phaseText = phaseText.replace(/[\(\)]+/g, '');
 
         // TODO: Dynamic word break.
         phaseTextElement.innerText = phaseText;
-        phaseTextElement.innerText = phaseTextElement.innerText.replace(/[\(\)]+/g, '');
         phaseTextElement.classList.add("specific-info-phase-output");
 
         var row = document.createElement("tr");
@@ -32,7 +32,7 @@
         row.appendChild(phaseTitleCell);
 
         for (var x = 0; x < 7; x++) {
-            row.appendChild(getPhaseCell());
+            row.appendChild(getPhaseCell(phaseText));
         }
 
         var totalCell = document.createElement("td");
@@ -46,10 +46,14 @@
         removeBtn.classList.add("btn", "btn-link");
         removeBtn.innerHTML = "Remove";
 
+        removeBtn.addEventListener("click", function () {
+            $(this).parent().parent().remove();
+        });
+
         return removeBtn;
     }
 
-    function getPhaseCell() {
+    function getPhaseCell(phaseText) {
         var cell = document.createElement("td");
         cell.classList.add("align-middle");
         var addBtn = document.createElement("button");
@@ -57,7 +61,8 @@
         addBtn.innerHTML = "<i class='fas fa-plus' style='vertical-align:center;'></i>";
 
         addBtn.addEventListener("click", function (e) {
-            alert("click!");
+            $("#addSpecificItemHoursTitle").text(phaseText + " Hours");
+            $("#addSpecificItemHoursModal").modal('show');
         });
 
         cell.appendChild(addBtn);
