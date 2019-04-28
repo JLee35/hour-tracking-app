@@ -2,7 +2,7 @@
     <center>
         <!-- Editable table -->
         <div class="table-responsive-lg">
-                <table class="table table-bordered table-striped text-center">
+                <table id="generalInfoBody" class="table table-bordered table-striped text-center">
                     <!-- Start table headers -->
                     <tr>
                         <th class="text-center">Phase</th>
@@ -39,9 +39,9 @@
                     <!-- End table headers -->
 
                     <!-- Start table content -->
-                    <tr>
+                    <tr id="generalTableHeaderContent">
                         <td class="swim-lane-content">
-                            <button type="button" class="btn btn-success addSpecificItem swim-lane-button">
+                            <button id="addSpecificItem" type="button" class="btn btn-success swim-lane-button">
                                 <ion-icon name="add"></ion-icon>
                             </button>
                         </td>
@@ -71,7 +71,6 @@
                         <!-- End table footer -->
                 </table>
             </div>
-
         <br>
         <button id="workerAcceptHoursBtn" class="btn btn-lg btn-primary btn-block" type="button">
             Continue
@@ -89,7 +88,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width: 100%">
         <div class="modal-header">
-            <h5 class="modal-title">Add a specific item</h5>
+            <h5 class="modal-title">Add Item</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -99,9 +98,6 @@
                 <option value="0000">0000</option>
             </select>
             <p id="phaseCode"></p>
-            <br>
-            <!-- min and step help from: https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only -->
-            <input type="number" id="specificInfoHours" min=".25" step=".25" class="form-control" placeholder="Time spent in hours (1.5)" required="true">
             <br>
         </div>
         <div class="modal-footer">

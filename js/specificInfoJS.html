@@ -1,14 +1,40 @@
 <script>
     // Contains event listeners and helper functions for Specific Info Page.
     
-    // Attach listeners to all 'addItem' swim lane buttons.
-    $(".addSpecificItem").each(function (index, value) {
-        $(this).click(function () {
-            $("#addSpecificItemModal").modal('toggle');
-            currentLaneAddItemButton = $(this);
-            currentSwimLane = $(this).parent();
-        });
+    $("#addSpecificItem").click(function () {
+        var element = document.createElement("tr");
+        var td1 = document.createElement("td");
+        td1.innerText = "HI";
+        var td2 = document.createElement("td");
+        td2.innerText = "HI";
+        var td3 = document.createElement("td");
+        td3.innerText = "HI";
+        var td4 = document.createElement("td");
+        td4.innerText = "HI";
+        var td5 = document.createElement("td");
+        td5.innerText = "HI";
+        var td6 = document.createElement("td");
+        td6.innerText = "HI";
+        var td7 = document.createElement("td");
+        td7.innerText = "HI";
+        var td8 = document.createElement("td");
+        td8.innerText = "HI";
+        var td9 = document.createElement("td");
+        td9.innerText = "HI";
+
+        element.appendChild(td9);
+        element.appendChild(td8);
+        element.appendChild(td7);
+        element.appendChild(td6);
+        element.appendChild(td5);
+        element.appendChild(td4);
+        element.appendChild(td3);
+        element.appendChild(td2);
+        element.appendChild(td1);
+
+        $(element).insertBefore($("#generalTableHeaderContent"));
     });
+
 
     // Attach 'Add item' listener to add item modal.
     $("#submitNewItem").click(function () {
@@ -17,106 +43,6 @@
         addItem();
         $("#addSpecificItemModal").modal('toggle');
     });
-
-    // Creates a new div element with phase code description
-    // and hours logged, then inserts the new element into
-    // the associated currentSwimLane before the 'add item' button.
-    function addItem() {
-
-        // Create new div element with container class and light
-        // gray background.
-        var item = document.createElement("div");
-        item.classList.add("container");
-        item.classList.add("swim-lane-item");
-
-        // Create 'remove item' button for deleting the swim
-        // lane item.
-        var removeButton = document.createElement("button");
-        removeButton.classList.add("btn");
-        removeButton.classList.add("btn-danger");
-        removeButton.classList.add("swim-lane-button");
-        removeButton.innerHTML = "<i class='fas fa-minus' style='vertical-align:top;'></i>";
-
-        // Add event listener to button that removes element from dom
-        // on click.
-        removeButton.addEventListener("click", function () {
-            // The button's great grand parent is the swim lane item container.
-            // We need a handle on that to update the total hours once this
-            // item is pruned from the DOM.
-            var lane = $(this).parent().parent().parent();
-            $(this).parent().remove();
-
-            // Update total hours.
-            sumTotalHours(lane);
-        });
-
-        // Create child div element to hold content.
-        var content = document.createElement("div");
-        content.classList.add("swim-lane-item-content");
-
-        // Pull phase code and hours from add item modal.
-        var phaseCode = $("#phaseCodeInput").val();
-        var hours = $("#specificInfoHours").val();
-
-        // Create phase code label.
-        var phaseLabel = document.createElement("p");
-        phaseLabel.innerText = "Phase";
-        phaseLabel.style.textDecoration = "underline";
-
-        // Create both big screen and iPad screen phase code displays.
-        var bigScreenDescription = document.createElement("p");
-        var ipadScreenDescription = document.createElement("p");
-
-        // Add class to bigScreenDescription so we can access it on the Review, Sign, Submit page.
-        bigScreenDescription.classList.add("full-phase-code-description");
-
-        // Fill new item description with pulled phase code depending on screen width.
-        // We need both descriptions as HTML elements so we can access the full description
-        // from the Review, Sign, and Submit page.
-        bigScreenDescription.innerText = phaseCode;
-        ipadScreenDescription.innerText = phaseCode.split(" ")[0];
-
-        // The width of an iPad screen is 768 pixels, so screens less than or equal
-        // to that width will only display the phase code number. Anything bigger will
-        // display full description text.
-        var screenWidth = $(window).width();
-        var iPadScreenWidth = 768;
-
-        // Using iPad screen, hide phase code description.
-        if (screenWidth <= iPadScreenWidth) {
-            bigScreenDescription.style.display = "none";
-        }
-
-        else {
-            ipadScreenDescription.style.display = "none";
-        }
-
-        var hoursLabel = document.createElement("p");
-        hoursLabel.innerText = "Hours";
-        hoursLabel.style.textDecoration = "underline";
-
-        // Fill hours text with pull hours logged.
-        var hoursText = document.createElement("p");
-        hoursText.classList.add("swim-lane-item-hours");
-        hoursText.innerText = hours;
-
-        // Put new item content into container.
-        content.appendChild(phaseLabel);
-        content.appendChild(bigScreenDescription);
-        content.appendChild(ipadScreenDescription);
-        content.appendChild(hoursLabel);
-        content.appendChild(hoursText);
-
-        // Put content into item container.
-        item.appendChild(content);
-        item.appendChild(removeButton);
-
-        // Insert new item into current lane.
-        currentSwimLane.find("div.swim-lane-item-container")[0].appendChild(item);
-
-        // Update total hours.
-        sumTotalHours(currentSwimLane);
-    }
 
     // Sum up all hour totals when an item is added or removed.
     function sumTotalHours(lane) {
@@ -140,15 +66,6 @@
     $("#phaseCodeInput").change(function () {
         updateAddItemModalButtonDisabled();
     });
-
-    $("#specificInfoHours").change(function () {
-        updateAddItemModalButtonDisabled();
-    });
-
-    var updateAddItemModalButtonDisabled = function () {
-        var isValid = (($("#phaseCodeInput").val() != 0000) && ($("#specificInfoHours").val() > 0));
-        $("#submitNewItem").prop('disabled', !isValid);
-    }
 
     // Moves on to the supervisor review page
     $("#workerAcceptHoursBtn").click(function() {
