@@ -2,45 +2,49 @@
     // Contains event listeners and helper functions for Specific Info Page.
     
     $("#addSpecificItem").click(function () {
-        var element = document.createElement("tr");
-        var td1 = document.createElement("td");
-        td1.innerText = "HI";
-        var td2 = document.createElement("td");
-        td2.innerText = "HI";
-        var td3 = document.createElement("td");
-        td3.innerText = "HI";
-        var td4 = document.createElement("td");
-        td4.innerText = "HI";
-        var td5 = document.createElement("td");
-        td5.innerText = "HI";
-        var td6 = document.createElement("td");
-        td6.innerText = "HI";
-        var td7 = document.createElement("td");
-        td7.innerText = "HI";
-        var td8 = document.createElement("td");
-        td8.innerText = "HI";
-        var td9 = document.createElement("td");
-        td9.innerText = "HI";
-
-        element.appendChild(td9);
-        element.appendChild(td8);
-        element.appendChild(td7);
-        element.appendChild(td6);
-        element.appendChild(td5);
-        element.appendChild(td4);
-        element.appendChild(td3);
-        element.appendChild(td2);
-        element.appendChild(td1);
-
-        $(element).insertBefore($("#generalTableHeaderContent"));
+        $("#addSpecificItemModal").modal('show');
     });
+
+    function insertPhaseRow() {
+        $(getPhaseRow()).insertBefore($("#generalTableHeaderContent"));
+    }
+
+    function getPhaseRow() {
+        var row = document.createElement("tr");
+        var phaseTitleCell = document.createElement("td");
+        phaseTitleCell.innerText = selectedPhase.split(' ')[0];
+        row.appendChild(phaseTitleCell);
+
+        for (var x = 0; x < 7; x++) {
+            row.appendChild(getPhaseCell());
+        }
+
+        var totalCell = document.createElement("td");
+        row.appendChild(totalCell);
+
+        return row;
+    }
+
+    function getPhaseCell() {
+        var cell = document.createElement("td");
+        var addBtn = document.createElement("button");
+        addBtn.classList.add("btn");
+        addBtn.classList.add("add-item-btn");
+        addBtn.type = "button";
+        addBtn.innerHTML = "<i class='fas fa-plus' style='vertical-align:top;'></i>";
+
+        addBtn.addEventListener("click", function (e) {
+            alert("click!");
+        });
+
+        cell.appendChild(addBtn);
+        return cell;
+    }
 
 
     // Attach 'Add item' listener to add item modal.
     $("#submitNewItem").click(function () {
-        // Create a new swim lane item with the given phase code and 
-        // hours logged.
-        addItem();
+        insertPhaseRow();
         $("#addSpecificItemModal").modal('toggle');
     });
 
@@ -61,10 +65,15 @@
         }
     }
 
-    // Event listener that ensures user only adds valid item to swim lane.
-    // If input is invalid the Add item button is disabled.
     $("#phaseCodeInput").change(function () {
-        updateAddItemModalButtonDisabled();
+        if ($(this).val() != "0000") {
+            $("#submitNewItem").prop('disabled', false);
+            selectedPhase = $(this).val();
+        }
+
+        else {
+            $("#submitNewItem").prop('disabled', true);
+        }
     });
 
     // Moves on to the supervisor review page
@@ -100,13 +109,9 @@
 
         return;
     });
-
-
+    
     // Global Variables
 
-    // currentLaneAddItemButton keeps track of which swim lane element is
-    // adding an item.
-    var currentLaneAddItemButton;
-    var currentSwimLane;
+    var selectedPhase;
 
 </script>
