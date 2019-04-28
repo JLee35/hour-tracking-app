@@ -6,13 +6,29 @@
     });
 
     function insertPhaseRow() {
-        $(getPhaseRow()).insertBefore($("#generalTableHeaderContent"));
+        $(getPhaseRow()).insertBefore($("#specificInfoAddRow"));
     }
 
     function getPhaseRow() {
+        var phaseNumElement = document.createElement("p");
+        phaseNumElement.innerText = selectedPhase.substr(0, selectedPhase.indexOf(' '));
+        phaseNumElement.classList.add("specific-info-phase-output");
+
+        var phaseTextElement = document.createElement("p");
+        var phaseText = selectedPhase.substr(selectedPhase.indexOf(' ') + 1);
+
+        // TODO: Dynamic word break.
+        
+        phaseTextElement.innerText = phaseText;
+        phaseTextElement.innerText = phaseTextElement.innerText.replace(/[\(\)]+/g, '');
+        phaseTextElement.classList.add("specific-info-phase-output");
+
         var row = document.createElement("tr");
         var phaseTitleCell = document.createElement("td");
-        phaseTitleCell.innerText = selectedPhase.split(' ')[0];
+        
+        phaseTitleCell.appendChild(phaseTextElement);
+        phaseTitleCell.appendChild(phaseNumElement);
+
         row.appendChild(phaseTitleCell);
 
         for (var x = 0; x < 7; x++) {

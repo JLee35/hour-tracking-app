@@ -98,12 +98,7 @@ body.modal-open div.modal-backdrop {
 }
 
 .swim-lane {
-    width: 14.28% !important;
-}
-
-.swim-lane-content {
-    height: 41vh !important;
-    overflow-y: auto;
+    
 }
 
 .swim-lane-item {
@@ -141,6 +136,20 @@ body.modal-open div.modal-backdrop {
     margin: 0 !important;
 }
 
+.specific-info-phase-header {
+    width: 15% !important;
+}
+
+.specific-info-phase-output {
+    font-size: 1.5vh;
+    word-wrap: "break-word";
+}
+
+.specific-info-table-body {
+    height: 50vh !important;
+    overflow: auto;
+}
+
 @media screen and (max-width: 1024px) {
     .table {
         table-layout: fixed;
@@ -151,19 +160,21 @@ body.modal-open div.modal-backdrop {
         height: 200px !important;
     }
 
-    .swim-lane-content {
-        height: 30vh !important;
-    }
-
 }
 
 @media screen and (max-width: 768px) {
-    .swim-lane-content {
-        height: 45vh !important;
-    }
-
+    
     .review-page-header {
         font-size: 83%;
+    }
+
+    .specific-info-phase-output {
+        font-size: 1.5vh;
+    }
+
+    .specific-info-table-body {
+        height: 40vh !important;
+        overflow: auto;
     }
 }
 
