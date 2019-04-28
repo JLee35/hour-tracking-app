@@ -18,7 +18,6 @@
         var phaseText = selectedPhase.substr(selectedPhase.indexOf(' ') + 1);
 
         // TODO: Dynamic word break.
-        
         phaseTextElement.innerText = phaseText;
         phaseTextElement.innerText = phaseTextElement.innerText.replace(/[\(\)]+/g, '');
         phaseTextElement.classList.add("specific-info-phase-output");
@@ -28,7 +27,8 @@
         
         phaseTitleCell.appendChild(phaseTextElement);
         phaseTitleCell.appendChild(phaseNumElement);
-
+        phaseTitleCell.appendChild(getRemoveBtn());
+        
         row.appendChild(phaseTitleCell);
 
         for (var x = 0; x < 7; x++) {
@@ -39,6 +39,14 @@
         row.appendChild(totalCell);
 
         return row;
+    }
+
+    function getRemoveBtn() {
+        var removeBtn = document.createElement("button");
+        removeBtn.classList.add("btn", "btn-link");
+        removeBtn.innerHTML = "Remove";
+
+        return removeBtn;
     }
 
     function getPhaseCell() {
