@@ -51,11 +51,10 @@
 
     function getPhaseCell() {
         var cell = document.createElement("td");
+        cell.classList.add("align-middle");
         var addBtn = document.createElement("button");
-        addBtn.classList.add("btn");
-        addBtn.classList.add("add-item-btn");
-        addBtn.type = "button";
-        addBtn.innerHTML = "<i class='fas fa-plus' style='vertical-align:top;'></i>";
+        addBtn.classList.add("btn", "add-item-btn");
+        addBtn.innerHTML = "<i class='fas fa-plus' style='vertical-align:center;'></i>";
 
         addBtn.addEventListener("click", function (e) {
             alert("click!");
