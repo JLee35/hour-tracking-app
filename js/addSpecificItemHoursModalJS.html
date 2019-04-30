@@ -5,8 +5,13 @@
         }
 
         else {
+            // Remove plus icon and replace with hours associated.
+            selectedCell.removeChild(selectedCell.firstChild);
+            var hoursElement = document.createElement('h6');
+            hoursElement.innerText = $("#specificInfoHours").val();
+            selectedCell.appendChild(hoursElement);
             $("#addSpecificItemHoursModal").modal('hide');
-            sumHours();
+            sumHours($(this).parent().parent());
         }
     });
 </script>

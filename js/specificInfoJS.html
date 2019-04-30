@@ -64,6 +64,8 @@
         addBtn.addEventListener("click", function (e) {
             $("#addSpecificItemHoursTitle").text(phaseText + " Hours");
             $("#addSpecificItemHoursModal").modal('show');
+
+            selectedCell = cell;
         });
 
         cell.appendChild(addBtn);
@@ -118,12 +120,12 @@
         return;
     });
 
-    function sumHours() {
+    function sumHours(row) {
         
     }
     
     // Global Variables
     var selectedPhase;
-    var selectedElement;
+    var selectedCell;
 
 </script>
