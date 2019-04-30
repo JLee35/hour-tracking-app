@@ -1,0 +1,12 @@
+<script>
+    $("#logItemHoursBtn").click(function () {
+        if ($("#specificInfoHours").val() <= 0) {
+            alert("Please select a value greater than zero");
+        }
+
+        else {
+            $("#addSpecificItemHoursModal").modal('hide');
+            sumHours();
+        }
+    });
+</script>

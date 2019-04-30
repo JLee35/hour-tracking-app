@@ -36,6 +36,7 @@
         }
 
         var totalCell = document.createElement("td");
+        totalCell.classList.add("row-total-cell");
         row.appendChild(totalCell);
 
         return row;
@@ -72,36 +73,15 @@
 
     // Attach 'Add item' listener to add item modal.
     $("#submitNewItem").click(function () {
-        insertPhaseRow();
-        $("#addSpecificItemModal").modal('toggle');
-    });
-
-    // Sum up all hour totals when an item is added or removed.
-    function sumTotalHours(lane) {
-        // Get lane item hours.
-        var hourEntries = lane.find("p.swim-lane-item-hours");
-        var totalHours = 0;
-
-        // Sum all lane item hours.
-        for (x=0; x < hourEntries.length; x++) {
-            totalHours += parseFloat(hourEntries[x].innerText);
-        }
-
-        // Set update lane total.
-        if (totalHours != "NaN") {
-            lane.find("div.swim-lane-item-total")[0].innerText = "Total: " + totalHours;
-        }
-    }
-
-    $("#phaseCodeInput").change(function () {
-        if ($(this).val() != "0000") {
-            $("#submitNewItem").prop('disabled', false);
-            selectedPhase = $(this).val();
+        if ($("#phaseCodeInput").val() == "0000") {
+            alert("Please select a phase code from the list.");
         }
 
         else {
-            $("#submitNewItem").prop('disabled', true);
-        }
+            selectedPhase = $("#phaseCodeInput").val();
+            insertPhaseRow();
+            $("#addSpecificItemModal").modal('toggle');
+        }        
     });
 
     // Moves on to the supervisor review page
@@ -137,9 +117,13 @@
 
         return;
     });
+
+    function sumHours() {
+        
+    }
     
     // Global Variables
-
     var selectedPhase;
+    var selectedElement;
 
 </script>

@@ -1,0 +1,25 @@
+<div id="addSpecificItemModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 100%">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select data-placeholder="Phase code" id="phaseCodeInput" class="form-control" required="true" autofocus>
+                    <option value="0000">0000</option>
+                </select>
+                <p id="phaseCode"></p>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button id="submitNewItem" type="button" class="btn btn-primary">Add item</button>
+                <br>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
