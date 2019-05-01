@@ -45,7 +45,8 @@
     function getRemoveBtn() {
         var removeBtn = document.createElement("button");
         removeBtn.classList.add("btn", "btn-link");
-        removeBtn.innerHTML = "Remove";
+        removeBtn.innerHTML = "<i class='fas fa-trash' style='color: red;'></i>";
+        removeBtn.style.fill = "red";
 
         removeBtn.addEventListener("click", function () {
             $(this).parent().parent().remove();

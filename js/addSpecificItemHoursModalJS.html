@@ -1,7 +1,7 @@
 <script>
     $("#logItemHoursBtn").click(function () {
         if ($("#specificInfoHours").val() <= 0) {
-            alert("Please select a value greater than zero");
+            alert("Please enter a value greater than zero.");
         }
 
         else {
@@ -10,6 +10,17 @@
             var hoursElement = document.createElement('h6');
             hoursElement.innerText = $("#specificInfoHours").val();
             selectedCell.appendChild(hoursElement);
+
+            var editBtn = document.createElement("button");
+            editBtn.classList.add("btn", "btn-link");
+            editBtn.innerHTML = "<i class='fas fa-edit'></i>";
+
+            editBtn.addEventListener("click", function () {
+                
+            });
+
+            selectedCell.appendChild(editBtn);
+
             $("#addSpecificItemHoursModal").modal('hide');
             sumHours($(this).parent().parent());
         }
