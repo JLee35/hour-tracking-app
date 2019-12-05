@@ -2,271 +2,394 @@
     <center>
         <!-- Editable table -->
         <div class="card">
-        <div class="card-body">
-            <div id="table" class="table-editable">
-            <table class="table table-bordered table-responsive-md table-striped text-center">
-                
-                <!-- Start Table Headers -->
-                <tr>
-                <th class="text-center"></th>
-                <th class="text-center">
-                    Start Time
-                    <br>
-                    <button id="general-hours-paste-start-time" type="button" class="btn btn-link general-hours-paste-col" disabled>Paste Column</button>
-                </th>
-                <th class="text-center">
-                    Lunch In
-                    <br>
-                    <button id="general-hours-paste-lunch-in" type="button" class="btn btn-link general-hours-paste-col" disabled>Paste Column</button>
-                </th>
-                <th class="text-center">
-                    Lunch Out
-                    <br>
-                    <button id="general-hours-paste-lunch-out" type="button" class="btn btn-link general-hours-paste-col" disabled>Paste Column</button>
-                </th>
-                <th class="text-center">
-                    Time Off
-                    <br>
-                    <button id="general-hours-paste-time-off" type="button" class="btn btn-link general-hours-paste-col" disabled>Paste Column</button>
-                </th>
-                </tr>
-                <!-- End Table Headers -->
+            <div class="card-body">
+                <div id="table" class="table-editable">
+                    <table class="table table-bordered table-responsive-md table-striped text-center">
 
-                <!-- Start Monday -->
-                <tr>
-                <th class="text-center">
-                    <span>Monday<br></span> 
-                    <span class="mondayDate"></span>
-                    </th>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="mondayStart" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="mondayLunchIn" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="mondayLunchOut" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="mondayEnd" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                </tr>
-                <!-- End Monday -->
+                        <!-- Start Table Headers -->
+                        <tr>
+                            <th class="text-center"></th>
+                            <th class="text-center">
+                                Present
+                            </th>
+                            <th class="text-center">
+                                Start Time
+                                <br>
+                                <button id="general-hours-paste-start-time" type="button"
+                                    class="btn btn-link general-hours-paste-col" style="visibility: hidden;">Paste
+                                    Column</button>
+                            </th>
+                            <th class="text-center">
+                                Lunch In
+                                <br>
+                                <button id="general-hours-paste-lunch-in" type="button"
+                                    class="btn btn-link general-hours-paste-col" style="visibility: hidden;">Paste
+                                    Column</button>
+                            </th>
+                            <th class="text-center">
+                                Lunch Out
+                                <br>
+                                <button id="general-hours-paste-lunch-out" type="button"
+                                    class="btn btn-link general-hours-paste-col" style="visibility: hidden;">Paste
+                                    Column</button>
+                            </th>
+                            <th class="text-center">
+                                Time Off
+                                <br>
+                                <button id="general-hours-paste-time-off" type="button"
+                                    class="btn btn-link general-hours-paste-col" style="visibility: hidden;">Paste
+                                    Column</button>
+                            </th>
+                        </tr>
+                        <!-- End Table Headers -->
 
-                <!-- Start Tuesday -->
-                <tr>
-                <th class="text-center">
-                    <span>Tuesday<br></span> 
-                    <span class="tuesdayDate"></span>
-                    </th>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="tuesdayStart" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="tuesdayLunchIn" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="tuesdayLunchOut" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="tuesdayEnd" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                </tr>
-                <!-- End Tuesday -->
+                        <!-- Start Monday -->
+                        <tr>
+                            <th class="text-center vertical-aligned-container">
+                                <span>Mon<br></span>
+                                <span class="mondayDate"></span>
+                            </th>
 
-                <!-- Start Wednesday -->
-                <tr>
-                <th class="text-center">
-                    <span>Wednesday<br></span> 
-                    <span class="wednesdayDate"></span>
-                    </th>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="wednesdayStart" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="wednesdayLunchIn" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="wednesdayLunchOut" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
-                <td class="pt-3-half" contenteditable="false">
-                    <input id="wednesdayEnd" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                </td>
+                            <td class="pt-3-half vertical-aligned-container">
+                                <!-- Worked this day checkbox -->
+                                <span style="display: block">
+                                    <input type="checkbox" class="general-hours-present custom-control-lg" checked><br>
+                                </span>
+                            </td>
 
-                </tr>
-                <!-- End Wednesday -->
-                
-                <!-- Start Thursday -->
-                <tr>
-                    <th class="text-center">
-                        <span>Thursday<br></span> 
-                        <span class="thursdayDate"></span>
-                    </th>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="thursdayStart" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="thursdayLunchIn" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="thursdayLunchOut" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="thursdayEnd" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                </tr>
-                <!-- End Thursday -->
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="mondayStart" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="mondayLunchIn" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="mondayLunchOut" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="mondayEnd" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                        </tr>
+                        <!-- End Monday -->
 
-                <!-- Start Friday -->
-                <tr>
-                    <th class="text-center">
-                        <span>Friday<br></span> 
-                        <span class="fridayDate"></span>
-                    </th>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="fridayStart" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="fridayLunchIn" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="fridayLunchOut" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="fridayEnd" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                </tr>
-                <!-- End Friday -->
+                        <!-- Start Tuesday -->
+                        <tr>
+                            <th class="text-center vertical-aligned-container">
+                                <span>Tue<br></span>
+                                <span class="tuesdayDate"></span>
+                            </th>
 
-                <!-- Start Saturday -->
-                <tr>
-                    <th class="text-center">
-                    <span>Saturday<br></span> 
-                    <span class="saturdayDate"></span>
-                    </th>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="saturdayStart" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="saturdayLunchIn" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="saturdayLunchOut" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="saturdayEnd" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                </tr>
-                <!-- End Saturday -->
+                            <td class="pt-3-half vertical-aligned-container">
+                                <!-- Worked this day checkbox -->
+                                <span style="display: block">
+                                    <input type="checkbox" class="general-hours-present custom-control-lg" checked><br>
+                                </span>
+                            </td>
 
-                <!-- Start Sunday -->
-                <tr>
-                    <th class="text-center">
-                    <span>Sunday<br></span>
-                    <span class="sundayDate"></span>
-                    </th>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="sundayStart" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="sundayLunchIn" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="sundayLunchOut" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                    <td class="pt-3-half" contenteditable="false">
-                    <input id="sundayEnd" class="time-entry" type="time">
-                    <br>
-                    <button type="button" class="btn btn-link general-hours-copy" disabled>Copy</button>
-                    <button type="button" class="btn btn-link general-hours-paste" disabled>Paste</button>
-                    </td>
-                </tr>
-                <!-- End Sunday -->
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="tuesdayStart" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="tuesdayLunchIn" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="tuesdayLunchOut" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="tuesdayEnd" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                        </tr>
+                        <!-- End Tuesday -->
 
-            </table>
+                        <!-- Start Wednesday -->
+                        <tr>
+                            <th class="text-center vertical-aligned-container">
+                                <span>Wed<br></span>
+                                <span class="wednesdayDate"></span>
+                            </th>
+
+                            <td class="pt-3-half vertical-aligned-container">
+                                <!-- Worked this day checkbox -->
+                                <span style="display: block">
+                                    <input type="checkbox" class="general-hours-present custom-control-lg" checked><br>
+                                </span>
+                            </td>
+
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="wednesdayStart" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="wednesdayLunchIn" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="wednesdayLunchOut" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="wednesdayEnd" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+
+                        </tr>
+                        <!-- End Wednesday -->
+
+                        <!-- Start Thursday -->
+                        <tr>
+                            <th class="text-center vertical-aligned-container">
+                                <span>Thu<br></span>
+                                <span class="thursdayDate"></span>
+                            </th>
+
+                            <td class="pt-3-half vertical-aligned-container">
+                                <!-- Worked this day checkbox -->
+                                <span style="display: block">
+                                    <input type="checkbox" class="general-hours-present custom-control-lg" checked><br>
+                                </span>
+                            </td>
+
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="thursdayStart" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="thursdayLunchIn" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="thursdayLunchOut" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="thursdayEnd" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                        </tr>
+                        <!-- End Thursday -->
+
+                        <!-- Start Friday -->
+                        <tr>
+                            <th class="text-center vertical-aligned-container">
+                                <span>Fri<br></span>
+                                <span class="fridayDate"></span>
+                            </th>
+
+                            <td class="pt-3-half vertical-aligned-container">
+                                <!-- Worked this day checkbox -->
+                                <span style="display: block">
+                                    <input type="checkbox" class="general-hours-present custom-control-lg" checked><br>
+                                </span>
+                            </td>
+
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="fridayStart" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="fridayLunchIn" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="fridayLunchOut" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="fridayEnd" class="time-entry" type="time">
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                        </tr>
+                        <!-- End Friday -->
+
+                        <!-- Start Saturday -->
+                        <tr>
+                            <th class="text-center vertical-aligned-container">
+                                <span>Sat<br></span>
+                                <span class="saturdayDate"></span>
+                            </th>
+
+                            <td class="pt-3-half vertical-aligned-container">
+                                <!-- Worked this day checkbox -->
+                                <span style="display: block">
+                                    <input type="checkbox" class="general-hours-present custom-control-lg"><br>
+                                </span>
+                            </td>
+
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="saturdayStart" class="time-entry" type="time" disabled>
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="saturdayLunchIn" class="time-entry" type="time" disabled>
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="saturdayLunchOut" class="time-entry" type="time" disabled>
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="saturdayEnd" class="time-entry" type="time" disabled>
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                        </tr>
+                        <!-- End Saturday -->
+
+                        <!-- Start Sunday -->
+                        <tr>
+                            <th class="text-center vertical-aligned-container">
+                                <span>Sun<br></span>
+                                <span class="sundayDate"></span>
+                            </th>
+
+                            <td class="pt-3-half vertical-aligned-container">
+                                <!-- Worked this day checkbox -->
+                                <span style="display: block">
+                                    <input type="checkbox" class="general-hours-present custom-control-lg"><br>
+                                </span>
+                            </td>
+
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="sundayStart" class="time-entry" type="time" disabled>
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="sundayLunchIn" class="time-entry" type="time" disabled>
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="sundayLunchOut" class="time-entry" type="time" disabled>
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                            <td class="pt-3-half" contenteditable="false">
+                                <input id="sundayEnd" class="time-entry" type="time" disabled>
+                                <br>
+                                <button type="button" class="btn btn-link general-hours-copy"
+                                    style="visibility: hidden;">Copy</button>
+                                <button type="button" class="btn btn-link general-hours-paste"
+                                    style="visibility: hidden;">Paste</button>
+                            </td>
+                        </tr>
+                        <!-- End Sunday -->
+
+                    </table>
+                </div>
             </div>
-        </div>
         </div>
 
         <!-- Editable table -->
@@ -276,5 +399,4 @@
         <button id="generalBack" class="btn btn-lg btn-primary btn-block" type="button">Back</button>
         <br>
     </center>
-    </div> 
-    
+</div>

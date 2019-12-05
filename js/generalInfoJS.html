@@ -73,7 +73,7 @@
     $(".general-hours-copy").click(function () {
         // Get associated time input and copy hours to global variable.
         copiedHours = $(this).parent().find("input.time-entry")[0].value;
-        updatePasteLinks();
+        showPasteLinks();
     });
 
     $(".general-hours-paste").click(function () {
@@ -133,17 +133,28 @@
         var copyLink = inputElement.parent().find("button.general-hours-copy")[0];
         var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputElement.val());
 
-        // If the input is invalid, disable the copy link so users don't accidently copy
+        // If the input is invalid, disable the copy link and hide it so users don't accidently copy
         // and paste invalid data.
-        copyLink.disabled = !isValid;
+        // copyLink.disabled = !isValid;
+
+        if (isValid) {
+            copyLink.style.visibility = 'visible';
+        }
+
+        else {
+            copyLink.style.visibility = 'hidden';
+        }
     }
 
-    // Enable all paste links if valid time has been copied.
-    var updatePasteLinks = function () {
-        $(".general-hours-paste").prop('disabled', false);
-        $(".general-hours-paste-col").prop('disabled', false);
+    // Enable all paste links and show them if valid time has been copied.
+    var showPasteLinks = function () {
+        $(".general-hours-paste").css('visibility', 'visible');
+        $(".general-hours-paste-col").css('visibility', 'visible');
+        
     }
 
+    // TODO: Create more effective way of tracking whether the user has actually completed
+    //       a section (all inputs are filled and valid).
     $("#generalContinue").click(function() {
       $("#generalInfoPage").css('display', 'none');
 
@@ -175,6 +186,13 @@
         currentPage = "employeeInfoPage";       
 
         return;
+    });
+
+    // Adds click event listener to 'Worked this day' checkboxes on Saturday and Sunday columns.
+    $(".general-hours-present").click(function (elem) {
+        // If check box is checked then enable column inputs,
+        // else disable column and remove inputs.
+        alert("Worked this day clicked");
     });
 
     // Globals
