@@ -4,6 +4,7 @@
     // Attach change event listener to time-entry elements that updates
     // the copy and paste links depending on input validity.
     $(".time-entry").change(function () {
+
         // Pull the input's id.
         var inputId = $(this).attr('id');
 
@@ -81,7 +82,7 @@
         var inputElement = $(this).parent().find("input.time-entry")[0];
         inputElement.value = copiedHours;
         // Enable input's copy button.
-        $(this).parent().find("button.general-hours-copy")[0].disabled = false;
+        $(this).parent().find("button.general-hours-copy")[0].style.visibility = 'visible';
         // Update date time on review page.
         updateDateTime(inputElement.id);
     });
@@ -188,7 +189,7 @@
         return;
     });
 
-    // Adds click event listener to 'Worked this day' checkboxes on Saturday and Sunday columns.
+    // Adds click event listener to 'Worked this day' checkboxes.
     $(".general-hours-present").click(function (elem) {
         // If check box is checked then enable column inputs,
         // else disable column and remove inputs.
