@@ -1,6 +1,8 @@
 <script>
     // Contains all event listeners and helper functions for General Info Page.
 
+    var daysOfTheWeekArray = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
     // Attach change event listener to time-entry elements that updates
     // the copy and paste links depending on input validity.
     $(".time-entry").change(function () {
@@ -26,46 +28,46 @@
 
         var day;
 
-        switch (inputId.substr(0,3)) {
+        switch (inputId.substr(0, 3)) {
             case "mon":
-                day = "monday";
+                day = daysOfTheWeekArray[0];
                 break;
             case "tue":
-                day = "tuesday";
+                day = daysOfTheWeekArray[1];
                 break;
             case "wed":
-                day = "wednesday";
+                day = daysOfTheWeekArray[2];
                 break;
             case "thu":
-                day = "thursday";
+                day = daysOfTheWeekArray[3];
                 break;
             case "fri":
-                day = "friday";
+                day = daysOfTheWeekArray[4];
                 break;
             case "sat":
-                day = "saturday";
+                day = daysOfTheWeekArray[5];
                 break;
             case "sun":
-                day = "sunday";
+                day = daysOfTheWeekArray[6];
                 break;
             default:
                 day = "";
                 console.log("Error! Daily start/stop day undefined");
         }
 
-        if(inputId.includes("Start")) {
+        if (inputId.includes("Start")) {
             timecardData[day]["start"] = output;
         }
 
-        else if(inputId.includes("LunchIn")) {
+        else if (inputId.includes("LunchIn")) {
             timecardData[day]["lunchIn"] = output;
         }
 
-        else if(inputId.includes("LunchOut")) {
+        else if (inputId.includes("LunchOut")) {
             timecardData[day]["lunchOut"] = output;
         }
 
-        else if(inputId.includes("End")) {
+        else if (inputId.includes("End")) {
             timecardData[day]["stop"] = output;
         }
     }
@@ -88,44 +90,34 @@
     });
 
     $("#general-hours-paste-start-time").click(function () {
-        $("#mondayStart").parent().find("button.general-hours-paste")[0].click();
-        $("#tuesdayStart").parent().find("button.general-hours-paste")[0].click();
-        $("#wednesdayStart").parent().find("button.general-hours-paste")[0].click();
-        $("#thursdayStart").parent().find("button.general-hours-paste")[0].click();
-        $("#fridayStart").parent().find("button.general-hours-paste")[0].click();
-        $("#saturdayStart").parent().find("button.general-hours-paste")[0].click();
-        $("#sundayStart").parent().find("button.general-hours-paste")[0].click();
+        daysOfTheWeekArray.forEach(function (day) {
+            getTimeEntryButton('#' + day + "Start", "button.general-hours-paste").click();
+        });
     });
 
     $("#general-hours-paste-lunch-in").click(function () {
-        $("#mondayLunchIn").parent().find("button.general-hours-paste")[0].click();
-        $("#tuesdayLunchIn").parent().find("button.general-hours-paste")[0].click();
-        $("#wednesdayLunchIn").parent().find("button.general-hours-paste")[0].click();
-        $("#thursdayLunchIn").parent().find("button.general-hours-paste")[0].click();
-        $("#fridayLunchIn").parent().find("button.general-hours-paste")[0].click();
-        $("#saturdayLunchIn").parent().find("button.general-hours-paste")[0].click();
-        $("#sundayLunchIn").parent().find("button.general-hours-paste")[0].click();
+        daysOfTheWeekArray.forEach(function (day) {
+            getTimeEntryButton('#' + day + "LunchIn", "button.general-hours-paste").click();
+        });
     });
 
     $("#general-hours-paste-lunch-out").click(function () {
-        $("#mondayLunchOut").parent().find("button.general-hours-paste")[0].click();
-        $("#tuesdayLunchOut").parent().find("button.general-hours-paste")[0].click();
-        $("#wednesdayLunchOut").parent().find("button.general-hours-paste")[0].click();
-        $("#thursdayLunchOut").parent().find("button.general-hours-paste")[0].click();
-        $("#fridayLunchOut").parent().find("button.general-hours-paste")[0].click();
-        $("#saturdayLunchOut").parent().find("button.general-hours-paste")[0].click();
-        $("#sundayLunchOut").parent().find("button.general-hours-paste")[0].click();
+        daysOfTheWeekArray.forEach(function (day) {
+            getTimeEntryButton('#' + day + "LunchOut", "button.general-hours-paste").click();
+        });
     });
 
     $("#general-hours-paste-time-off").click(function () {
-        $("#mondayEnd").parent().find("button.general-hours-paste")[0].click();
-        $("#tuesdayEnd").parent().find("button.general-hours-paste")[0].click();
-        $("#wednesdayEnd").parent().find("button.general-hours-paste")[0].click();
-        $("#thursdayEnd").parent().find("button.general-hours-paste")[0].click();
-        $("#fridayEnd").parent().find("button.general-hours-paste")[0].click();
-        $("#saturdayEnd").parent().find("button.general-hours-paste")[0].click();
-        $("#sundayEnd").parent().find("button.general-hours-paste")[0].click();
+        daysOfTheWeekArray.forEach(function (day) {
+            getTimeEntryButton('#' + day + "End", "button.general-hours-paste").click();
+        });
     });
+
+    // Given a time entry ID (#mondayStart, #mondayEnd, etc.), and a css class (general-hours-paste or general-hours-copy)
+    // return the associated copy/paste button.
+    function getTimeEntryButton(id, cssClass) {
+        return $(id).parent().find(cssClass)[0];
+    }
 
     // Given an input elements id, update copy and paste link's disable property
     // based on whether the input element contains a valid time entry.
@@ -151,40 +143,40 @@
     var showPasteLinks = function () {
         $(".general-hours-paste").css('visibility', 'visible');
         $(".general-hours-paste-col").css('visibility', 'visible');
-        
+
     }
 
     // TODO: Create more effective way of tracking whether the user has actually completed
     //       a section (all inputs are filled and valid).
-    $("#generalContinue").click(function() {
-      $("#generalInfoPage").css('display', 'none');
+    $("#generalContinue").click(function () {
+        $("#generalInfoPage").css('display', 'none');
 
-      if(!$("#progressBar3").hasClass("bg-success")) {
-        $("#progressBar2").removeClass("bg-warning");
-        $("#progressBar2").addClass("bg-success");
-        $("#progressBar3").removeClass("bg-danger");
-        $("#progressBar3").addClass("bg-warning");
-      }
+        if (!$("#progressBar3").hasClass("bg-success")) {
+            $("#progressBar2").removeClass("bg-warning");
+            $("#progressBar2").addClass("bg-success");
+            $("#progressBar3").removeClass("bg-danger");
+            $("#progressBar3").addClass("bg-warning");
+        }
 
-      $("#progressBar2").removeClass("progress-highlight");
-      $("#progressBar3").addClass("progress-highlight");
+        $("#progressBar2").removeClass("progress-highlight");
+        $("#progressBar3").addClass("progress-highlight");
 
 
-      $("#specificInfoPage").css('display', 'block');
-      currentPage = "specificInfoPage";       
+        $("#specificInfoPage").css('display', 'block');
+        currentPage = "specificInfoPage";
 
-      return;
+        return;
     });
 
     // Returns the employee info page
-    $("#generalBack").click(function() {
+    $("#generalBack").click(function () {
         $("#generalInfoPage").css('display', 'none');
         $("#employeeInfoPage").css('display', 'block');
 
         $("#progressBar2").removeClass("progress-highlight");
         $("#progressBar1").addClass("progress-highlight");
 
-        currentPage = "employeeInfoPage";       
+        currentPage = "employeeInfoPage";
 
         return;
     });
