@@ -184,25 +184,13 @@
         // Get parent row element.
         var rowElement = $(this).parent().parent().parent();
 
-        var visibilityValue;
-        
         if (this.checked) {
-            visibilityValue = "visible";
+            rowElement.find(".time-entry-container").show();
         }
 
         else {
-            visibilityValue = "hidden";
-        }
-
-        // Must hide/show time entries and copy/paste buttons seperately.
-        // The copy/paste buttons are hidden and displayed based on time 
-        // entry validity.
-        // rowElement.find(".time-entry").css("visibility", visibilityValue).each(function () {
-        //     updateCopyLinks(this.id);
-        //     updateDateTime(this.id);
-        // });
-
-        
+            rowElement.find(".time-entry-container").hide();
+        }        
     });
 
     // Globals
