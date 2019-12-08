@@ -12,10 +12,6 @@
         // Update the copy and paste disabled property associated with
         // changed input.
         updateCopyLinks(inputId);
-
-        // TODO: Wait to collect information until user submits or save changes to DB.
-        // Update the time stamps on all matching days.
-        //updateDateTime(inputId);
     });
 
     // Update date times when hour input is changed.
@@ -145,6 +141,8 @@
     // TODO: Create more effective way of tracking whether the user has actually completed
     //       a section (all inputs are filled and valid).
     $("#generalContinue").click(function () {
+
+
         $("#generalInfoPage").css('display', 'none');
 
         if (!$("#progressBar3").hasClass("bg-success")) {
