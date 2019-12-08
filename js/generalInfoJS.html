@@ -6,7 +6,6 @@
     // Attach change event listener to time-entry elements that updates
     // the copy and paste links depending on input validity.
     $(".time-entry").change(function () {
-
         // Pull the input's id.
         var inputId = $(this).attr('id');
 
@@ -16,7 +15,6 @@
 
         // Update the time stamps on all matching days.
         updateDateTime(inputId);
-
     });
 
     // Update date times when hour input is changed.
@@ -119,16 +117,13 @@
         return $(id).parent().find(cssClass)[0];
     }
 
-    // Given an input elements id, update copy and paste link's disable property
+    // Given an input elements id and visibility status, update copy and paste link's visibility property
     // based on whether the input element contains a valid time entry.
     var updateCopyLinks = function (id) {
+
         var inputElement = $("#" + id);
         var copyLink = inputElement.parent().find("button.general-hours-copy")[0];
         var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputElement.val());
-
-        // If the input is invalid, disable the copy link and hide it so users don't accidently copy
-        // and paste invalid data.
-        // copyLink.disabled = !isValid;
 
         if (isValid) {
             copyLink.style.visibility = 'visible';
@@ -182,10 +177,32 @@
     });
 
     // Adds click event listener to 'Worked this day' checkboxes.
-    $(".general-hours-present").click(function (elem) {
-        // If check box is checked then enable column inputs,
-        // else disable column and remove inputs.
-        alert("Worked this day clicked");
+    // If the present checkbox is checked, show all inputs.
+    // Else, hide them.
+    $(".general-hours-present").click(function () {
+        
+        // Get parent row element.
+        var rowElement = $(this).parent().parent().parent();
+
+        var visibilityValue;
+        
+        if (this.checked) {
+            visibilityValue = "visible";
+        }
+
+        else {
+            visibilityValue = "hidden";
+        }
+
+        // Must hide/show time entries and copy/paste buttons seperately.
+        // The copy/paste buttons are hidden and displayed based on time 
+        // entry validity.
+        // rowElement.find(".time-entry").css("visibility", visibilityValue).each(function () {
+        //     updateCopyLinks(this.id);
+        //     updateDateTime(this.id);
+        // });
+
+        
     });
 
     // Globals
