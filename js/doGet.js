@@ -172,6 +172,9 @@ function populateTimecard(email, data) {
   var mondayDateCell = ss.getRange('J3');
   mondayDateCell.setValue(data["monday"]["date"]);
 
+  // var dateSignedCell = ss.getRange('B40');
+  // dateSignedCell.setValue($("#signatureDate").val());
+
   fillDayInOutCells("monday", data, ["B14", "E14", "C14", "D14"], ss);
   fillDayInOutCells("tuesday", data, ["B16", "E16", "C16", "D16"], ss);
   fillDayInOutCells("wednesday", data, ["B18", "E18", "C18", "D18"], ss);

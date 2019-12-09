@@ -1,7 +1,7 @@
 <script>
     $("#logItemHoursBtn").click(function () {
-        if ($("#specificInfoHours").val() <= 0) {
-            alert("Please enter a value greater than zero.");
+        if ($("#specificInfoHours").val() < 0) {
+            alert("Please enter a value greater than or equal to zero.");
         }
 
         else {
@@ -24,7 +24,6 @@
 
             $("#addSpecificItemHoursModal").modal('hide');
             $("#specificInfoHours").val("");
-            sumHours($(this).parent().parent());
         }
     });
 </script>

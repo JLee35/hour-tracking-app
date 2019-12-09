@@ -36,10 +36,6 @@
             row.appendChild(getPhaseCell(phaseText));
         });
 
-        var totalCell = document.createElement("td");
-        totalCell.classList.add("row-total-cell");
-        row.appendChild(totalCell);
-
         return row;
     }
 
@@ -73,7 +69,6 @@
         cell.appendChild(addBtn);
         return cell;
     }
-
 
     // Attach 'Add item' listener to add item modal.
     $("#submitNewItem").click(function () {
@@ -121,13 +116,11 @@
 
         return;
     });
-
-    function sumHours(row) {
-        
-    }
     
     // Global Variables
     var selectedPhase;
     var selectedCell;
+
+    
 
 </script>
