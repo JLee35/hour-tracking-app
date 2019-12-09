@@ -31,9 +31,10 @@
         
         row.appendChild(phaseTitleCell);
 
-        for (var x = 0; x < 7; x++) {
+        // DaysOfTheWeekArray: global from generalInfoJS
+        DaysOfTheWeekArray.forEach(function (day) {
             row.appendChild(getPhaseCell(phaseText));
-        }
+        });
 
         var totalCell = document.createElement("td");
         totalCell.classList.add("row-total-cell");

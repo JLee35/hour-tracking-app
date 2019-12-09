@@ -1,8 +1,6 @@
 <script>
     // Contains all event listeners and helper functions for General Info Page.
 
-    var daysOfTheWeekArray = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-
     // Attach change event listener to time-entry elements that updates
     // the copy and paste links depending on input validity.
     $(".time-entry").change(function () {
@@ -16,6 +14,7 @@
 
     // Update date times when user clicks 'Continue'.
     var saveTimeEntries = function () {
+        DaysWorked = [];
 
         // Cycle thru all time-entries.
         $(".time-entry").each(function () {
@@ -33,25 +32,25 @@
 
                 switch (inputId.substr(0, 3)) {
                     case "mon":
-                        day = daysOfTheWeekArray[0];
+                        day = DaysOfTheWeekArray[0];
                         break;
                     case "tue":
-                        day = daysOfTheWeekArray[1];
+                        day = DaysOfTheWeekArray[1];
                         break;
                     case "wed":
-                        day = daysOfTheWeekArray[2];
+                        day = DaysOfTheWeekArray[2];
                         break;
                     case "thu":
-                        day = daysOfTheWeekArray[3];
+                        day = DaysOfTheWeekArray[3];
                         break;
                     case "fri":
-                        day = daysOfTheWeekArray[4];
+                        day = DaysOfTheWeekArray[4];
                         break;
                     case "sat":
-                        day = daysOfTheWeekArray[5];
+                        day = DaysOfTheWeekArray[5];
                         break;
                     case "sun":
-                        day = daysOfTheWeekArray[6];
+                        day = DaysOfTheWeekArray[6];
                         break;
                     default:
                         day = "";
@@ -60,6 +59,7 @@
 
                 if (inputId.includes("Start")) {
                     timecardData[day]["start"] = output;
+                    DaysWorked.push(day);
                 }
 
                 else if (inputId.includes("LunchIn")) {
@@ -80,38 +80,38 @@
     // Attach event listeners to all copy and paste links.
     $(".general-hours-copy").click(function () {
         // Get associated time input and copy hours to global variable.
-        copiedHours = $(this).parent().find("input.time-entry")[0].value;
+        CopiedHours = $(this).parent().find("input.time-entry")[0].value;
         showPasteLinks();
     });
 
     $(".general-hours-paste").click(function () {
         // Fill hour input with copied time.
         var inputElement = $(this).parent().find("input.time-entry")[0];
-        inputElement.value = copiedHours;
+        inputElement.value = CopiedHours;
         // Enable input's copy button.
         $(this).parent().find("button.general-hours-copy")[0].style.visibility = 'visible';
     });
 
     $("#general-hours-paste-start-time").click(function () {
-        daysOfTheWeekArray.forEach(function (day) {
+        DaysOfTheWeekArray.forEach(function (day) {
             getTimeEntryButton('#' + day + "Start", "button.general-hours-paste").click();
         });
     });
 
     $("#general-hours-paste-lunch-in").click(function () {
-        daysOfTheWeekArray.forEach(function (day) {
+        DaysOfTheWeekArray.forEach(function (day) {
             getTimeEntryButton('#' + day + "LunchIn", "button.general-hours-paste").click();
         });
     });
 
     $("#general-hours-paste-lunch-out").click(function () {
-        daysOfTheWeekArray.forEach(function (day) {
+        DaysOfTheWeekArray.forEach(function (day) {
             getTimeEntryButton('#' + day + "LunchOut", "button.general-hours-paste").click();
         });
     });
 
     $("#general-hours-paste-time-off").click(function () {
-        daysOfTheWeekArray.forEach(function (day) {
+        DaysOfTheWeekArray.forEach(function (day) {
             getTimeEntryButton('#' + day + "End", "button.general-hours-paste").click();
         });
     });
@@ -203,8 +203,12 @@
     });
 
     // Globals
+    var DaysOfTheWeekArray = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
-    // copiedHours keeps track of the input hours value that has been copied.
-    var copiedHours;
+    // Which days of the week have time entries.
+    var DaysWorked = [];
+
+    // CopiedHours keeps track of the input hours value that has been copied.
+    var CopiedHours;
 
 </script>
