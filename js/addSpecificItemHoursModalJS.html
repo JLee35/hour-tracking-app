@@ -6,7 +6,7 @@
 
         else {
             // Remove plus icon and replace with hours associated.
-            selectedCell.removeChild(selectedCell.firstChild);
+            $(selectedCell).empty();
             var hoursElement = document.createElement('h6');
             hoursElement.innerText = $("#specificInfoHours").val();
             selectedCell.appendChild(hoursElement);
@@ -16,12 +16,14 @@
             editBtn.innerHTML = "<i class='fas fa-edit'></i>";
 
             editBtn.addEventListener("click", function () {
-                
+                $("#specificInfoHours").val(hoursElement.innerText);       
+                $("#addSpecificItemHoursModal").modal('show');
             });
 
             selectedCell.appendChild(editBtn);
 
             $("#addSpecificItemHoursModal").modal('hide');
+            $("#specificInfoHours").val("");
             sumHours($(this).parent().parent());
         }
     });
