@@ -14,57 +14,67 @@
         updateCopyLinks(inputId);
     });
 
-    // Update date times when hour input is changed.
-    var updateDateTime = function (inputId) {
-        var outputId = "#" + inputId + "Output";
-        var output = $("#" + inputId).val();
+    // Update date times when user clicks 'Continue'.
+    var saveTimeEntries = function () {
 
-        $(outputId).text(output);
+        // Cycle thru all time-entries.
+        $(".time-entry").each(function () {
+            var inputId = this.id;
 
-        var day;
+            var outputId = inputId + "Output";
+            var output = $(this).val();
 
-        switch (inputId.substr(0, 3)) {
-            case "mon":
-                day = daysOfTheWeekArray[0];
-                break;
-            case "tue":
-                day = daysOfTheWeekArray[1];
-                break;
-            case "wed":
-                day = daysOfTheWeekArray[2];
-                break;
-            case "thu":
-                day = daysOfTheWeekArray[3];
-                break;
-            case "fri":
-                day = daysOfTheWeekArray[4];
-                break;
-            case "sat":
-                day = daysOfTheWeekArray[5];
-                break;
-            case "sun":
-                day = daysOfTheWeekArray[6];
-                break;
-            default:
-                day = "";
-                console.log("Error! Daily start/stop day undefined");
-        }
+            // Check to ensure input is valid and visible (determines whether that day was worked)
+            var hasValidInput = output != undefined && $(this).is(":visible");
+            
+            if (hasValidInput) {
+                $('#' + outputId).text(output);
+                var day;
 
-        if (inputId.includes("Start")) {
-            timecardData[day]["start"] = output;
-        }
+                switch (inputId.substr(0, 3)) {
+                    case "mon":
+                        day = daysOfTheWeekArray[0];
+                        break;
+                    case "tue":
+                        day = daysOfTheWeekArray[1];
+                        break;
+                    case "wed":
+                        day = daysOfTheWeekArray[2];
+                        break;
+                    case "thu":
+                        day = daysOfTheWeekArray[3];
+                        break;
+                    case "fri":
+                        day = daysOfTheWeekArray[4];
+                        break;
+                    case "sat":
+                        day = daysOfTheWeekArray[5];
+                        break;
+                    case "sun":
+                        day = daysOfTheWeekArray[6];
+                        break;
+                    default:
+                        day = "";
+                        console.log("Error! Daily start/stop day undefined");
+                }
 
-        else if (inputId.includes("LunchIn")) {
-            timecardData[day]["lunchIn"] = output;
-        }
+                if (inputId.includes("Start")) {
+                    timecardData[day]["start"] = output;
+                }
 
-        else if (inputId.includes("LunchOut")) {
-            timecardData[day]["lunchOut"] = output;
-        }
+                else if (inputId.includes("LunchIn")) {
+                    timecardData[day]["lunchIn"] = output;
+                }
 
-        else if (inputId.includes("End")) {
-            timecardData[day]["stop"] = output;
-        }
+                else if (inputId.includes("LunchOut")) {
+                    timecardData[day]["lunchOut"] = output;
+                }
+
+                else if (inputId.includes("End")) {
+                    timecardData[day]["stop"] = output;
+                }
+            }
+        });
     }
 
     // Attach event listeners to all copy and paste links.
@@ -80,8 +90,6 @@
         inputElement.value = copiedHours;
         // Enable input's copy button.
         $(this).parent().find("button.general-hours-copy")[0].style.visibility = 'visible';
-        // Update date time on review page.
-        updateDateTime(inputElement.id);
     });
 
     $("#general-hours-paste-start-time").click(function () {
@@ -142,6 +150,8 @@
     //       a section (all inputs are filled and valid).
     $("#generalContinue").click(function () {
 
+        // Locally store user selected time inputs.
+        saveTimeEntries();
 
         $("#generalInfoPage").css('display', 'none');
 
@@ -179,7 +189,7 @@
     // If the present checkbox is checked, show all inputs.
     // Else, hide them.
     $(".general-hours-present").click(function () {
-        
+
         // Get parent row element.
         var rowElement = $(this).parent().parent().parent();
 
@@ -189,7 +199,7 @@
 
         else {
             rowElement.find(".time-entry-container").hide();
-        }        
+        }
     });
 
     // Globals
