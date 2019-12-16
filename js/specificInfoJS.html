@@ -46,6 +46,12 @@
         removeBtn.style.fill = "red";
 
         removeBtn.addEventListener("click", function () {
+            // Get phaseCode from parent element.
+
+            //var phaseCode = $(this).parent().parent().find("specific-info-phase-output")[0].text();
+            alert("Deleteing: " + phaseCode);
+
+            // Remove row from UI table.
             $(this).parent().parent().remove();
         });
 
@@ -80,11 +86,17 @@
             selectedPhase = $("#phaseCodeInput").val();
             insertPhaseRow();
             $("#addSpecificItemModal").modal('toggle');
+
+            // Add blank entry of phase code to 
+            addBlankPhaseCodeToPhaseCodesAndHours(selectedPhase);
         }        
     });
 
     // Moves on to the supervisor review page
     $("#workerAcceptHoursBtn").click(function() {
+
+        // Store specific info in a json object.
+        
         $("#specificInfoPage").css('display', 'none');
         $("#supervisorReviewPage").css('display', 'block');
         
@@ -116,11 +128,61 @@
 
         return;
     });
+
+    // Given a string representing the phaseCode, add a blank
+    // entry to PhaseCodesAndHours if it doesn't already exist.
+    function addBlankPhaseCodeToPhaseCodesAndHours(phaseCode) {
+        if (!phaseCodeExistsInPhaseCodesAndHours(phaseCode)) {
+            PhaseCodesAndHours[phaseCode] = {};
+            alert(PhaseCodesAndHours.toString());
+        }
+    }
+
+    // Given a string representing the phaseCode, remove
+    // any entry of the same phaseCode from PhaseCodesAndHours.
+    function removePhaseCodeFromPhaseCodesAndHours(phaseCode) {
+        if (phaseCodeExistsInPhaseCodesAndHours(phaseCode)) {
+            delete PhaseCodesAndHours.phaseCode;
+            alert(PhaseCodesAndHours.toString());
+        }
+    }
+
+    // Given a string representing a phaseCode, return true if
+    // phaseCode is already a key in PhaseCodesAndHours. Else
+    // return false.
+    function phaseCodeExistsInPhaseCodesAndHours(phaseCode) {
+        return PhaseCodesAndHours.hasOwnProperty(phaseCode);
+    }
+
+    // Given a string containing the phaseCode ("Permit Fees"),
+    // and a float containing the number of hours worked,
+    // add them to the PhaseCodesAndHours JSON object.
+    function updatePhaseCodesAndHours(phaseCode, hours) {
+        // Check validity of both phaseCode and hours.
+
+        // Add phaseCode to object if it doesn't exist already.
+
+        // Add day and hours.
+    }
     
     // Global Variables
     var selectedPhase;
     var selectedCell;
 
-    
+    var PhaseCodesAndHours = {};
+
+    // PhaseCodesAndHours stores specific item hour info in a JSON object.
+    // See below for example.
+
+    // PhaseCodesAndHours = {
+    //     "Clean Up": {
+    //         "Monday": .5,
+    //         "Friday": 1.5
+    //     },
+    //     "Permit Fees": {
+    //         "Thursday": 1.0
+    //     }
+    // }
+
 
 </script>
