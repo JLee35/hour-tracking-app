@@ -6,16 +6,17 @@
     });
 
     function insertPhaseRow() {
-        $(getPhaseRow()).insertBefore($("#specificInfoAddRow"));
+        $(constructPhaseRow()).insertBefore($("#specificInfoAddRow"));
     }
 
-    function getPhaseRow() {
+    // Creates and returns a phase row element.
+    function constructPhaseRow() {
         var phaseNumElement = document.createElement("p");
-        phaseNumElement.innerText = '(' + selectedPhase.substr(0, selectedPhase.indexOf(' ')) + ')';
+        phaseNumElement.innerText = '(' + SelectedPhase.substr(0, SelectedPhase.indexOf(' ')) + ')';
         phaseNumElement.classList.add("specific-info-phase-output");
 
         var phaseTextElement = document.createElement("p");
-        var phaseText = selectedPhase.substr(selectedPhase.indexOf(' ') + 1);
+        var phaseText = SelectedPhase.substr(SelectedPhase.indexOf(' ') + 1);
         phaseText = phaseText.replace(/[\(\)]+/g, '');
 
         // TODO: Dynamic word break.
@@ -27,19 +28,37 @@
         
         phaseTitleCell.appendChild(phaseTextElement);
         phaseTitleCell.appendChild(phaseNumElement);
-        phaseTitleCell.appendChild(getRemoveBtn());
+        phaseTitleCell.appendChild(constructRemoveBtn());
         
         row.appendChild(phaseTitleCell);
 
         // DaysOfTheWeekArray: global from generalInfoJS
         DaysOfTheWeekArray.forEach(function (day) {
-            row.appendChild(getPhaseCell(phaseText));
+            row.appendChild(constructPhaseCell(phaseText));
         });
 
+        addToPhaseRowStorage(row, phaseText, phaseNumElement.innerText);
         return row;
     }
 
-    function getRemoveBtn() {
+    function addToPhaseRowStorage(rowObj, phaseText, phaseNum) {
+        var phaseTitle = phaseText + " " + phaseNum;
+        PhaseRowStorage.push({name: phaseTitle, row: rowObj});
+    }
+
+    function removeFromPhaseRowStorage(rowObj) {
+        
+        for (var i = 0; i < PhaseRowStorage.length; i++) {
+            if ($(PhaseRowStorage[i].row).is($(rowObj)) ) {
+                PhaseRowStorage.splice(i, 1);
+                return;
+            }
+        }
+
+        alert("removeFromPhaseRowStorage: Phase Row did not exist in Phase Row Storage.");
+    }
+
+    function constructRemoveBtn() {
         var removeBtn = document.createElement("button");
         removeBtn.classList.add("btn", "btn-link");
         removeBtn.innerHTML = "<i class='fas fa-trash' style='color: red;'></i>";
@@ -56,7 +75,7 @@
         return removeBtn;
     }
 
-    function getPhaseCell(phaseText) {
+    function constructPhaseCell(phaseText) {
         var cell = document.createElement("td");
         cell.classList.add("align-middle");
         var addBtn = document.createElement("button");
@@ -74,8 +93,6 @@
         return cell;
     }
 
-    
-
     // Attach 'Add item' listener to add item modal.
     $("#submitNewItem").click(function () {
         if ($("#phaseCodeInput").val() == "0000") {
@@ -83,17 +100,15 @@
         }
 
         else {
-            selectedPhase = $("#phaseCodeInput").val();
+            SelectedPhase = $("#phaseCodeInput").val();
             insertPhaseRow();
             $("#addSpecificItemModal").modal('toggle');
-
-            // Add blank entry of phase code to 
-            addBlankPhaseCodeToPhaseCodesAndHours(selectedPhase);
         }        
     });
 
     // Removes selected phase row after user has confirmed.
     $("#confirmDeleteButton").click(function () {
+        removeFromPhaseRowStorage(SelectedRow);
         $(SelectedRow).remove();
         $("#confirmDeleteModal").modal("hide");
     });
@@ -101,8 +116,6 @@
     // Moves on to the supervisor review page
     $("#workerAcceptHoursBtn").click(function() {
 
-        // Store specific info in a json object.
-        
         $("#specificInfoPage").css('display', 'none');
         $("#supervisorReviewPage").css('display', 'block');
         
@@ -170,24 +183,19 @@
     }
     
     // Global Variables
-    var selectedPhase;
+    var SelectedPhase;
     var SelectedCell;
     var SelectedRow;
 
-    var PhaseCodesAndHours = {};
+    var PhaseRowStorage = [];
+    // PhaseRowStorage stores phase row objects in a JSON object
+    // with the following format:
 
-    // PhaseCodesAndHours stores specific item hour info in a JSON object.
-    // See below for example.
-
-    // PhaseCodesAndHours = {
-    //     "Clean Up": {
-    //         "Monday": .5,
-    //         "Friday": 1.5
-    //     },
-    //     "Permit Fees": {
-    //         "Thursday": 1.0
-    //     }
+    // phaseCodeObj = new {
+    //     name: "phaseTitle",
+    //     obj: [Object]
     // }
 
+    // The obj points to the row object that is parent to phase row.
 
 </script>
