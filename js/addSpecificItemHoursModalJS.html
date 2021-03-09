@@ -6,31 +6,54 @@
         }
 
         else {
-            // Remove plus icon and replace with hours associated.
-            $(selectedCell).empty();
-            var hoursElement = document.createElement('h6');
-            hoursElement.innerText = $("#specificInfoHours").val();
-            selectedCell.appendChild(hoursElement);
+            // If plus icon exists, then new cell content must be created.
+            var buttons = $(SelectedCell).find("button");
+            var hasAddButton = false;
 
-            var editBtn = document.createElement("button");
-            editBtn.classList.add("btn", "btn-link");
-            editBtn.innerHTML = "<i class='fas fa-edit'></i>";
+            for (var i = 0; i < buttons.length; i++) {
+                if ($(buttons[i]).hasClass("add-item-btn")) {
+                    hasAddButton = true;
+                }
+            }
 
-            editBtn.addEventListener("click", function () {
-                $("#specificInfoHours").val(hoursElement.innerText);       
-                $("#addSpecificItemHoursModal").modal('show');
-            });
+            // If the SelectedCell contains an add button child, then there is 
+            // no item information present.
+            if (hasAddButton) {
+                $(SelectedCell).empty();
 
-            selectedCell.appendChild(editBtn);
+                var hoursElement = document.createElement('h6');
+                hoursElement.innerText = $("#specificInfoHours").val();
+
+                SelectedCell.appendChild(hoursElement);
+
+                var editBtn = document.createElement("button");
+                editBtn.classList.add("btn", "btn-link");
+                editBtn.innerHTML = "<i class='fas fa-edit'></i>";
+
+                SelectedCell.appendChild(editBtn);
+
+                editBtn.addEventListener("click", function () {
+                    $("#specificInfoHours").val(hoursElement.innerText);
+                    $("#addSpecificItemHoursModal").modal('show');
+                    SelectedCell = $(this).parent();
+                });
+            }
+
+            // Cell content already exists, just updated it.
+            else {
+                var hoursElement = $(SelectedCell).find("h6")[0];
+                hoursElement.innerText = $("#specificInfoHours").val();
+            }
 
             $("#addSpecificItemHoursModal").modal('hide');
             $("#specificInfoHours").val("");
 
             // TODO: Update specific item JSON object.
             var phaseCode = $("#addSpecificItemHoursTitle").text();
-            alert("phaseCode: " + phaseCode);
+
             //updatePhaseCodesAndHours(,hoursElement.innerText)
 
         }
     });
+
 </script>

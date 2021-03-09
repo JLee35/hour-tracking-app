@@ -46,7 +46,6 @@
         removeBtn.style.fill = "red";
 
         removeBtn.addEventListener("click", function () {
-            alert("Deleting: " + phaseCode);
 
             // Remove row from UI table.
             $(this).parent().parent().remove();
@@ -66,7 +65,7 @@
             $("#addSpecificItemHoursTitle").text(phaseText + " Hours");
             $("#addSpecificItemHoursModal").modal('show');
 
-            selectedCell = cell;
+            SelectedCell = cell;
         });
 
         cell.appendChild(addBtn);
@@ -131,7 +130,6 @@
     function addBlankPhaseCodeToPhaseCodesAndHours(phaseCode) {
         if (!phaseCodeExistsInPhaseCodesAndHours(phaseCode)) {
             PhaseCodesAndHours[phaseCode] = {};
-            alert(PhaseCodesAndHours.toString());
         }
     }
 
@@ -140,7 +138,6 @@
     function removePhaseCodeFromPhaseCodesAndHours(phaseCode) {
         if (phaseCodeExistsInPhaseCodesAndHours(phaseCode)) {
             delete PhaseCodesAndHours.phaseCode;
-            alert(PhaseCodesAndHours.toString());
         }
     }
 
@@ -164,7 +161,7 @@
     
     // Global Variables
     var selectedPhase;
-    var selectedCell;
+    var SelectedCell;
 
     var PhaseCodesAndHours = {};
 
