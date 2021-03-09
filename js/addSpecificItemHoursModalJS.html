@@ -21,7 +21,8 @@
             if (hasAddButton) {
                 $(SelectedCell).empty();
 
-                var hoursElement = document.createElement('h6');
+                var hoursElement = document.createElement("h6");
+                hoursElement.classList.add("phase-hours");
                 hoursElement.innerText = $("#specificInfoHours").val();
 
                 SelectedCell.appendChild(hoursElement);
@@ -47,13 +48,6 @@
 
             $("#addSpecificItemHoursModal").modal('hide');
             $("#specificInfoHours").val("");
-
-            // TODO: Update specific item JSON object.
-            var phaseCode = $("#addSpecificItemHoursTitle").text();
-            
-
-            //updatePhaseCodesAndHours(,hoursElement.innerText)
-
         }
     });
 

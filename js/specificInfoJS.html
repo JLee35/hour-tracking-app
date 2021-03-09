@@ -78,6 +78,7 @@
     function constructPhaseCell(phaseText) {
         var cell = document.createElement("td");
         cell.classList.add("align-middle");
+        cell.classList.add("phase-hour-cell");
         var addBtn = document.createElement("button");
         addBtn.classList.add("btn", "add-item-btn");
         addBtn.innerHTML = "<i class='fas fa-plus' style='vertical-align:center;'></i>";
@@ -129,12 +130,53 @@
         currentPage = "supervisorReview";
 
         // Calculate total hours per day per phase.
+        populateWeeklyPhaseStorage();
 
         // Update review page with employee input.
         populateReviewPage();     
 
         return;
     });
+
+    function populateWeeklyPhaseStorage() {
+        WeeklyPhaseStorage = [];
+
+        for (var i = 0; i < PhaseRowStorage.length; i++) {
+            var name = PhaseRowStorage[i].name;
+            var row = $(PhaseRowStorage[i].row);
+            var cells = $(row).find("td");
+
+            var totalHours = 0;
+
+            
+            for (var x = 0; x < cells.length; x++) {
+                if ($(cells[x]).hasClass("phase-hour-cell")) {
+                    // Days are in zero index format, and the first cell
+                    // in the row does not contain hours, so we off set
+                    // x by one.
+
+                    var day = x - 1;
+                    var hoursForDay = 0;
+                    
+                    // Time cells either have an <h6> element with num
+                    // hours, or a <button> element plus sign.
+                    // If cell has hours, pull them, if they have a 
+                    // button, count time for that day as zero.
+                    var hourElements = $(cells[x]).find("h6");
+
+                    if (hourElements.length > 0) {
+                        hoursForDay = parseFloat($(hourElements[0]).text());
+                    }
+
+                    else {
+                        hoursForDay = 0;
+                    }
+                    totalHours += hoursForDay;
+
+                }
+            }
+        }
+    }
 
     // Returns to general info page
     $("#specificInfoBackBtn").click(function() {
@@ -155,6 +197,7 @@
     var SelectedRow;
 
     var PhaseRowStorage = [];
+    var WeeklyPhaseStorage = [];
 
     //*************************************************************
     //   EXAMPLE (DO NOT DELETE):
@@ -176,13 +219,13 @@
     //     "phaseTitle": "Clean up",
     //     "total": 5.0,
     //     "days": {
-    //         "Monday": 0,
-    //         "Tuesday": 2.5,
-    //         "Wednesday": 1.5,
-    //         "Thursday": 0,
-    //         "Friday": 1,
-    //         "Saturday": 0,
-    //         "Sunday": 0
+    //         0: 0,
+    //         1: 2.5,
+    //         2: 1.5,
+    //         3: 0,
+    //         4: 1,
+    //         5: 0,
+    //         6: 0
     //     }
     // }
     //*****************************************************************
