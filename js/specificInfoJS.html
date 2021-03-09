@@ -46,10 +46,7 @@
         removeBtn.style.fill = "red";
 
         removeBtn.addEventListener("click", function () {
-            // Get phaseCode from parent element.
-
-            //var phaseCode = $(this).parent().parent().find("specific-info-phase-output")[0].text();
-            alert("Deleteing: " + phaseCode);
+            alert("Deleting: " + phaseCode);
 
             // Remove row from UI table.
             $(this).parent().parent().remove();
