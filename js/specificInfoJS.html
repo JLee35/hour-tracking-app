@@ -47,8 +47,10 @@
 
         removeBtn.addEventListener("click", function () {
 
-            // Remove row from UI table.
-            $(this).parent().parent().remove();
+            SelectedRow = $(this).parent().parent();
+
+            // Prompt user with confirm delete modal.
+            $("#confirmDeleteModal").modal('show');
         });
 
         return removeBtn;
@@ -72,6 +74,8 @@
         return cell;
     }
 
+    
+
     // Attach 'Add item' listener to add item modal.
     $("#submitNewItem").click(function () {
         if ($("#phaseCodeInput").val() == "0000") {
@@ -86,6 +90,12 @@
             // Add blank entry of phase code to 
             addBlankPhaseCodeToPhaseCodesAndHours(selectedPhase);
         }        
+    });
+
+    // Removes selected phase row after user has confirmed.
+    $("#confirmDeleteButton").click(function () {
+        $(SelectedRow).remove();
+        $("#confirmDeleteModal").modal("hide");
     });
 
     // Moves on to the supervisor review page
@@ -162,6 +172,7 @@
     // Global Variables
     var selectedPhase;
     var SelectedCell;
+    var SelectedRow;
 
     var PhaseCodesAndHours = {};
 
