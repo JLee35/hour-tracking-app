@@ -115,7 +115,6 @@
 
     // Moves on to the supervisor review page
     $("#workerAcceptHoursBtn").click(function() {
-
         $("#specificInfoPage").css('display', 'none');
         $("#supervisorReviewPage").css('display', 'block');
         
@@ -128,6 +127,8 @@
         $("#progressBar4").addClass("progress-highlight");
 
         currentPage = "supervisorReview";
+
+        // Calculate total hours per day per phase.
 
         // Update review page with employee input.
         populateReviewPage();     
@@ -148,54 +149,42 @@
         return;
     });
 
-    // Given a string representing the phaseCode, add a blank
-    // entry to PhaseCodesAndHours if it doesn't already exist.
-    function addBlankPhaseCodeToPhaseCodesAndHours(phaseCode) {
-        if (!phaseCodeExistsInPhaseCodesAndHours(phaseCode)) {
-            PhaseCodesAndHours[phaseCode] = {};
-        }
-    }
-
-    // Given a string representing the phaseCode, remove
-    // any entry of the same phaseCode from PhaseCodesAndHours.
-    function removePhaseCodeFromPhaseCodesAndHours(phaseCode) {
-        if (phaseCodeExistsInPhaseCodesAndHours(phaseCode)) {
-            delete PhaseCodesAndHours.phaseCode;
-        }
-    }
-
-    // Given a string representing a phaseCode, return true if
-    // phaseCode is already a key in PhaseCodesAndHours. Else
-    // return false.
-    function phaseCodeExistsInPhaseCodesAndHours(phaseCode) {
-        return PhaseCodesAndHours.hasOwnProperty(phaseCode);
-    }
-
-    // Given a string containing the phaseCode ("Permit Fees"),
-    // and a float containing the number of hours worked,
-    // add them to the PhaseCodesAndHours JSON object.
-    function updatePhaseCodesAndHours(phaseCode, hours) {
-        // Check validity of both phaseCode and hours.
-
-        // Add phaseCode to object if it doesn't exist already.
-
-        // Add day and hours.
-    }
-    
     // Global Variables
     var SelectedPhase;
     var SelectedCell;
     var SelectedRow;
 
     var PhaseRowStorage = [];
+
+    //*************************************************************
+    //   EXAMPLE (DO NOT DELETE):
+    //
     // PhaseRowStorage stores phase row objects in a JSON object
     // with the following format:
 
     // phaseCodeObj = new {
     //     name: "phaseTitle",
-    //     obj: [Object]
+    //     row: [Object]
     // }
-
     // The obj points to the row object that is parent to phase row.
+    //**************************************************************
+    
+    //**************************************************************
+    //   EXAMPLE (DO NOT DELETE):
+    //
+    // var weeklyPhaseObject = {
+    //     "phaseTitle": "Clean up",
+    //     "total": 5.0,
+    //     "days": {
+    //         "Monday": 0,
+    //         "Tuesday": 2.5,
+    //         "Wednesday": 1.5,
+    //         "Thursday": 0,
+    //         "Friday": 1,
+    //         "Saturday": 0,
+    //         "Sunday": 0
+    //     }
+    // }
+    //*****************************************************************
 
 </script>
