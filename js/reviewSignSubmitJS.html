@@ -36,7 +36,6 @@
     // Given an ID containing the day of the week, populate the details
     // modal dialog with specific tasks completed.
     function fillDetailsModal(index) {
-        console.log("day of the week index: " + index);
 
         var totalHours = 0;
         var descriptionHours = {
@@ -70,32 +69,6 @@
 
         // Update total hours
         $("#detailsModalTotalHours").text(totalHours);
-
-        // Go through each item and pull out description and hours.
-        // Then create a table row with data and insert into details modal
-        // items.each(function (index, element) {
-        //     var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-        //     var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
-
-        //     totalHours += parseFloat(hours);
-
-        //     // Create new table row.
-        //     var row = document.createElement("tr");
-        //     var descCol = document.createElement("td");
-        //     descCol.classList.add("text-center");
-        //     var hoursCol = document.createElement("td");
-        //     hoursCol.classList.add("text-center");
-            
-        //     descCol.innerText = desc;
-        //     hoursCol.innerText = hours;
-
-        //     row.append(descCol);
-        //     row.append(hoursCol);
-
-        //     $("#detailsModalTableBody").append(row);
-        // });
-
-        
     }
 
     // Clears details modal content.
