@@ -133,10 +133,12 @@ function loadFromSpreadsheet() {
 
 function populateTimecard(email, data) {
   var date = data["dateSigned"];
+  // dateStamp is used to keep sheet names unique.
+  var dateStamp = new Date();
 
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var blankTimecard = ss.getSheetByName("Blank Timecard");
-  ss.insertSheet(email + " - " + date.toLocaleString(), { template: blankTimecard });
+  ss.insertSheet(email + " - " + dateStamp.toLocaleString(), { template: blankTimecard });
 
   var nameCell = ss.getRange('B8');
   nameCell.setValue(data["name"]);
@@ -179,7 +181,7 @@ function populateTimecard(email, data) {
   fillDayInOutCells("saturday", data, ["B24", "E24", "C24", "D24"], ss);
   fillDayInOutCells("sunday", data, ["B26", "E26", "C26", "D26"], ss);
 
-  populateLaborHours(data["weeklyPhases"]);
+  populateLaborHours(data["weeklyPhases"], ss);
 
   var fileName = ss.getName() + " (COPY)";
   var newSheet = ss.copy(fileName);
@@ -194,17 +196,30 @@ function populateTimecard(email, data) {
 
 }
 
-function populateLaborHours(weeklyPhases) {
-  var monCol = 'J';
-  var tueCol = 'K';
-  var wedCol = 'L';
-  var thuCol = 'M';
-  var friCol = 'N';
-  var satCol = 'O';
-  var sunCol = 'P';
+function populateLaborHours(weeklyPhases, spreadSheet) {
+  var dayCols = ['J', 'K', 'L', 'M', 'N', 'O', 'P'];
+  
+  var descriptionStartRow = 4;
 
-  var dayStartRow = '4';
+  var descriptionCol = 'G';
+  var codeCol = 'H';
 
+  for (var i = 0; i < weeklyPhases.length; i ++) {
+    var phaseTitle = weeklyPhases[i]["phaseTitle"];
+    var phaseCode = weeklyPhases[i]["phaseCode"];
+
+    var descriptionCell = spreadSheet.getRange(descriptionCol + (descriptionStartRow + i).toString());
+    var codeCell = spreadSheet.getRange(codeCol + (descriptionStartRow + i).toString());
+
+    descriptionCell.setValue(phaseTitle);
+    codeCell.setValue(phaseCode);
+
+    for (var y = 0; y < weeklyPhases[i]["dayHours"].length; y++) {
+      var dayCell = spreadSheet.getRange(dayCols[y] + (descriptionStartRow + i).toString());
+      
+      dayCell.setValue(weeklyPhases[i]["dayHours"][y]);
+    }
+  }
 }
 
 // Given day string, timecard data object, active spread sheet reference,
