@@ -3,8 +3,8 @@ function doGet(e) {
   tName = "Scout Lake Construction Payroll App";
 
   if (e.parameter.user) {
-    template = HtmlService.createTemplateFromFile('html/mainScoutLake');
-    template.data = { playerId: e.parameter.user };
+    template = HtmlService.createTemplateFromFile('html/main');
+    template.data = { userId: e.parameter.user };
     return template
       .evaluate()
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
@@ -13,7 +13,7 @@ function doGet(e) {
   }
 
   else { //login page
-    template = HtmlService.createTemplateFromFile('html/loginScoutLake');
+    template = HtmlService.createTemplateFromFile('html/login');
     return template
       .evaluate()
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
@@ -169,8 +169,8 @@ function populateTimecard(email, data) {
   var mondayDateCell = ss.getRange('J3');
   mondayDateCell.setValue(data["monday"]["date"]);
 
-  // var dateSignedCell = ss.getRange('B40');
-  // dateSignedCell.setValue($("#signatureDate").val());
+  var dateSignedCell = ss.getRange('B40');
+  dateSignedCell.setValue($("#signatureDate").val());
 
   fillDayInOutCells("monday", data, ["B14", "E14", "C14", "D14"], ss);
   fillDayInOutCells("tuesday", data, ["B16", "E16", "C16", "D16"], ss);
