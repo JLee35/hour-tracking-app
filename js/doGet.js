@@ -179,6 +179,8 @@ function populateTimecard(email, data) {
   fillDayInOutCells("saturday", data, ["B24", "E24", "C24", "D24"], ss);
   fillDayInOutCells("sunday", data, ["B26", "E26", "C26", "D26"], ss);
 
+  populateLaborHours(data["weeklyPhases"]);
+
   var fileName = ss.getName() + " (COPY)";
   var newSheet = ss.copy(fileName);
 
@@ -189,6 +191,19 @@ function populateTimecard(email, data) {
     body: "Attached is a copy of a timecard for " + data["name"] + ", week ending on " + data["weekEnding"] + " on job " + data["jobNumber"] + ". This is an automatic message, please do not reply.",
     attachments: [newSheet.getBlob().setName(fileName)]
   });
+
+}
+
+function populateLaborHours(weeklyPhases) {
+  var monCol = 'J';
+  var tueCol = 'K';
+  var wedCol = 'L';
+  var thuCol = 'M';
+  var friCol = 'N';
+  var satCol = 'O';
+  var sunCol = 'P';
+
+  var dayStartRow = '4';
 
 }
 
