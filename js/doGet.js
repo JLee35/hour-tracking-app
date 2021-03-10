@@ -77,7 +77,7 @@ function requestAccount(email, password) {
 
   if (emailIsAttachedToEmployee && emailIsUnique) {
     // Add account with password
-    SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Login Info").appendRow([email, password]);
+    SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Login Info").appendRow([email, Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_512, password))]);
     return 1;
   }
 
@@ -87,6 +87,8 @@ function requestAccount(email, password) {
 function entryExistsInSheet(entry, sheet) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheet);
   var numEntries = sheet.getLastRow();
+
+  console.log("Made it past numEntries");
 
   if (numEntries == 0) {
     return false;
