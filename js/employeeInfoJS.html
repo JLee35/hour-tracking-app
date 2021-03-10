@@ -8,26 +8,26 @@
 
         if (weekEnding != "") {
 
-            timecardData["weekEnding"] = weekEnding;
+            TimecardData["weekEnding"] = weekEnding;
 
             var endingDateInMilliseconds = new Date(Date.parse(weekEnding)).getTime();
             // There are 86400000 ms in a day, subtracting that
             // from current date object gives us previous day.
 
             setDateAndMonth(".sundayDate", endingDateInMilliseconds);
-            timecardData["sunday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
+            TimecardData["sunday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".saturdayDate", endingDateInMilliseconds -= 86400000);
-            timecardData["saturday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
+            TimecardData["saturday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".fridayDate", endingDateInMilliseconds -= 86400000);
-            timecardData["friday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
+            TimecardData["friday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".thursdayDate", endingDateInMilliseconds -= 86400000);
-            timecardData["thursday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
+            TimecardData["thursday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".wednesdayDate", endingDateInMilliseconds -= 86400000);
-            timecardData["wednesday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
+            TimecardData["wednesday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".tuesdayDate", endingDateInMilliseconds -= 86400000);
-            timecardData["tuesday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
+            TimecardData["tuesday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
             setDateAndMonth(".mondayDate", endingDateInMilliseconds -= 86400000);
-            timecardData["monday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
+            TimecardData["monday"]["date"] = getDateFromMilliseconds(endingDateInMilliseconds);
         }
     }
 
@@ -53,10 +53,10 @@
 
     // Pull all info from page exept for week info (already populated).
     function populateTimecardWithPageInfo() {
-        timecardData["name"] = $("#employeeName").val();
-        timecardData["classification"] = $("#employeeClassification").val();
-        timecardData["jobNumber"] = $("#jobNumber").val();
-        timecardData["projectManager"] = $("#projectManager").val();
+        TimecardData["name"] = $("#employeeName").val();
+        TimecardData["classification"] = $("#employeeClassification").val();
+        TimecardData["jobNumber"] = $("#jobNumber").val();
+        TimecardData["projectManager"] = $("#projectManager").val();
     }
 
     $("#beginLoggingBtn").click(function() {

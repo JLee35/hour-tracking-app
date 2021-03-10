@@ -58,20 +58,20 @@
                 }
 
                 if (inputId.includes("Start")) {
-                    timecardData[day]["start"] = output;
+                    TimecardData[day]["start"] = output;
                     DaysWorked.push(day);
                 }
 
                 else if (inputId.includes("LunchIn")) {
-                    timecardData[day]["lunchIn"] = output;
+                    TimecardData[day]["lunchIn"] = output;
                 }
 
                 else if (inputId.includes("LunchOut")) {
-                    timecardData[day]["lunchOut"] = output;
+                    TimecardData[day]["lunchOut"] = output;
                 }
 
                 else if (inputId.includes("End")) {
-                    timecardData[day]["stop"] = output;
+                    TimecardData[day]["stop"] = output;
                 }
             }
         });

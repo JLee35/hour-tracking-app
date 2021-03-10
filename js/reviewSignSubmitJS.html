@@ -22,6 +22,8 @@
     $("#confirmSubmitButton").click(function() {
         $("#confirmSubmitModal").modal("toggle");
         $("#pleaseWaitModal").modal("show");
+
+        TimecardData["dateSigned"] = $("#signatureDate").val();
         submitTimecard();
     });
 
@@ -76,7 +78,6 @@
     
     // Update employee name, job number, and week ending on the review, sign, submit page.
     function populateReviewPage() {
-
         // Set employee name.
         $("#reviewName").text($("#employeeName").val());
 
@@ -85,11 +86,7 @@
 
         // Set weekending.
         $("#reviewWeekEnding").text($("#weekEnding").val());
-
-        // Set signaturedate
-        var date1 = new Date();
         
-
         signaturePad.clear();
     }
 </script>

@@ -91,7 +91,7 @@
     var phaseCodes;
 
     // Timecard object used to store all collected timecard information.
-    var timecardData;
+    var TimecardData;
 
     // Note: baseURL reference must stay on html page for reference to compile.
     var baseURL = <?=ScriptApp.getService().getUrl()?>; 
@@ -100,6 +100,7 @@
     function blankTimecardData() {
       return {
           name: "",
+          dateSigned: "",
           classification: "",
           projectManager: "",
           jobNumber: "",
@@ -110,7 +111,8 @@
           thursday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
           friday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
           saturday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
-          sunday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] }
+          sunday: { date: "", start: "", stop: "", lunchIn: "", lunchOut: "", tasks: [] },
+          weeklyPhases: null
       };
     }
 
@@ -155,7 +157,7 @@
 
     // Function that calls populateTimecard in doGet.
     function submitTimecard() {
-        google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).populateTimecard(sessionStorage.getItem("inputEmail"), timecardData);
+        google.script.run.withSuccessHandler(submitSuccess).withFailureHandler(submitFailure).populateTimecard(sessionStorage.getItem("inputEmail"), TimecardData);
     }
 
     // Resets all data and returns user to main page.

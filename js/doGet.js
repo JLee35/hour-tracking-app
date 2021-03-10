@@ -132,7 +132,8 @@ function loadFromSpreadsheet() {
 }
 
 function populateTimecard(email, data) {
-  var date = new Date();
+  var date = data["dateSigned"];
+
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var blankTimecard = ss.getSheetByName("Blank Timecard");
   ss.insertSheet(email + " - " + date.toLocaleString(), { template: blankTimecard });
@@ -168,9 +169,7 @@ function populateTimecard(email, data) {
   mondayDateCell.setValue(data["monday"]["date"]);
 
   var dateSignedCell = ss.getRange('B40');
-  
-  // Cannot use jQuery in this file.
-  //dateSignedCell.setValue($("#signatureDate").val());
+  dateSignedCell.setValue(data["dateSigned"]);
 
   fillDayInOutCells("monday", data, ["B14", "E14", "C14", "D14"], ss);
   fillDayInOutCells("tuesday", data, ["B16", "E16", "C16", "D16"], ss);
