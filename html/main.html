@@ -76,13 +76,16 @@
 
     <!-- Confirm Phase Delete Modal -->
     <?!= include('html/confirmDeleteModal'); ?>
+
+    <!-- Confirm Submit Modal -->
+    <?!= include('html/confirmSubmitModal'); ?>
     
   </div>
   <!-- End main container -->
 
   <script>
     // Note: Global variables must stay here.
-    var userEmail = <?=data.playerId?>; // holds player name for top bar
+    var userEmail = <?=data.userId?>; // holds player name for top bar
 
     var workOrders;
     var phaseCodes;
@@ -135,20 +138,19 @@
 
     // Callback function for client-side submitTimecard function.
     function submitFailure(error) {
-      console.log(error);
       $("#pleaseWaitModal").modal("hide");
+      alert(error);
     }
 
     // Callback function for client-side insertEmployeeInfo function.
     function submitSuccess() {
       $("#pleaseWaitModal").modal("hide");
 
-      setInterval(function () {
-        $("#returnToMainModal").modal({
-          backdrop: 'static',
-          keyboard: false
-        });
-      }, 800);
+      // Timeout is necessary to prevent modal below from displaying twice.
+      // This is a known issue with Bootstrap (https://github.com/twbs/bootstrap/issues/16581).
+      setTimeout(function() {
+        $("#returnToMainModal").modal("toggle");
+      }, 500);
     }
 
     // Function that calls populateTimecard in doGet.
@@ -158,7 +160,8 @@
 
     // Resets all data and returns user to main page.
     function returnToMain() {
-      $("#pleaseWaitModal").modal('show');
+      $("#returnToMainModal").modal("hide");
+      $("#pleaseWaitModal").modal("show");
       window.open(baseURL + "?user=" + $("#inputEmail").val(), "_top");
     }
     

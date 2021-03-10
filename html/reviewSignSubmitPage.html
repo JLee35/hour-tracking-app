@@ -203,10 +203,15 @@
                 <h6>Signed: </h6>
                 <!-- Info on canvas from: https://www.w3schools.com/html/html5_canvas.asp -->
                 <div class="card-body text-center" id="signatureDiv">
-                <!--<canvas id="signature" width="576" height="200" class="signature-box"></canvas>-->
+                
                 </div>
                 <h6>Date: </h6>
-                <p id="signatureDate"></p>
+                <div class="input-group date" data-provide="datepicker">
+                    <input type="text" class="form-control">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
             </div>
             <div id="toDelete">
                 <p id="testMedia" class="signature-box"></p>

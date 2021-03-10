@@ -88,8 +88,6 @@ function entryExistsInSheet(entry, sheet) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheet);
   var numEntries = sheet.getLastRow();
 
-  console.log("Made it past numEntries");
-
   if (numEntries == 0) {
     return false;
   }
@@ -170,7 +168,9 @@ function populateTimecard(email, data) {
   mondayDateCell.setValue(data["monday"]["date"]);
 
   var dateSignedCell = ss.getRange('B40');
-  dateSignedCell.setValue($("#signatureDate").val());
+  
+  // Cannot use jQuery in this file.
+  //dateSignedCell.setValue($("#signatureDate").val());
 
   fillDayInOutCells("monday", data, ["B14", "E14", "C14", "D14"], ss);
   fillDayInOutCells("tuesday", data, ["B16", "E16", "C16", "D16"], ss);

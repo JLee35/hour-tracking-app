@@ -11,21 +11,24 @@
 
             // Toggle modal dialog containing details from that day.
             fillDetailsModal(index);
-            $('#detailsModal').modal('show');
+            $("#detailsModal").modal("show");
         });
     });
 
     $("#supervisorAcceptHoursBtn").click(function() {
-        $("#pleaseWaitModal").modal('show');
+        $("#confirmSubmitModal").modal("show");
+    });
 
-        // TODO: Are you sure you wish to submit?
+    $("#confirmSubmitButton").click(function() {
+        $("#confirmSubmitModal").modal("toggle");
+        $("#pleaseWaitModal").modal("show");
         submitTimecard();
     });
 
     // Returns to specific info page
     $("#supervisorAcceptBackBtn").click(function() {
-        $("#supervisorReviewPage").css('display', 'none');
-        $("#specificInfoPage").css('display', 'block');
+        $("#supervisorReviewPage").css("display", "none");
+        $("#specificInfoPage").css("display", "block");
 
         $("#progressBar4").removeClass("progress-highlight");
         $("#progressBar3").addClass("progress-highlight");
@@ -38,10 +41,7 @@
     function fillDetailsModal(index) {
 
         var totalHours = 0;
-        var descriptionHours = {
-            "phaseTitle": "",
-            "hours": 0
-        }
+        
         for (var i = 0; i < WeeklyPhaseStorage.length; i++) {
 
             var currentPhaseObject = WeeklyPhaseStorage[i]
@@ -88,7 +88,7 @@
 
         // Set signaturedate
         var date1 = new Date();
-        $("#signatureDate").text(date1.toLocaleDateString());
+        
 
         signaturePad.clear();
     }
