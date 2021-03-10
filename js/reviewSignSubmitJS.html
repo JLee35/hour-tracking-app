@@ -47,8 +47,6 @@
             var currentPhaseObject = WeeklyPhaseStorage[i]
             // If the employee logged specific hours for index day:
             if (currentPhaseObject.dayHours[index] > 0) {
-                console.log("Worker logged specific hours for index day: " + index);
-
                 totalHours += currentPhaseObject.dayHours[index];
 
                 // Create new table row
@@ -94,5 +92,4 @@
 
         signaturePad.clear();
     }
-    
 </script>
