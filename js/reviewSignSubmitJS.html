@@ -10,13 +10,15 @@
             clearDetailsModal();
 
             // Toggle modal dialog containing details from that day.
-            fillDetailsModal($(this).attr('id'));
+            fillDetailsModal(index);
             $('#detailsModal').modal('show');
         });
     });
 
     $("#supervisorAcceptHoursBtn").click(function() {
         $("#pleaseWaitModal").modal('show');
+
+        // TODO: Are you sure you wish to submit?
         submitTimecard();
     });
 
@@ -33,40 +35,67 @@
 
     // Given an ID containing the day of the week, populate the details
     // modal dialog with specific tasks completed.
-    function fillDetailsModal(dayOfTheWeekID) {
-        // Get swim lane associated with day of week selected.
-        var lane = $("#" + dayOfTheWeekID + "Lane");
-
-        var items = lane.find("div.swim-lane-item-content");
+    function fillDetailsModal(index) {
+        console.log("day of the week index: " + index);
 
         var totalHours = 0;
+        var descriptionHours = {
+            "phaseTitle": "",
+            "hours": 0
+        }
+        for (var i = 0; i < WeeklyPhaseStorage.length; i++) {
 
-        // Go through each item and pull out description and hours.
-        // Then create a table row with data and insert into details modal
-        items.each(function (index, element) {
-            var desc = $(element).find('p.full-phase-code-description')[0].textContent;
-            var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+            var currentPhaseObject = WeeklyPhaseStorage[i]
+            // If the employee logged specific hours for index day:
+            if (currentPhaseObject.dayHours[index] > 0) {
+                console.log("Worker logged specific hours for index day: " + index);
 
-            totalHours += parseFloat(hours);
+                totalHours += currentPhaseObject.dayHours[index];
 
-            // Create new table row.
-            var row = document.createElement("tr");
-            var descCol = document.createElement("td");
-            descCol.classList.add("text-center");
-            var hoursCol = document.createElement("td");
-            hoursCol.classList.add("text-center");
-            
-            descCol.innerText = desc;
-            hoursCol.innerText = hours;
+                // Create new table row
+                var row = document.createElement("tr");
+                var descCol = document.createElement("td");
+                var hoursCol = document.createElement("td");
+                hoursCol.classList.add("text-left");
+                
+                descCol.innerText = currentPhaseObject.phaseTitle;
+                hoursCol.innerText = currentPhaseObject.dayHours[index];
 
-            row.append(descCol);
-            row.append(hoursCol);
+                row.append(descCol);
+                row.append(hoursCol);
 
-            $("#detailsModalTableBody").append(row);
-        });
+                $("#detailsModalTableBody").append(row);
+            }
+        }
 
         // Update total hours
         $("#detailsModalTotalHours").text(totalHours);
+
+        // Go through each item and pull out description and hours.
+        // Then create a table row with data and insert into details modal
+        // items.each(function (index, element) {
+        //     var desc = $(element).find('p.full-phase-code-description')[0].textContent;
+        //     var hours = $(element).find('p.swim-lane-item-hours')[0].textContent;
+
+        //     totalHours += parseFloat(hours);
+
+        //     // Create new table row.
+        //     var row = document.createElement("tr");
+        //     var descCol = document.createElement("td");
+        //     descCol.classList.add("text-center");
+        //     var hoursCol = document.createElement("td");
+        //     hoursCol.classList.add("text-center");
+            
+        //     descCol.innerText = desc;
+        //     hoursCol.innerText = hours;
+
+        //     row.append(descCol);
+        //     row.append(hoursCol);
+
+        //     $("#detailsModalTableBody").append(row);
+        // });
+
+        
     }
 
     // Clears details modal content.
