@@ -188,12 +188,14 @@ function populateTimecard(email, data) {
 
   // Test sending email.
   MailApp.sendEmail({
-    to: "jaredlee.dev@gmail.com",
+    to: "erickb@scout-lake.com",
     subject: "Timecard for " + data["name"],
     body: "Attached is a copy of a timecard for " + data["name"] + ", week ending on " + data["weekEnding"] + " on job " + data["jobNumber"] + ". This is an automatic message, please do not reply.",
     attachments: [newSheet.getBlob().setName(fileName)]
   });
 
+  // Delete temp sheet.
+  ss.deleteSheet(fileName);
 }
 
 function populateLaborHours(weeklyPhases, spreadSheet) {
